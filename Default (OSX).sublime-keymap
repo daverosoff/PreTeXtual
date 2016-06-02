@@ -1,0 +1,27 @@
+/*
+Mathbook XML Package keymap for Windows
+*/
+[
+    {   
+        "keys": ["super+l", "super+space"], 
+        "context": [
+            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
+        ],
+        "command": "mbx_ref_cite"
+    },
+    {   
+        "keys": ["super+l", "x"], 
+        "context": [
+            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
+        ],
+        "command": "mbx_ref_cite"
+    },
+    {   "keys": ["\""],
+        "context":  [
+            {"key": "setting.disable_mbx_ref_auto_trigger", "operator": "not_equal", "operand": true},
+            {"key": "selector", "operator": "equal", "operand": "tag.reference.internal.xml.mbx"},
+            {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true},
+            {"key": "preceding_text", "operator": "regex_contains",
+                "operand": "<\\s*xref\\s+ref\\s*=\\s*", "match_all": true}],
+        "command": "mbx_ref_cite", "args": {"insert_char": "\""}}
+]
