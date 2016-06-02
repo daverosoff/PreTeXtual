@@ -1,3 +1,20 @@
+# Copyright 2016 David W. Rosoff
+
+# This file is part of MBXTools, a package for Sublime Text.
+
+# MBXTools is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# MBXTools is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
+
 from __future__ import print_function 
 import sublime, sublime_plugin
 
@@ -245,7 +262,7 @@ def get_ref_completions(view, point, autocompleting=False):
     # root = getTeXRoot.get_tex_root(view)
     # if root:
     #     print ("TEX root: " + repr(root))
-    find_labels_in_files(os.path.dirname(view.file_name()), view.file_name(), completions)
+    # find_xmlids_in_files(os.path.dirname(view.file_name()), view.file_name(), completions)
 
     # remove duplicates
     completions = list(set(completions))
@@ -356,7 +373,8 @@ class MbxRefCommand(sublime_plugin.TextCommand):
             caret = view.sel()[0].b
             view.sel().subtract(view.sel()[0])
             view.sel().add(sublime.Region(caret, caret))
-        
+
+        print(repr(completions))
         view.window().show_quick_panel(completions, on_done)
 
 class MbxRefCiteCommand(sublime_plugin.TextCommand):
