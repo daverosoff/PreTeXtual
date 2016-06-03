@@ -1,20 +1,3 @@
-<!-- Copyright 2016 David W. Rosoff -->
-
-<!-- This file is part of MBXTools, a package for Sublime Text. -->
-
-<!-- MBXTools is free software: you can redistribute it and/or modify -->
-<!-- it under the terms of the GNU General Public License as published by -->
-<!-- the Free Software Foundation, either version 3 of the License, or -->
-<!-- (at your option) any later version. -->
-
-<!-- MBXTools is distributed in the hope that it will be useful, -->
-<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of -->
-<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the -->
-<!-- GNU General Public License for more details. -->
-
-<!-- You should have received a copy of the GNU General Public License -->
-<!-- along with MBXTools.  If not, see <http://www.gnu.org/licenses/>. -->
-
 # MBXTools: a Sublime Text package for MathBook XML
 
 MBXTools is a Sublime Text package designed to assist authors using
@@ -56,7 +39,7 @@ the status bar visible (command palette: Toggle Status Bar).
 There are only a few features implemented so far. 
 
 1. If you have some sectioning in your MBX file, hit `Ctrl-R` (`Cmd-R` on OS X)
-    to run the Go To Anything command. You should see a panel showing all your
+    to run the Go To Symbol command. You should see a panel showing all your
     available sections. 
 
 ![Image of quick panel showing sections](media/quickpanel-sections.png)
@@ -76,5 +59,5 @@ There are only a few features implemented so far.
 * Syntax highlighting is not always consistent.
 * The `ref` snippet does not bring up the quick panel. Should it?
 * Recursive search through included files for labels is not yet implemented.
-  This will only work for xref completion, not Go To Anything.
+  This will only work for xref completion, not Go To Symbol.
 * Nothing has been tested on OS X or Linux.
