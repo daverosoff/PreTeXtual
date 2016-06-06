@@ -19,7 +19,7 @@
 name: Mathbook XML
 file_extensions:
   - mbx
-# first_line_match: '^<\?xml '
+# first_line_match: '^<?xml version="1.0" encoding="UTF-8"?>\s*<!--\s*MBX\s*-->'
 scope: text.xml.mbx
 variables:
   # This is the full XML Name production, but should not be used where namespaces
@@ -31,9 +31,9 @@ variables:
   #  2: namespace prefix colon
   #  3: local tag name
   qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
-  structure: '(book|article|part|chapter|(?:sub)*section|exercises|references)(?=\s)'
-  # rule out matching 'booktitle'
-  structure_data: '((?:sub)title|introduction|conclusion)'
+  subdivision: '(book|article|part|chapter|(?:sub)*section|exercises|references)(?=\s)'
+  # rule out matching e.g. 'booktitle'
+  subdivision_data: '((?:sub)title|introduction|conclusion)'
   list: '(ul|ol|dl)'
   list_item: '(li)'
   paragraphs: '(paragraphs)'
@@ -64,10 +64,7 @@ variables:
   usage: '(usage)'
   caption: '(caption)'
   table: '(table)'
-  tabular: '(tabular)'
-  col: '(col)'
-  row: '(row)'
-  cell: '(cell)'
+  table_subdivision: '(tabular|col|row|cell)'
   figure: '(figure)'
   listing: '(listing)'
   sidebyside: '(sidebyside)'
@@ -80,7 +77,7 @@ variables:
   url: '(url)'
   xref: '(xref)'
   index: '(index)'
-  index_structure: '(main|sub|see)'
+  index_subdivision: '(main|sub|see)'
   math_inline: '(m)'
   math_displayed: '(m[ed]n?)'
   math_row: '(mrow)'
@@ -152,10 +149,10 @@ variables:
 
 contexts:
   main:
-    - match: '(<)\s*(?:{{structure}})'
+    - match: '(<)\s*(?:{{subdivision}})'
       captures: 
         1: punctuation.definition.tag.begin.xml
-      push: mbx-structure
+      push: mbx-subdivision
     # - match: '(<xref\s+ref)\s*(=)\s*"({{qualified_name}})"'
     - match: '(<)xref'
       captures:
@@ -229,7 +226,7 @@ contexts:
           scope: punctuation.definition.string.end.xml
           pop: true
     - include: should-be-entity
-    # - include: mbx-structure
+    # - include: mbx-subdivision
   should-be-entity:
     - match: '&'
       scope: invalid.illegal.bad-ampersand.xml
@@ -359,8 +356,8 @@ contexts:
     # - include: mbx-xmlid
     - include: double-quoted-string
     - include: single-quoted-string
-  mbx-structure:
-    - meta_scope: tag.structure.xml.mbx entity.name.tag.xml
+  mbx-subdivision:
+    - meta_scope: tag.subdivision.xml.mbx entity.name.tag.localname.xml meta.tag.xml
     - match: '>'
       scope: punctuation.definition.tag.end.xml
       pop: true
@@ -371,7 +368,7 @@ contexts:
     - include: tag-stuff
     - include: double-quoted-string
   mbx-xref:
-    - meta_scope: tag.reference.internal.xml.mbx entity.name.tag.xml
+    - meta_scope: tag.reference.internal.xml.mbx entity.name.tag.localname.xml meta.tag.xml
     - match: '/>'
       scope: punctuation.definition.tag.end.xml
       pop: true
