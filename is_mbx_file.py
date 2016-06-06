@@ -17,6 +17,7 @@
 
 import sublime
 import sys
+import re
 
 # try:
 #     from latextools_utils import get_setting
@@ -43,4 +44,10 @@ def is_mbx_file(file_name):
     for ext in mbx_file_exts:
         if file_name.lower().endswith(ext):
             return True
+    view = sublime.active_window().active_view()
+    first_line = sublime.Region(0,view.line(0).b)
+    line = view.substr(first_line)
+    rex = re.compile(r"<!-- MBX -->")
+    if rex.search(line):
+        return True
     return False

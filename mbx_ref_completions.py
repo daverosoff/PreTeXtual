@@ -39,6 +39,11 @@ if sys.version_info < (3, 0):
 else:
     strbase = str
 
+try:
+    from is_mbx_file import is_mbx_file
+except ImportError:
+    from .is_mbx_file import is_mbx_file
+
 def get_setting(setting, default=None):
     global_settings = sublime.load_settings('MathBookXML.sublime-settings')
 
@@ -60,15 +65,15 @@ def get_setting(setting, default=None):
     return result
 
 
-def is_mbx_file(file_name):
-    if not isinstance(file_name, strbase):
-        raise TypeError('file_name must be a string')
+# def is_mbx_file(file_name):
+#     if not isinstance(file_name, strbase):
+#         raise TypeError('file_name must be a string')
 
-    mbx_file_exts = ['.mbx', '.xml']
-    for ext in mbx_file_exts:
-        if file_name.lower().endswith(ext):
-            return True
-    return False
+#     mbx_file_exts = ['.mbx', '.xml']
+#     for ext in mbx_file_exts:
+#         if file_name.lower().endswith(ext):
+#             return True
+#     return False
 
 class UnrecognizedRefFormatError(Exception): pass
 
@@ -259,10 +264,10 @@ def get_ref_completions(view, point, autocompleting=False):
     # view.find_all(r'\\label\{([^\{\}]+)\}', 0, '\\1', completions)
     view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_-]*)"\s*>', 0, '\\1 : \\2', completions)
 
-    # root = getTeXRoot.get_tex_root(view)
-    # if root:
-    #     print ("TEX root: " + repr(root))
-    # find_xmlids_in_files(os.path.dirname(view.file_name()), view.file_name(), completions)
+    root = view.settings().get("mbx_root_file")
+    if root:
+        print ("MBX root: " + repr(root))
+        find_xmlids_in_files(os.path.dirname(root), root, completions)
 
     # remove duplicates
     completions = list(set(completions))

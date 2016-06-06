@@ -37,8 +37,7 @@ except ImportError:
 # else:
 #     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.tmLanguage'
 
-MBX_SYNTAX = 'Packages/mbx/mbx.sublime-syntax'
-
+MBX_SYNTAX = 'Packages/MBXTools/mbx.sublime-syntax'
 
 class MbxSyntaxListener(sublime_plugin.EventListener):
     def on_load(self, view):
@@ -50,6 +49,10 @@ class MbxSyntaxListener(sublime_plugin.EventListener):
     def detect_and_apply_syntax(self, view):
         if view.is_scratch() or not view.file_name():
             return
+        
+        file_name = view.file_name()
+        if is_mbx_file(file_name):
+            view.set_syntax_file(MBX_SYNTAX)
 
         if view.score_selector(0, "text.xml.mbx"):
             return
@@ -57,6 +60,3 @@ class MbxSyntaxListener(sublime_plugin.EventListener):
         # if not get_setting('latextools_set_syntax', True):
         #     return
 
-        file_name = view.file_name()
-        if is_mbx_file(file_name):
-            view.set_syntax_file(MBX_SYNTAX)
