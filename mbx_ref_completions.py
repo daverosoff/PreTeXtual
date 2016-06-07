@@ -45,7 +45,7 @@ except ImportError:
     from .is_mbx_file import is_mbx_file
 
 def get_setting(setting, default=None):
-    global_settings = sublime.load_settings('MathBookXML.sublime-settings')
+    global_settings = sublime.load_settings('MBXTools.sublime-settings')
 
     try:
         result = sublime.active_window().active_view().settings().get(setting)
@@ -59,8 +59,8 @@ def get_setting(setting, default=None):
     if result is None:
         result = default
     
-    if isinstance(result, sublime.Settings) or isinstance(result, dict):
-        result = SettingsWrapper(setting, result)
+    # if isinstance(result, sublime.Settings) or isinstance(result, dict):
+    #     result = SettingsWrapper(setting, result)
 
     return result
 
@@ -265,7 +265,7 @@ def get_ref_completions(view, point, autocompleting=False):
     view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_-]*)"\s*>', 0, '\\1 : \\2', completions)
 
     root = view.settings().get("mbx_root_file")
-    if root:
+    if root and not root == view.file_name():
         print ("MBX root: " + repr(root))
         find_xmlids_in_files(os.path.dirname(root), root, completions)
 
@@ -309,10 +309,10 @@ class MbxToolsReplaceCommand(sublime_plugin.TextCommand):
         self.view.replace(edit, region, replacement)
 
 
-class LatexRefCompletions(sublime_plugin.EventListener):
+class MbxRefCompletions(sublime_plugin.EventListener):
 
     def on_query_completions(self, view, prefix, locations):
-        # Only trigger within LaTeX
+        # Only trigger within MBX xref
         if not view.match_selector(locations[0],
                 "tag.reference.internal.xml.mbx"):
             return []
@@ -390,10 +390,9 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         view = self.view
         point = view.sel()[0].b
         print (point)
-        # Only trigger within LaTeX
+        # Only trigger within MBX
         # Note using score_selector rather than match_selector
-        if not view.score_selector(point,
-                "text.xml.mbx"):
+        if not view.score_selector(point, "text.xml.mbx"):
             return
 
         if insert_char:

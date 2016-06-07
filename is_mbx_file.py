@@ -47,7 +47,10 @@ def is_mbx_file(file_name):
     view = sublime.active_window().active_view()
     first_line = sublime.Region(0,view.line(0).b)
     line = view.substr(first_line)
-    rex = re.compile(r"<!-- MBX -->")
-    if rex.search(line):
+    try:   
+        mbx_ident = re.compile("<!--\s*MBX\s*-->")
+    except TypeError:
+        print("MEH!")
+    if mbx_ident.search(line):
         return True
     return False
