@@ -21,17 +21,15 @@
 	<key>name</key>
 	<string>Symbol List</string>
 	<key>scope</key>
-	<string>tag.subdivision.xml.mbx</string>
+	<string>tag.remark-like.xml.mbx</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
 		<integer>1</integer>
 		<key>symbolTransformation</key> 
 		<string>
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art)&gt;//g;
-			s/&lt;(exercises|references)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(exercises|references)&gt;/\u$1/g;
+			s/&lt;(.)(?:emark)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(remark)&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>

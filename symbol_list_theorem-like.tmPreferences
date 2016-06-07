@@ -21,17 +21,27 @@
 	<key>name</key>
 	<string>Symbol List</string>
 	<key>scope</key>
-	<string>tag.subdivision.xml.mbx</string>
+	<string>tag.theorem-like.xml.mbx</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
 		<integer>1</integer>
 		<key>symbolTransformation</key> 
 		<string>
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art)&gt;//g;
-			s/&lt;(exercises|references)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(exercises|references)&gt;/\u$1/g;
+			s/&lt;(.)(?:heorem)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:orollary)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:emma)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:lgorithm)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:roposition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:laim)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:act)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(theorem)&gt;//g;
+			s/&lt;(corollary)&gt;//g;
+			s/&lt;(lemma)&gt;//g;
+			s/&lt;(algorithm)&gt;//g;
+			s/&lt;(proposition)&gt;//g;
+			s/&lt;(claim)&gt;//g;
+			s/&lt;(fact)&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>

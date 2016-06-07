@@ -31,7 +31,7 @@ variables:
   #  2: namespace prefix colon
   #  3: local tag name
   qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
-  subdivision: '(book|article|part|chapter|(?:sub)*section|exercises|references)(?=\s)'
+  subdivision: '(book|article|part|chapter|(?:sub)*section|exercise(?:s|group)|references)(?=[\s>])'
   # rule out matching e.g. 'booktitle'
   subdivision_data: '((?:sub)title|introduction|conclusion)'
   list: '(ul|ol|dl)'
@@ -40,10 +40,12 @@ variables:
   p: '(p)'
   statement: '(statement)'
   proof: '(proof)'
-  definition: '(definition)'
-  theoremlike: '(theorem|corollary|lemma|algorithm|proposition|claim)'
-  axiomlike: '(fact|conjecture|axiom|principle)'
-  example: '(example)'
+  conjecture_like: '(conjecture|axiom|principle)'
+  definition_like: '(definition)'
+  example_like: '(example)'
+  exercise_like: '(exercise)'
+  remark_like: '(remark)'
+  theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact)'
   list_example_like: '(list_example_like)'
   remark: '(remark)'
   blockquote: '(blockquote)'
@@ -149,22 +151,54 @@ variables:
 
 contexts:
   main:
-    - match: '(<)\s*(?:{{subdivision}})'
+    - match: '(<)({{subdivision}})'
       captures: 
         1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
       push: mbx-subdivision
     # - match: '(<xref\s+ref)\s*(=)\s*"({{qualified_name}})"'
-    - match: '(<)xref'
+    - match: '(<)(xref)'
       captures:
         1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
       #   2: entity.other.attribute-name.reference.mbx
       #   3: punctuation.separator.key-value.xml
       #   4: entity.other.attribute-value.reference-target.mbx
       push: mbx-xref
+    - match: '(<)({{conjecture_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
+      push: mbx-conjecture-like
+    - match: '(<)({{definition_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
+      push: mbx-definition-like
+    - match: '(<)({{example_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
+      push: mbx-example-like
+    - match: '(<)({{exercise_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
+      push: mbx-exercise-like
+    - match: '(<)({{remark_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
+      push: mbx-remark-like
+    - match: '(<)({{theorem_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.xml
+        2: entity.name.tag.localname.xml
+      push: mbx-theorem-like
     - match: '(<\?)\s*({{qualified_name}})'
       captures:
         1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.xml
+        2: entity.name.tag.localname.xml
       push:
         - meta_scope: meta.tag.preprocessor.xml
         - match: \?>
@@ -357,7 +391,7 @@ contexts:
     - include: double-quoted-string
     - include: single-quoted-string
   mbx-subdivision:
-    - meta_scope: tag.subdivision.xml.mbx entity.name.tag.localname.xml meta.tag.xml
+    - meta_scope: tag.subdivision.xml.mbx meta.tag.xml
     - match: '>'
       scope: punctuation.definition.tag.end.xml
       pop: true
@@ -366,14 +400,64 @@ contexts:
     #     1: entity.other.attribute-name.xmlid.xml.mbx
     #   push: mbx-xmlid
     - include: tag-stuff
+    - include: single-quoted-string
     - include: double-quoted-string
   mbx-xref:
-    - meta_scope: tag.reference.internal.xml.mbx entity.name.tag.localname.xml meta.tag.xml
-    - match: '/>'
+    - meta_scope: tag.reference.internal.xml.mbx meta.tag.xml
+    - match: '/?>'
       scope: punctuation.definition.tag.end.xml
       pop: true
+    - include: single-quoted-string
     - include: double-quoted-string
     - include: tag-stuff
+  mbx-conjecture-like:
+    - meta_scope: tag.conjecture-like.xml.mbx meta.tag.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag-stuff
+    - include: single-quoted-string
+    - include: double-quoted-string
+  mbx-definition-like:
+    - meta_scope: tag.definition-like.xml.mbx meta.tag.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag-stuff
+    - include: single-quoted-string
+    - include: double-quoted-string
+  mbx-example-like:
+    - meta_scope: tag.example-like.xml.mbx meta.tag.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag-stuff
+    - include: single-quoted-string
+    - include: double-quoted-string
+  mbx-exercise-like:
+    - meta_scope: tag.exercise-like.xml.mbx meta.tag.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag-stuff
+    - include: single-quoted-string
+    - include: double-quoted-string
+  mbx-remark-like:
+    - meta_scope: tag.remark-like.xml.mbx meta.tag.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag-stuff
+    - include: single-quoted-string
+    - include: double-quoted-string
+  mbx-theorem-like:
+    - meta_scope: tag.theorem-like.xml.mbx meta.tag.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag-stuff
+    - include: single-quoted-string
+    - include: double-quoted-string
     # - match: '"'
     #   push: double-quoted-string
     #   pop: true
