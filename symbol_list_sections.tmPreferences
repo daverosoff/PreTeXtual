@@ -30,8 +30,8 @@
 		<string>
 			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
 			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art)&gt;//g;
-			s/&lt;(exercises|references)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(exercises|references)&gt;/\u$1/g;
+			s/&lt;(exercise(?:s|group)|references)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(exercise(?:s|group)|references)&gt;/\u$1/g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>
