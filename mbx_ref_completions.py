@@ -98,7 +98,8 @@ def match(rex, str):
 def find_xmlids_in_files(rootdir, src, xmlids):
     if not is_mbx_file(src):
         src_mbx_file = None
-        for ext in get_mbx_extensions():
+        # for ext in get_mbx_extensions():
+        for ext in ['.xml', '.mbx']:
             src_mbx_file = ''.join((src, ext))
             if os.path.exists(os.path.join(rootdir, src_mbx_file)):
                 src = src_mbx_file
@@ -340,7 +341,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         view = self.view
         point = view.sel()[0].b
         print (point)
-        # Only trigger within LaTeX
+        # Only trigger within MBX
         # Note using score_selector rather than match_selector
         if not view.score_selector(point,
                 "text.xml.mbx"):

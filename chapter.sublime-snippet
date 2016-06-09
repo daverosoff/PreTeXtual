@@ -1,9 +1,9 @@
 <snippet>
     <content><![CDATA[
-<subsection xml:id="chapter-${1/([A-Z])|(\W)/(?1\l$1:)(?2-:)/g}">
+<chapter xml:id="chapter-${1/([A-Z])|(\W)/(?1\l$1:)(?2-:)/g}">
     <title>$1</title>
     <p>$2</p>
-</subsection>
+</chapter>
 ]]>
 </content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
