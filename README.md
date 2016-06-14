@@ -13,8 +13,19 @@ you would like to include.
 
 ### Installation
 
-I am not yet included in Package Control, so you must install via `git`. Change
-directories into your `Packages` folder. To find the `Packages` folder, select Browse Packages from the Preferences menu (from the Sublime Text 3 menu on OS X). Make sure you are in the `Packages` folder and *not* `Packages/User`.
+It is recommended to install MBXTools via [Package
+Control](https://packagecontrol.io). If you have not installed Package Control
+yet, you should do that first (and restart Sublime Text afterward).
+
+After Package Control is installed, use the `Install Package` command to search
+for the MBXTools package, and select it from the Quick Panel to install. This
+method of installation allows Package Control to automatically update your
+installation and show you appropriate release notes.
+
+You may also install MBXTools via `git`. Change directories into your
+`Packages` folder. To find the `Packages` folder, select Browse Packages from
+the Preferences menu (from the Sublime Text 3 menu on OS X). Make sure you are
+in the `Packages` folder and *not* `Packages/User`.
 
 Then, run
 ```
@@ -22,19 +33,29 @@ git clone https://github.com/daverosoff/MBXTools.git
 ```
 and restart Sublime Text (probably not necessary).
 
+### Keybindings
+
+MBXTools is inspired by
+[LaTeXTools](https://packagecontrol.io/packages/LaTeXTools), and like that
+package uses a <kbd>Ctrl+l</kbd> prefix for many commands. The Expand Selection
+to Line command is bound to <kbd>Ctrl+l</kbd> by default. MBXTools rebinds that
+command to <kbd>Ctrl+l, Ctrl+l</kbd>. Note that this is a keyboard shortcut
+consisting of two separate keystroke combinations. Most MBXTools shortcuts are
+like this.
+
 ### Usage
 
 You can activate the package features by enabling the MathBook XML syntax. The
 syntax definition looks for `.mbx` file extensions, which most of us don't use
 (yet?). If your MBX files end with `.xml`, you will either need to add a
-comment to the first line of each file:
+comment to the first line of each file (after the XML declaration):
 ```
 <!-- MBX -->
 ```
 or you will need to enable the syntax manually using the command palette. To
-enable it manually, open an MBX file and press `Ctrl+Shift+P` (`Cmd+Shift+P`
-on OS X) and type `mbx`. Select `Set Syntax: MathBook XML` from the list of
-options.
+enable it manually, open an MBX file and press <kbd>Ctrl+Shift+P</kbd>
+(<kbd>Cmd+Shift+P</kbd> on OS X) and type `mbx`. Select `Set Syntax: MathBook
+XML` from the list of options.
 
 You should see the text `MathBook XML` in the lower right corner if you have
 the status bar visible (command palette: Toggle Status Bar).
@@ -43,9 +64,10 @@ the status bar visible (command palette: Toggle Status Bar).
 
 There are only a few features implemented so far.
 
-1. If you have some sectioning in your MBX file, hit `Ctrl-R` (`Cmd-R` on OS X)
-    to run the Go To Symbol command. You should see a panel showing all your
-    available sections.
+1. If you have some subdivisions (with `@xml:id`) in your MBX file, hit
+   `Ctrl-R` (`Cmd-R` on OS X) to run the Go To Symbol command. You should see a
+   panel showing all your available sections. Select one to jump to it in the
+   active view. This tool does not index subdivisions without an `@xml:id` attribute.
 
 ![Image of quick panel showing sections](media/quickpanel-sections.png)
 
@@ -54,19 +76,22 @@ There are only a few features implemented so far.
    panel containing all xml:id values along with the elements they go with.
    Choose one to insert it at the caret and close the `xref` tag.
    Alternatively, type `ref` and hit `Tab` to activate the `xref` snippet. Then
-   hit `Ctrl+l` followed by `x` or `Ctrl+l` followed by `Ctrl+Space` to bring
-   up the completions menu. There are several variants of the `ref` snippet, namely `refa`, `refp`, and `refpa`.
+   hit <kbd>Ctrl+L, X</kbd> or <kbd>Ctrl+L, Ctrl+Space</kbd> to bring up the
+   completions menu. There are several variants of the `ref` snippet, namely
+   `refa`, `refp`, and `refpa`.
 
 ![Image of quick panel showing xml id values](media/quickpanel-xrefs.png)
 
 3. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
-   subdivision snippets. A blank `title` element is provided and the cursor positioned within it. As you type, the `@xml:id` field for the subdivision is filled with similar text mirroring the title you are entering.
+   subdivision snippets. A blank `title` element is provided and the cursor
+   positioned within it. As you type, the `@xml:id` field for the subdivision
+   is filled with similar text mirroring the title you are entering.
 
 ### Known issues
 
-* Syntax highlighting is not always consistent.
+* When manually adding an `xref` (not using the snippets or autocomplete), 
+you will frequently see a spurious `Unrecognized format` error.
 * The `ref` snippet does not bring up the quick panel. Should it?
 * Recursive search through included files for labels is not yet implemented.
-  This will only work for xref completion, not Go To Symbol.
+  This will only work for `xref` completion, not Go To Symbol.
 * Nothing has been tested on OS X or Linux.
-* When adding attributes other than ref to an xref element, errors are thrown.
