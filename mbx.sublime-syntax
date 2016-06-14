@@ -42,7 +42,7 @@ variables:
   proof: '(proof)'
   conjecture_like: '(conjecture|axiom|principle)'
   definition_like: '(definition)'
-  example_like: '(example)'
+  example_like: '(example|question|problem)'
   exercise_like: '(exercise)'
   remark_like: '(remark)'
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact)'
