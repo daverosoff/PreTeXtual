@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<subsection xml:id="subsection-${1/([A-Z])|(\W)/(?1\l$1:)(?2-:)/g}">
+<subsection xml:id="subsection-${1/([A-Z])|(<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
     <p>$2</p>
 </subsection>
