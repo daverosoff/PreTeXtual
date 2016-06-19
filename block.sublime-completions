@@ -1,0 +1,13 @@
+{
+    "scope": "text.xml.mbx",
+    "completions":
+    [
+        { "trigger": "thm\ttheorem", "contents": "<theorem xml:id=\"$1\">$2</theorem>$0" },
+        { "trigger": "cor\tcorollary", "contents": "<corollary xml:id=\"$1\">$2</corollary>$0" },
+        { "trigger": "lem\tlemma", "contents": "<lemma xml:id=\"$1\">$2</lemma>$0" },
+        { "trigger": "alg\talgorithm", "contents": "<algorithm xml:id=\"$1\">$2</algorithm>$0" },
+        { "trigger": "prop\tproposition", "contents": "<proposition xml:id=\"$1\">$2</proposition>$0" },
+        { "trigger": "clm\tclaim", "contents": "<claim xml:id=\"$1\">$2</claim>$0" },
+        { "trigger": "fac\tfact", "contents": "<fact xml:id=\"$1\">$2</fact>$0" },
+    ]
+}
