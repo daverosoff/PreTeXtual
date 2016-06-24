@@ -35,6 +35,17 @@
 			s/&lt;(?:axiom)&gt;//g;
 			s/&lt;(?:principle)&gt;//g;
 		</string>
+		<key>showInIndexedSymbolList</key>
+		<integer>1</integer>
+		<key>symbolIndexTransformation</key> 
+		<string>
+			s/&lt;(.)(?:onjecture)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:xiom)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:rinciple)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:conjecture)&gt;//g;
+			s/&lt;(?:axiom)&gt;//g;
+			s/&lt;(?:principle)&gt;//g;
+		</string>
 		<!-- <key>unusedValue</key>
 		<string>
 			s/&lt;(?:sub){0,1,2}(.)(?:ection|hapter|art)(?:\*)?\{([^\}]+)\}/\u$1 $2/g;

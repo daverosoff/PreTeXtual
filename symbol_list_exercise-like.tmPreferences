@@ -33,6 +33,15 @@
 			s/&lt;(.)(?:xercise)\s+(?:[^&gt;]*)(number|xml:id)\s*=\s*\"([^\"]+)\"\s*(number|xml:id)\s*=\s*\"([^\"]+)\"&gt;/\u$1 $2, $3/g;
 			s/&lt;(exercise)&gt;//g;
 		</string>
+		<key>showInIndexedSymbolList</key>
+		<integer>1</integer>
+		<key>symbolIndexTransformation</key> 
+		<string>
+			s/&lt;(.)(?:xercise)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:xercise)\s+(?:[^&gt;]*)number\s*=\s*(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:xercise)\s+(?:[^&gt;]*)(number|xml:id)\s*=\s*\"([^\"]+)\"\s*(number|xml:id)\s*=\s*\"([^\"]+)\"&gt;/\u$1 $2, $3/g;
+			s/&lt;(exercise)&gt;//g;
+		</string>
 		<!-- <key>unusedValue</key>
 		<string>
 			s/&lt;(?:sub){0,1,2}(.)(?:ection|hapter|art)(?:\*)?\{([^\}]+)\}/\u$1 $2/g;
