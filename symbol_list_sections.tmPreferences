@@ -19,7 +19,7 @@
 <!-- along with MBXTools.  If not, see <http://www.gnu.org/licenses/>. -->
 <dict>
 	<key>name</key>
-	<string>Symbol List</string>
+	<string>Symbol List - Subdivision</string>
 	<key>scope</key>
 	<string>tag.subdivision.xml.mbx</string>
 	<key>settings</key>

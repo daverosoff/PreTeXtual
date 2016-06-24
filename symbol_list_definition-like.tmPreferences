@@ -19,7 +19,7 @@
 <!-- along with MBXTools.  If not, see <http://www.gnu.org/licenses/>. -->
 <dict>
 	<key>name</key>
-	<string>Symbol List</string>
+	<string>Symbol List - Definition-like</string>
 	<key>scope</key>
 	<string>tag.definition-like.xml.mbx</string>
 	<key>settings</key>
