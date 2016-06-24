@@ -31,6 +31,13 @@
 			s/&lt;(.)(?:efinition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
 			s/&lt;(definition)&gt;//g;
 		</string>
+		<key>showInIndexedSymbolList</key>
+		<integer>1</integer>
+		<key>symbolIndexTransformation</key> 
+		<string>
+			s/&lt;(.)(?:efinition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(definition)&gt;//g;
+		</string>
 		<!-- <key>unusedValue</key>
 		<string>
 			s/&lt;(?:sub){0,1,2}(.)(?:ection|hapter|art)(?:\*)?\{([^\}]+)\}/\u$1 $2/g;

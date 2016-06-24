@@ -31,6 +31,13 @@
 			s/&lt;(.)(?:emark)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
 			s/&lt;(remark)&gt;//g;
 		</string>
+		<key>showInIndexedSymbolList</key>
+		<integer>1</integer>
+		<key>symbolIndexTransformation</key> 
+		<string>
+			s/&lt;(.)(?:emark)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(remark)&gt;//g;
+		</string>
 		<!-- <key>unusedValue</key>
 		<string>
 			s/&lt;(?:sub){0,1,2}(.)(?:ection|hapter|art)(?:\*)?\{([^\}]+)\}/\u$1 $2/g;
