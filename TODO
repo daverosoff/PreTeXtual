@@ -1,0 +1,7 @@
+This is a list of features that may be added to future releases. If you
+want to suggest a feature, open an issue at 
+
+    https://github.com/daverosoff/MBXTools
+
+* Quick Panel with list of subdivs lacking @xml:id
+* adapt subdiv snippets for wrapping selection

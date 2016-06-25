@@ -89,9 +89,7 @@ There are only a few features implemented so far.
 
 ### Known issues
 
-* When manually adding an `xref` (not using the snippets or autocomplete), 
-you will frequently see a spurious `Unrecognized format` error.
-* The `ref` snippet does not bring up the quick panel. Should it?
-* Recursive search through included files for labels is not yet implemented.
-  This will only work for `xref` completion, not Go To Symbol.
+*  The `ref` snippet does not bring up the quick panel. Should it?
+*  Recursive search through included files for labels is not yet implemented
+   for `xref` completion. As of 0.3.0 it does work for Goto Symbol in Project.
 * Nothing has been tested on OS X or Linux.

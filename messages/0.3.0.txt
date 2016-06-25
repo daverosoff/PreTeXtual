@@ -1,11 +1,11 @@
-MBXTools package version 0.2.1
+MBXTools package version 0.3.0
 
 Release notes:
 
     * Improved subdivision (chapter, ((sub)sub)section) snippets
     * Added new 'example-like' entities to syntax definition
-        - See d3f640387b26f6762ebc60539369edf0c24491ff at rbeezer/mathbook
-
+        - See d3f6403 at rbeezer/mathbook
+    * Symbol lists for xml:id work with Goto Symbol in Project
 
 Make sure to inspect the README.md for instructions on usage and configuring your MathBook XML files to work automatically with MBXTools. If you find a bug or have a feature request, please open an issue at
 
