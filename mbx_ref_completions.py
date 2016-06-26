@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function 
+from __future__ import print_function
 import sublime, sublime_plugin
 
 if sublime.version() < '3000':
@@ -25,7 +25,7 @@ if sublime.version() < '3000':
     # from latextools_utils.is_tex_file import is_tex_file, get_tex_extensions
     # from latextools_utils import get_setting
 else:
-    _ST3 = True   
+    _ST3 = True
     # from . import getTeXRoot
     # from .latextools_utils.is_tex_file import is_tex_file, get_tex_extensions
     # from .latextools_utils import get_setting
@@ -58,7 +58,7 @@ def get_setting(setting, default=None):
 
     if result is None:
         result = default
-    
+
     # if isinstance(result, sublime.Settings) or isinstance(result, dict):
     #     result = SettingsWrapper(setting, result)
 
@@ -83,8 +83,10 @@ class UnrecognizedRefFormatError(Exception): pass
 # NEW_STYLE_REF_REGEX = re.compile(r"([^{}]*)\{fer(" + _ref_special_commands + r")?\\(\()?")
 # REF_REGEX = re.compile(r'<\s*xref\s*ref\s*=\s*[\'"]([A-Za-z][A-Za-z0-9_-]*)[\'"]\s*/>')
 # REF_REGEX = re.compile(r'<\s*xref\s+ref\s*=\s*[\'"]')
-REF_REGEX = re.compile(r'[\'"]\s*=\s*(?:lanoisivorp|fer)(?:.*)\s+ferx<')
+REF_REGEX = re.compile(r'[\'"]\s*=\s*(?:fer)(?:.*)\s+ferx<')
 # forward: <xref\s+(?:(?:ref|provisional|autoname|detail|first|last)\s*=\s*(['"])([^'"]+)\1\s*)*\s*/>
+COMPLETED_REF_REGEX = re.compile(r'([\'"])(?:[^\'"]+)\1\s*=\s*(?:fer)(?:.*)\s+ferx<')
+# forward: <xref\s+(?:.*)(?:ref)\s*=\s*(['"])(?:[^'"]+)\1)
 def match(rex, str):
     m = rex.search(str)
     if m:
@@ -110,17 +112,10 @@ def find_xmlids_in_files(rootdir, src, xmlids):
 
     file_path = os.path.normpath(os.path.join(rootdir, src))
     print ("Searching file: " + repr(file_path))
-    # The following was a mistake:
-    #dir_name = os.path.dirname(file_path)
-    # THe reason is that \input and \include reference files **from the directory
-    # of the master file**. So we must keep passing that (in rootdir).
 
-    # read src file and extract all label tags
+    # read src file and extract all xml:id attributes
 
     # We open with utf-8 by default. If you use a different encoding, too bad.
-    # If we really wanted to be safe, we would read until \begin{document},
-    # then stop. Hopefully we wouldn't encounter any non-ASCII chars there. 
-    # But for now do the dumb thing.
     try:
         src_file = codecs.open(file_path, "r", "UTF-8")
     except IOError:
@@ -131,8 +126,6 @@ def find_xmlids_in_files(rootdir, src, xmlids):
     src_content = re.sub("%.*", "", src_file.read())
     src_file.close()
 
-    # If the file uses inputenc with a DIFFERENT encoding, try re-opening
-    # This is still not ideal because we may still fail to decode properly, but still... 
     m = re.search(r"<\?xml.*encoding=\"([^\"]*)\"", src_content)
     if m and (m.group(1) not in ["utf8", "UTF-8", "utf-8"]):
         print("reopening with encoding " + m.group(1))
@@ -146,11 +139,8 @@ def find_xmlids_in_files(rootdir, src, xmlids):
             if f and not f.closed:
                 f.close()
 
-    # labels += re.findall(r'\\label\{([^{}]+)\}', src_content)
     xmlids += re.findall(r'<\s*([A-Za-z][A-Za-z0-9_-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_-]*)"\s*>', src_content)
 
-    # search through input tex files recursively
-    # for f in re.findall(r'\\(?:input|include)\{([^\{\}]+)\}', src_content):
     for f in re.findall(r'<\s*xi:include\s*href\s*=\s*"([^"]+)"', src_content):
         find_xmlids_in_files(rootdir, f, xmlids)
 
@@ -176,44 +166,15 @@ def get_ref_completions(view, point, autocompleting=False):
     expr = match(rex, line)
     # print(expr)
 
-    # if expr:
-    #     # Do not match on plain "ref" when autocompleting,
-    #     # in case the user is typing something else
-    #     # if autocompleting and re.match(r"p?fer(?:" + _ref_special_commands + r")?\\?", expr):
-    #     # if autocompleting and re.match(r"ref\s*=\s*['\"]", expr):
-    #     #     raise UnrecognizedRefFormatError()
-    #     # Return the matched bits, for mangling
-    #     prefix, has_p, special_command = rex.match(expr).groups()
-    #     preformatted = False
-    #     if prefix:
-    #         prefix = prefix[::-1]   # reverse
-    #         prefix = prefix[1:]     # chop off "_"
-    #     else:
-    #         prefix = ""
-    #     #print prefix, has_p, special_command
-
-    # else:
-    #     # Check to see if the location matches a preformatted "\ref{blah"
-    # rex = REF_REGEX
-    # expr = match(rex, line)
-
     if not expr:
         raise UnrecognizedRefFormatError()
 
-    # preformatted = True
-    # # Return the matched bits (barely needed, in this case)
-    # prefix, special_command, has_p = rex.match(expr).groups()
     prefix = rex.match(expr).group(0)
     if prefix:
         prefix = prefix[::-1]   # reverse
     else:
         prefix = ""
-    # #print prefix, has_p, special_command
 
-    # pre_snippet = "\\" + special_command[::-1] + "ref{"
-    # post_snippet = "}"
-
-    # prefix = rex.match(expr).group(0)
     pre_snippet = "<xref ref=\""
     post_snippet_rex = re.compile(r"\"\s*/>")
     post_snippet_rex_noquo = re.compile(r"\s*/>")
@@ -229,42 +190,14 @@ def get_ref_completions(view, point, autocompleting=False):
     else:
         post_snippet = ""
 
-
-    # If we captured a parenthesis, we need to put it back in
-    # However, if the user had paren automatching, we don't want to add
-    # another one. So by default we don't, unless the user tells us to
-    # in the settings.
-    # (HACKISH: I don't actually remember why we matched the initial paren!)
-    # if has_p:
-    #     pre_snippet = "(" + pre_snippet
-    #     add_paren = get_setting("ref_add_parenthesis", False)
-    #     if add_paren:
-    #         post_snippet = post_snippet + ")"
-
-    # if not preformatted:
-    #     # Replace ref_blah with \ref{blah
-    #     # The "latex_tools_replace" command is defined in latex_ref_cite_completions.py
-    #     view.run_command("latex_tools_replace", {"a": point-len(expr), "b": point, "replacement": pre_snippet + prefix})
-    #     # save prefix begin and endpoints points
-    #     new_point_a = point - len(expr) + len(pre_snippet)
-    #     new_point_b = new_point_a + len(prefix)
-    #     view.end_edit(ed)
-
-    # else:
-        # Don't include post_snippet if it's already present
-    # suffix = view.substr(sublime.Region(point, point + len(post_snippet)))
     new_point_a = point - len(prefix)
     new_point_b = point
-    # if post_snippet == suffix:
-    #     post_snippet = "\""
 
     completions = []
     # Check the file buffer first:
     #    1) in case there are unsaved changes
     #    2) if this file is unnamed and unsaved, get_tex_root will fail
-    # view.find_all(r'\\label\{([^\{\}]+)\}', 0, '\\1', completions)
-    view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_-]*)"\s*>', 0, '\\1 : \\2', completions)
-
+    view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_\-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_\-]*)"\s*>', 0)#, '\\1: \\2', completions)
     root = view.settings().get("mbx_root_file")
     if root and not root == view.file_name():
         print ("MBX root: " + repr(root))
@@ -272,30 +205,16 @@ def get_ref_completions(view, point, autocompleting=False):
 
     # remove duplicates
     completions = list(set(completions))
+    # this screws up the list for some reason?
+    # fixed with a wretched hack
+    tuple = type((1,2,3))
+    completions = [": ".join(c) if type(c) is tuple else c for c in completions]
+    print(repr(completions))
+    # raise RuntimeError
 
     return completions, prefix, post_snippet, new_point_a, new_point_b
 
-
-# Based on html_completions.py
-#
-# It expands references; activated by 
-# ref<tab>
-# refp<tab> [this adds parentheses around the ref]
-# eqref<tab> [obvious]
-#
-# Furthermore, you can "pre-filter" the completions: e.g. use
-#
-# ref_sec
-#
-# to select all labels starting with "sec". 
-#
-# There is only one problem: if you have a label "sec:intro", for instance,
-# doing "ref_sec:" will find it correctly, but when you insert it, this will be done
-# right after the ":", so the "ref_sec:" won't go away. The problem is that ":" is a
-# word boundary. Then again, TextMate has similar limitations :-)
-
-
-# ST3 cannot use an edit object after the TextCommand has returned; and on_done gets 
+# ST3 cannot use an edit object after the TextCommand has returned; and on_done gets
 # called after TextCommand has returned. Thus, we need this work-around (works on ST2, too)
 # Used by both cite and ref completion
 class MbxToolsReplaceCommand(sublime_plugin.TextCommand):
@@ -325,11 +244,9 @@ class MbxRefCompletions(sublime_plugin.EventListener):
         except UnrecognizedRefFormatError:
             return []
 
-        # r = [(label + "\t\\ref{}", label + post_snippet) for label in completions]
         r = [(label, label + post_snippet) for label in completions]
         #print r
         return (r, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
-
 
 ### Ref completions using the quick panel
 
@@ -363,15 +280,15 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         # Note we now generate refs on the fly. Less copying of vectors! Win!
         def on_done(i):
             print ("mbx_ref_completion called with index %d" % (i,))
-            
+
             # Allow user to cancel
             if i<0:
                 return
 
-            refname = re.search(r' : (.*)$', completions[i]).group(1)   
+            refname = re.search(r': (.*)$', completions[i]).group(1)
 
             ref = prefix + refname + post_snippet
-            
+
             # Replace ref expression with reference and possibly post_snippet
             # The "latex_tools_replace" command is defined in latex_ref_cite_completions.py
             view.run_command("mbx_tools_replace", {"a": new_point_a, "b": new_point_b, "replacement": ref})
@@ -404,12 +321,10 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
             # Get prefs and toggles to see if we are auto-triggering
             # This is only the case if we also must insert , or {, so we don't need a separate arg
             do_ref = get_setting('ref_auto_trigger', True)
-            do_cite = get_setting('cite_auto_trigger', True)
         else: # if we didn't autotrigger, we must surely run
             do_ref = True
-            do_cite = True
 
-        print (do_ref, do_cite)
+        print (do_ref)
 
         # Get the contents of the current line, from the beginning of the line to
         # the current point
@@ -419,20 +334,14 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         # Reverse
         line = line[::-1]
 
-
-        # if re.match(OLD_STYLE_REF_REGEX, line) or re.match(NEW_STYLE_REF_REGEX, line):
         if re.match(REF_REGEX, line):
             if do_ref:
                 print ("Dispatching ref")
                 view.run_command("mbx_ref")
             else:
                 pass # Don't do anything if we match ref completion but we turned it off
-        # elif re.match(OLD_STYLE_CITE_REGEX, line) or re.match(NEW_STYLE_CITE_REGEX, line):
-        #     if do_cite:
-        #         print ("Dispatching cite")
-        #         view.run_command("latex_cite")
-        #     else:
-        #         pass # ditto for cite
+        elif re.search(COMPLETED_REF_REGEX, line):
+            pass # Don't do anything if the ref is actually complete already
         else: # here we match nothing, so error out regardless of autotrigger settings
             print(repr(REF_REGEX.pattern))
             print(line)
