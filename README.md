@@ -47,15 +47,18 @@ like this.
 
 You can activate the package features by enabling the MathBook XML syntax. The
 syntax definition looks for `.mbx` file extensions, which most of us don't use
-(yet?). If your MBX files end with `.xml`, you will either need to add a
-comment to the first line of each file (after the XML declaration):
-```
-<!-- MBX -->
-```
-or you will need to enable the syntax manually using the command palette. To
-enable it manually, open an MBX file and press <kbd>Ctrl+Shift+P</kbd>
-(<kbd>Cmd+Shift+P</kbd> on OS X) and type `mbx`. Select `Set Syntax: MathBook
-XML` from the list of options.
+(yet?). If your MathBook XML files end with `.xml`, you have several choices.
+
+1. Add a setting to your user settings: `"mbx_file_exts"` with value
+   `[".mbx", ".xml"]`.
+
+2. Add a comment `<!-- MBX -->`to the first line of each file (after the XML
+   declaration):
+
+3. Enable the syntax manually using the command palette. To enable it
+   manually, open an MathBook XML file and press <kbd>Ctrl+Shift+P</kbd>
+   (<kbd>Cmd+Shift+P</kbd> on OS X) and type `mbx`. Select 
+   `Set Syntax: MathBook XML` from the list of options.
 
 You should see the text `MathBook XML` in the lower right corner if you have
 the status bar visible (command palette: Toggle Status Bar).
@@ -64,7 +67,7 @@ the status bar visible (command palette: Toggle Status Bar).
 
 There are only a few features implemented so far.
 
-1. If you have some subdivisions (with `xml:id`) in your MBX file, hit
+1. If you have some subdivisions (with `xml:id`) in your MathBook XML file, hit
    <kbd>Ctrl+R</kbd> (<kbd>Cmd+R</kbd> on OS X) to run the Goto Symbol command.
    You should see a panel showing all your available sections. Select one to
    jump to it in the active view. This tool does not index subdivisions without
@@ -87,7 +90,13 @@ There are only a few features implemented so far.
 
 ![Image of quick panel showing xml id values](media/quickpanel-xrefs.png)
 
-3. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
+3. If you set the setting `"mbx_root_file"` in your User settings (this will
+   be improved in a future release), then ref completion as described above
+   will recursively search for `xml:id` through all your `xi:includes` starting
+   with the indicated root file. Use an absolute path name for the value of
+   the setting.
+
+4. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
    subdivision snippets. A blank `title` element is provided and the cursor
    positioned within it. As you type, the `xml:id` field for the subdivision
    is filled with similar text mirroring the title you are entering.
