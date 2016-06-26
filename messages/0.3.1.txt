@@ -12,7 +12,9 @@ Release notes:
       "mbx_root_file": "/path/to/root.mbx")
     * General code cleanup in mbx_ref_completions.py
 
-Make sure to inspect the README.md for instructions on usage and configuring your MathBook XML files to work automatically with MBXTools. If you find a bug or have a feature request, please open an issue at
+Make sure to inspect the README.md for instructions on usage and configuring
+your MathBook XML files to work automatically with MBXTools. If you find a bug
+or have a feature request, please open an issue at
 
     https://github.com/daverosoff/MBXTools
 
