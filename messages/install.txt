@@ -1,4 +1,4 @@
-MBXTools package version 0.2.0, initial public (pre-)release:
+MBXTools package, public (pre-)release:
 
 Make sure to inspect the README.md for instructions on usage and configuring your MathBook XML files to work automatically with MBXTools. If you find a bug or have a feature request, please create an issue at 
 

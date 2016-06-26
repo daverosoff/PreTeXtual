@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<xref provisional="$1" />
+(<xref ref="$1" />)
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
     <tabTrigger>refp</tabTrigger>
