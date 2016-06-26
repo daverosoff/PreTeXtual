@@ -18,18 +18,11 @@
 import sublime
 import sys
 import re
-import sys, os
-
-sys.path.append(os.path.dirname(os.path.realpath(__file__)))
-# try:
-#     from latextools_utils import get_setting
-# except:
-#     from .settings import get_setting
 
 try:
-    from .mbx_ref_completions import get_setting
+    from .get_setting import get_setting
 except:
-    from MBXTools.mbx_ref_completions import get_setting
+    from get_setting import get_setting
 
 if sys.version_info < (3, 0):
     strbase = basestring

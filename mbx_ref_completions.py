@@ -40,29 +40,29 @@ else:
     strbase = str
 
 try:
+    from is_mbx_file import is_mbx_file
+except ImportError:
     from .is_mbx_file import is_mbx_file
-except:
-    from MBXTools.is_mbx_file import is_mbx_file
 
-def get_setting(setting, default=None):
-    global_settings = sublime.load_settings('MBXTools.sublime-settings')
+# def get_setting(setting, default=None):
+#     global_settings = sublime.load_settings('MBXTools.sublime-settings')
 
-    try:
-        result = sublime.active_window().active_view().settings().get(setting)
-    except AttributeError:
-        # no view defined
-        result = None
+#     try:
+#         result = sublime.active_window().active_view().settings().get(setting)
+#     except AttributeError:
+#         # no view defined
+#         result = None
 
-    if result is None:
-        result = global_settings.get(setting, default)
+#     if result is None:
+#         result = global_settings.get(setting, default)
 
-    if result is None:
-        result = default
+#     if result is None:
+#         result = default
 
-    # if isinstance(result, sublime.Settings) or isinstance(result, dict):
-    #     result = SettingsWrapper(setting, result)
+#     # if isinstance(result, sublime.Settings) or isinstance(result, dict):
+#     #     result = SettingsWrapper(setting, result)
 
-    return result
+#     return result
 
 
 # def is_mbx_file(file_name):
@@ -100,8 +100,8 @@ def match(rex, str):
 def find_xmlids_in_files(rootdir, src, xmlids):
     if not is_mbx_file(src):
         src_mbx_file = None
-        # for ext in get_mbx_extensions():
-        for ext in ['.xml', '.mbx']:
+        for ext in get_mbx_extensions():
+        # for ext in ['.xml', '.mbx']:
             src_mbx_file = ''.join((src, ext))
             if os.path.exists(os.path.join(rootdir, src_mbx_file)):
                 src = src_mbx_file
