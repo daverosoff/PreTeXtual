@@ -18,16 +18,18 @@
 import sublime
 import sys
 import re
+import sys, os
 
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 # try:
 #     from latextools_utils import get_setting
 # except:
 #     from .settings import get_setting
 
 try:
-    from mbx_ref_completions import get_setting
-except:
     from .mbx_ref_completions import get_setting
+except:
+    from MBXTools.mbx_ref_completions import get_setting
 
 if sys.version_info < (3, 0):
     strbase = basestring
@@ -37,6 +39,9 @@ else:
 def get_mbx_extensions():
     # view = sublime.active_window().active_view()
     # You can change settings in Packages/User/MBXTools
+    # Default is that only .mbx files are recognized by extension
+    # so other .xml files will be ignored unless they carry
+    # the <!-- MBX --> magic comment in line 1
     mbx_file_exts = get_setting('mbx_file_exts', ['.mbx'])
 
     # return ['mbx']

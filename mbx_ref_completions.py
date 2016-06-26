@@ -40,9 +40,9 @@ else:
     strbase = str
 
 try:
-    from is_mbx_file import is_mbx_file
-except ImportError:
     from .is_mbx_file import is_mbx_file
+except:
+    from MBXTools.is_mbx_file import is_mbx_file
 
 def get_setting(setting, default=None):
     global_settings = sublime.load_settings('MBXTools.sublime-settings')
