@@ -20,7 +20,7 @@ along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
 [
     {   "keys": ["ctrl+l","ctrl+l"], 
         "context":  [
-            {"key": "selector", "operator": "equal", "operand": "text.tex.latex"}],
+            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}],
         "command": "expand_selection", "args": {"to": "line"} },
 
     {   
