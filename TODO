@@ -5,3 +5,4 @@ want to suggest a feature, open an issue at
 
 * Quick Panel with list of subdivs lacking @xml:id
 * adapt subdiv snippets for wrapping selection
+* add command to set root file with input panel
