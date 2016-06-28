@@ -136,7 +136,7 @@ variables:
 contexts:
   main:
     - match: '(<)({{subdivision}})'
-      captures: 
+      captures:
         1: punctuation.definition.tag.begin.xml
         2: entity.name.tag.localname.xml
       push: mbx-subdivision
@@ -446,7 +446,7 @@ contexts:
     #   push: double-quoted-string
     #   pop: true
   # mbx-xmlid:
-  #   - meta_scope: 
+  #   - meta_scope:
   #   - match: '"'
   #     pop: true
-  #   - 
+  #   -

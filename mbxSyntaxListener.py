@@ -49,7 +49,7 @@ class MbxSyntaxListener(sublime_plugin.EventListener):
     def detect_and_apply_syntax(self, view):
         if view.is_scratch() or not view.file_name():
             return
-        
+
         file_name = view.file_name()
         if is_mbx_file(file_name):
             view.set_syntax_file(MBX_SYNTAX)

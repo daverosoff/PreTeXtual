@@ -49,17 +49,19 @@ You can activate the package features by enabling the MathBook XML syntax. The
 syntax definition looks for `.mbx` file extensions, which most of us don't use
 (yet?). If your MathBook XML files end with `.xml`, you have several choices.
 
-1. Add a setting to your user settings or project settings. Use the
-   Preferences menu or the Command Palette to run the command `Set MBX
-   File Extensions`. Sublime will look for a project settings file first, 
-   then update user preferences if it doesn't find one.
+1. Use the Preferences menu or the Command Palette to run the command `Set
+   MBX File Extensions`, and use the input panel to add `.xml` to the
+   comma-separated list. Sublime will look for a project settings file first,
+   then update user preferences if it doesn't find one. If you have multiple
+   MBX projects, or if you edit XML other than MBX, it is best to start using
+   projects so that you can have project-specific settings.
 
 2. Add a comment `<!-- MBX -->` to the first line of each file (after the XML
-   declaration):
+   declaration).
 
 3. Enable the syntax manually using the command palette. To enable it
    manually, open an MathBook XML file and press <kbd>Ctrl+Shift+P</kbd>
-   (<kbd>Cmd+Shift+P</kbd> on OS X) and type `mbx`. Select 
+   (<kbd>Cmd+Shift+P</kbd> on OS X) and type `mbx`. Select
    `Set Syntax: MathBook XML` from the list of options.
 
 You should see the text `MathBook XML` in the lower right corner if you have
@@ -73,7 +75,7 @@ There are only a few features implemented so far.
    <kbd>Ctrl+R</kbd> (<kbd>Cmd+R</kbd> on OS X) to run the Goto Symbol command.
    You should see a panel showing all your available sections. Select one to
    jump to it in the active view. This tool does not index subdivisions without
-   an `xml:id` attribute. 
+   an `xml:id` attribute.
 
 ![Image of quick panel showing sections](media/quickpanel-sections.png)
 
@@ -81,7 +83,7 @@ There are only a few features implemented so far.
    Goto Symbol in Project (<kbd>Ctrl+Shift+R</kbd>/<kbd>Cmd+Shift+R</kbd>) to
    see all the `xml:id` for all the MathBook XML files in the project (must use
    either `.mbx` extension or `&lt;!-- MBX --&gt;` comment in first line of
-   each file for indexing to succeed). 
+   each file for indexing to succeed).
 
 3. If you have been using `xml:id` to label your stuff, try typing `<xref
    ref="` (the beginning of a cross-reference). Sublime Text should show you a
