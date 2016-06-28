@@ -54,7 +54,7 @@ syntax definition looks for `.mbx` file extensions, which most of us don't use
    File Extensions`. Sublime will look for a project settings file first, 
    then update user preferences if it doesn't find one.
 
-2. Add a comment `<!-- MBX -->`to the first line of each file (after the XML
+2. Add a comment `<!-- MBX -->` to the first line of each file (after the XML
    declaration):
 
 3. Enable the syntax manually using the command palette. To enable it
