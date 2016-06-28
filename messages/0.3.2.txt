@@ -1,0 +1,5 @@
+MBXTools package version 0.3.2
+
+Release notes:
+
+    * Bugfix: a fatal typo in the core ref-completion code
