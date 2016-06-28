@@ -250,8 +250,8 @@ class MbxRefCompletions(sublime_plugin.EventListener):
         except UnrecognizedRefFormatError:
             return []
 
-        r = [(label, label + post_snippet) for label in completions]
-        #print r
+        r = [(label + post_snippet) for label in completions]
+        print(r)
         return (r, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 ### Ref completions using the quick panel
