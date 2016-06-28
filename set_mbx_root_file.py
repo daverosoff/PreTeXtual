@@ -16,7 +16,7 @@ class SetMbxRootFileCommand(sublime_plugin.WindowCommand):
         def load_settings(self):
             return sublime.load_settings('Preferences.sublime-settings')
 
-        def set_file_user_prefs(filename):
+        def set_user_prefs(filename):
             if window.project_file_name():
                 data = window.project_data()
                 if 'settings' not in data:
@@ -28,13 +28,13 @@ class SetMbxRootFileCommand(sublime_plugin.WindowCommand):
                 plugin_settings = sublime.load_settings('Preferences.sublime-settings')
                 plugin_settings.set('mbx_root_file', filename)
                 sublime.save_settings('Preferences.sublime-settings')
-                sublime.status_message('MBX root file: ' + filename)
+            sublime.status_message('MBX root file: ' + filename)
 
         def on_done(filename):
-            set_file_user_prefs(filename)
+            set_user_prefs(filename)
 
         if 'filename' in kwargs:
-            set_file_user_prefs(kwargs['filename'])
+            set_user_prefs(kwargs['filename'])
         else:
             current_root = get_setting('mbx_root_file')
             if current_root:

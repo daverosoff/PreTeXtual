@@ -16,5 +16,9 @@
     {
         "caption": "MBXTools: Set MBX Root File",
         "command": "set_mbx_root_file"
+    },
+    {
+        "caption": "MBXTools: Set MBX File Extensions",
+        "command": "set_mbx_exts"
     }
 ]
