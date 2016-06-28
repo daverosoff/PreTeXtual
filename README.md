@@ -71,15 +71,17 @@ There are only a few features implemented so far.
    <kbd>Ctrl+R</kbd> (<kbd>Cmd+R</kbd> on OS X) to run the Goto Symbol command.
    You should see a panel showing all your available sections. Select one to
    jump to it in the active view. This tool does not index subdivisions without
-   an `xml:id` attribute. Open your entire source folder as a project and use
-   Goto Symbol in Project (<kbd>Ctrl+Shift+R</kbd>/<kbd>Cmd+Shift+R</kbd>) to
-   see all the `xml:id` for all the MathBook XML files in the project (must use
-   either `.mbx` extension or `&lt;!-- MBX --&gt;` comment in first line of
-   each file for indexing to succeed).
+   an `xml:id` attribute. 
 
 ![Image of quick panel showing sections](media/quickpanel-sections.png)
 
-2. If you have been using `xml:id` to label your stuff, try typing `<xref
+2. Open your entire source folder as a project and use
+   Goto Symbol in Project (<kbd>Ctrl+Shift+R</kbd>/<kbd>Cmd+Shift+R</kbd>) to
+   see all the `xml:id` for all the MathBook XML files in the project (must use
+   either `.mbx` extension or `&lt;!-- MBX --&gt;` comment in first line of
+   each file for indexing to succeed). 
+
+3. If you have been using `xml:id` to label your stuff, try typing `<xref
    ref="` (the beginning of a cross-reference). Sublime Text should show you a
    panel containing all xml:id values along with the elements they go with.
    Choose one to insert it at the caret and close the `xref` tag.
@@ -90,13 +92,13 @@ There are only a few features implemented so far.
 
 ![Image of quick panel showing xml id values](media/quickpanel-xrefs.png)
 
-3. If you set the setting `"mbx_root_file"` in your User settings (this will
-   be improved in a future release), then ref completion as described above
-   will recursively search for `xml:id` through all your `xi:includes` starting
-   with the indicated root file. Use an absolute path name for the value of
-   the setting.
+4. If you set an MBX root file, then ref completion as described above will
+   recursively search for `xml:id` through all your `xi:includes` starting with
+   the indicated root file. Run the command "Set MBX Root File" from the
+   Preferences menu or the Command Palette. Be sure to use an absolute path
+   name for the value of the setting.
 
-4. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
+5. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
    subdivision snippets. A blank `title` element is provided and the cursor
    positioned within it. As you type, the `xml:id` field for the subdivision
    is filled with similar text mirroring the title you are entering.

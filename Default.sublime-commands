@@ -1,0 +1,20 @@
+[
+    {
+        "caption": "Preferences: MBXTools Settings – Default",
+        "command": "open_file",
+        "args": {
+            "file": "${packages}/MBXTools/MBXTools.sublime-settings"
+        }
+    },
+    {
+        "caption": "Preferences: MBXTools Settings – User",
+        "command": "open_file",
+        "args": {
+            "file": "${packages}/User/MBXTools.sublime-settings"
+        }
+    },
+    {
+        "caption": "Set MBX Root File",
+        "command": "set_mbx_root_file"
+    }
+]
