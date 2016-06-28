@@ -34,6 +34,10 @@
                                 "command": "open_file"
                             }, 
                             {
+                                "caption": "Set MBX Root File",
+                                "command": "set_mbx_root_file"
+                            },
+                            {
                                 "caption": "-"
                             }
                         ]

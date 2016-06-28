@@ -12,5 +12,9 @@
         "args": {
             "file": "${packages}/User/MBXTools.sublime-settings"
         }
+    },
+    {
+        "caption": "Set MBX Root File",
+        "command": "set_mbx_root_file"
     }
 ]
