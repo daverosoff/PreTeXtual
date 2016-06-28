@@ -11,7 +11,7 @@ class SetMbxExtsCommand(sublime_plugin.WindowCommand):
 
     def run(self, **kwargs):
         window = self.window
-        
+
         def load_settings(self):
             return sublime.load_settings('Preferences.sublime-settings')
 

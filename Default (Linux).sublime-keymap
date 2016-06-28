@@ -18,20 +18,20 @@ You should have received a copy of the GNU General Public License
 along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
 */
 [
-    {   "keys": ["ctrl+l","ctrl+l"], 
+    {   "keys": ["ctrl+l","ctrl+l"],
         "context":  [
             {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}],
         "command": "expand_selection", "args": {"to": "line"} },
 
-    {   
-        "keys": ["ctrl+l", "ctrl+space"], 
+    {
+        "keys": ["ctrl+l", "ctrl+space"],
         "context": [
             {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
         ],
         "command": "mbx_ref_cite"
     },
-    {   
-        "keys": ["ctrl+l", "x"], 
+    {
+        "keys": ["ctrl+l", "x"],
         "context": [
             {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
         ],
