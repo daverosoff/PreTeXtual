@@ -1,10 +1,10 @@
 import sublime
 import sublime_plugin
 
-# try:
-#     from .get_setting import get_setting
-# except ImportError:
-#     from get_setting import get_setting
+try:
+    from .get_setting import get_setting
+except ImportError:
+    from get_setting import get_setting
 
 class SetMbxRootFileCommand(sublime_plugin.WindowCommand):
 
@@ -36,6 +36,11 @@ class SetMbxRootFileCommand(sublime_plugin.WindowCommand):
         if 'filename' in kwargs:
             set_file_user_prefs(kwargs['filename'])
         else:
-            window.show_input_panel("Absolute path to root MBX file:",
-                "", on_done, None, None)
+            current_root = get_setting('mbx_root_file')
+            if current_root:
+                window.show_input_panel("Absolute path to root MBX file:",
+                    current_root, on_done, None, None)
+            else:
+                window.show_input_panel("Absolute path to root MBX file:",
+                    "", on_done, None, None)
 
