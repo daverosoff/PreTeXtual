@@ -2,7 +2,8 @@ MBXTools package version NEXT
 
 Release notes:
 
-	* Set custom MBX extensions (e.g., `.xml`) in User Settings
-	  (key "mbx_file_exts")
-	* Commands to set this value and "mbx_root_file" via input panel
-	
+    * Set custom MBX extensions (e.g., `.xml`) in User Settings
+      (key "mbx_file_exts")
+    * Commands to set this value and "mbx_root_file" via input panel
+    * Completion insertion using completion list instead of quick panel
+
