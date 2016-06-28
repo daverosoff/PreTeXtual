@@ -44,6 +44,11 @@ try:
 except ImportError:
     from .is_mbx_file import is_mbx_file
 
+try:
+    from get_setting import get_setting
+except ImportError:
+    from .get_setting import get_setting
+
 # def get_setting(setting, default=None):
 #     global_settings = sublime.load_settings('MBXTools.sublime-settings')
 
@@ -197,10 +202,11 @@ def get_ref_completions(view, point, autocompleting=False):
     # Check the file buffer first:
     #    1) in case there are unsaved changes
     #    2) if this file is unnamed and unsaved, get_tex_root will fail
-    view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_\-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_\-]*)"\s*>', 0)#, '\\1: \\2', completions)
-    root = view.settings().get("mbx_root_file")
+    view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_\-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_\-]*)"\s*>', 0, '\\1: \\2', completions)
+
+    root = get_setting('mbx_root_file')
+    print ("MBX root: " + repr(root))
     if root and not root == view.file_name():
-        print ("MBX root: " + repr(root))
         find_xmlids_in_files(os.path.dirname(root), root, completions)
 
     # remove duplicates
