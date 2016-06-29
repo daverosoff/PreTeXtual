@@ -18,6 +18,10 @@
         "command": "set_mbx_root_file"
     },
     {
+        "caption": "MBXTools: Clear MBX Root File",
+        "command": "clear_mbx_root_file"
+    },
+    {
         "caption": "MBXTools: Set MBX File Extensions",
         "command": "set_mbx_exts"
     }

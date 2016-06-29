@@ -17,18 +17,32 @@ class SetMbxRootFileCommand(sublime_plugin.WindowCommand):
             return sublime.load_settings('Preferences.sublime-settings')
 
         def set_user_prefs(filename):
-            if window.project_file_name():
-                data = window.project_data()
-                if 'settings' not in data:
-                    data['settings'] = {'mbx_root_file': filename}
+            if filename:
+                if window.project_file_name():
+                    data = window.project_data()
+                    if 'settings' not in data:
+                        data['settings'] = {'mbx_root_file': filename}
+                    else:
+                        data['settings'].update({'mbx_root_file': filename})
+                    window.set_project_data(data)
+                else: # fall back on user prefs
+                    plugin_settings = sublime.load_settings('Preferences.sublime-settings')
+                    plugin_settings.set('mbx_root_file', filename)
+                    sublime.save_settings('Preferences.sublime-settings')
+                sublime.status_message('MBX root file: ' + filename)
+            else: # no filename, so clear the setting
+                print ("clearing!")
+                if window.project_file_name():
+                    data = window.project_data()
+                    if 'settings' in data :
+                        if 'mbx_root_file' in data['settings']:
+                            del data['settings']['mbx_root_file']
+                            window.set_project_data(data)
                 else:
-                    data['settings'].update({'mbx_root_file': filename})
-                window.set_project_data(data)
-            else: # fall back on user prefs
-                plugin_settings = sublime.load_settings('Preferences.sublime-settings')
-                plugin_settings.set('mbx_root_file', filename)
-                sublime.save_settings('Preferences.sublime-settings')
-            sublime.status_message('MBX root file: ' + filename)
+                    plugin_settings = sublime.load_settings('Preferences.sublime-settings')
+                    plugin_settings.set('mbx_root_file', "")
+                    sublime.save_settings('Preferences.sublime-settings')
+                sublime.status_message('MBX root file cleared')
 
         def on_done(filename):
             set_user_prefs(filename)
@@ -43,4 +57,3 @@ class SetMbxRootFileCommand(sublime_plugin.WindowCommand):
             else:
                 window.show_input_panel("Absolute path to root MBX file:",
                     "", on_done, None, None)
-
