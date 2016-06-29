@@ -49,8 +49,8 @@ You can activate the package features by enabling the MathBook XML syntax. The
 syntax definition looks for `.mbx` file extensions, which most of us don't use
 (yet?). If your MathBook XML files end with `.xml`, you have several choices.
 
-1. Use the Preferences menu or the Command Palette to run the command `Set
-   MBX File Extensions`, and use the input panel to add `.xml` to the
+1. Use the Preferences menu or the Command Palette to run the command
+   `Set MBX File Extensions`, and use the input panel to add `.xml` to the
    comma-separated list. Sublime will look for a project settings file first,
    then update user preferences if it doesn't find one. If you have multiple
    MBX projects, or if you edit XML other than MBX, it is best to start using

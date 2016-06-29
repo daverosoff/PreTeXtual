@@ -1,0 +1,16 @@
+MBXTools package version NEXT
+
+Release notes:
+
+    * Set custom MBX extensions (e.g., `.xml`) in User Settings
+      (key "mbx_file_exts")
+    * Commands to set this value and "mbx_root_file" via input panel
+    * Completion insertion using completion list instead of quick panel
+
+Known issues:
+
+    * There should be a command to clear the MBX root file.
+    * Some important math snippets are still missing. Please open an issue if
+      there is something you desperately need.
+
+        https://github.com/daverosoff/MBXTools
