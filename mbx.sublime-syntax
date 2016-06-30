@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Mathbook XML
+name: MathBook XML
 file_extensions:
   - mbx
 # first_line_match: '^<?xml version="1.0" encoding="UTF-8"?>\s*<!--\s*MBX\s*-->'

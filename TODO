@@ -3,5 +3,5 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/MBXTools
 
-* Quick Panel with list of subdivs lacking @xml:id
+* Text command to move to next subdiv/block lacking xml:id
 * adapt subdiv snippets for wrapping selection

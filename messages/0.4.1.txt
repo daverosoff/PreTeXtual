@@ -1,0 +1,16 @@
+MBXTools package version 0.4.1
+
+Release notes:
+
+    * Bugfix: corrected syntax name
+    * Bugfix: corrected release message
+
+Known issues:
+
+    * Some users experience an error about plist syntax and the file
+      symbol_list_remark-like.tmPreferences.
+    * There should be a command to clear the MBX root file.
+    * Some important math snippets are still missing. Please open an issue if
+      there is something you desperately need.
+
+        https://github.com/daverosoff/MBXTools
