@@ -4,4 +4,4 @@
     [
         { "trigger": "x\txml:id", "contents": "xml:id=\"$1\"$0" }
     ]
-},
+}
