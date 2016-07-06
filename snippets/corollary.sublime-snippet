@@ -1,0 +1,12 @@
+<snippet>
+    <content><![CDATA[
+<corollary xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+    <title>$1</title>
+    <statement>$2</statement>
+</corollary>$0
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>cor</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>text.xml.mbx</scope>
+</snippet>

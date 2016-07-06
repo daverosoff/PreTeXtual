@@ -1,7 +1,0 @@
-{
-    "scope": "meta.tag.xml",
-    "completions":
-    [
-        { "trigger": "x\txml:id", "contents": "xml:id=\"$1\"$0" }
-    ]
-},
