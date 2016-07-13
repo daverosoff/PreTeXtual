@@ -1,5 +1,23 @@
-MBXTools package version NEXT
+MBXTools package version 0.4.2
 
 Release notes:
 
+    * Added many new snippets for theorem-likes, axiom-likes
+    * Reorganized package, putting snippets, completions, etc.
+      into subfolders
+    * There are a few changes in snippet triggers
+
 Known issues:
+
+    * Mirrored title text in snippet xml:id does not always give
+      completely satisfactory results (e.g., XML tags inside)
+        - Should there be a user setting to disable this mirroring?
+        - Is this even possible?
+    * MathBook XML syntax is inappropriately applied to newly opened
+      files of other types in some instances
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite: 
+      unrecognized format")
+    * Potential for confusion since Symbols List is always based on
+      the current project (or open folder) but the ref autocomplete
+      list may not be (if there is not an explicit project and the
+      root MBX file is set globally or not at all)
