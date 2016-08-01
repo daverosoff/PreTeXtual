@@ -1,6 +1,9 @@
 MBXTools package, public (pre-)release:
 
-Make sure to inspect the README.md for instructions on usage and configuring your MathBook XML files to work automatically with MBXTools. If you find a bug or have a feature request, please create an issue at 
+Thank you for your interest in MBXTools. Make sure to inspect the README.md
+for instructions on usage and configuring your MathBook XML files to work
+automatically with MBXTools. If you find a bug or have a feature request,
+please open an issue at
 
     https://github.com/daverosoff/MBXTools
 
