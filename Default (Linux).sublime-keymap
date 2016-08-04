@@ -43,6 +43,17 @@ along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
             {"key": "selector", "operator": "equal", "operand": "tag.reference.internal.xml.mbx"},
             {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true},
             {"key": "preceding_text", "operator": "regex_contains",
-                "operand": "<\\s*xref\\s+ref\\s*=\\s*", "match_all": true}],
-        "command": "mbx_ref_cite", "args": {"insert_char": "\""}}
+                "operand": "<\\s*xref\\s+ref\\s*=\\s*", "match_all": true}
+        ],
+        "command": "mbx_ref_cite", "args": {"insert_char": "\""}
+    },
+    {
+        "keys": ["ctrl+alt+."],
+        "context": [
+            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"},
+            {"key": "selector", "operator": "not_equal", "operand": "string"},
+            {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true},
+        ],
+        "command": "complete_snippet_no_space", "args": {}
+    }
 ]
