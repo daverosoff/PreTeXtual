@@ -1,4 +1,4 @@
-MBXTools package, public (pre-)release:
+MBXTools, package version 0.4.3
 
 Thank you for your interest in MBXTools. Make sure to inspect the README.md
 for instructions on usage and configuring your MathBook XML files to work
@@ -8,6 +8,14 @@ please open an issue at
     https://github.com/daverosoff/MBXTools
 
 I hope you find MBXTools useful!
+
+Release notes:
+
+    * Improved snippet triggers
+    * Snippets for <mdash />, <ndash />, <ellipsis />, <ampersand />,
+      and <percent /> are available via Ctrl+Alt+. at the end
+      of a word (so, the character preceding the trigger need not be
+      a space)
 
 Known issues:
 
