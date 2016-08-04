@@ -23,8 +23,8 @@ Known issues:
       completely satisfactory results (e.g., XML tags inside)
         - Should there be a user setting to disable this mirroring?
         - Is this even possible?
-    * MathBook XML syntax is inappropriately applied to newly opened
-      files of other types in some instances
+    * MathBook XML syntax is inappropriately applied to files of 
+      other types in some instances
     * Typing '<xref ref=""' results in a spurious error ("ref/cite: 
       unrecognized format")
     * Potential for confusion since Symbols List is always based on
