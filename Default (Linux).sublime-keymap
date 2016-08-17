@@ -52,7 +52,7 @@ along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
         "context": [
             {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"},
             {"key": "selector", "operator": "not_equal", "operand": "string"},
-            {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true},
+            {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true}
         ],
         "command": "complete_snippet_no_space", "args": {}
     }
