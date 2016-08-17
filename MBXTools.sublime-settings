@@ -9,5 +9,5 @@
 
 {
     "ref_auto_trigger": true,
-    "mbx_file_exts": [".mbx"],
+    "mbx_file_exts": [".mbx"]
 }
