@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<fact xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<fact xml:id="fact-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
     <statement>$2</statement>
 </fact>$0

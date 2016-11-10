@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<algorithm xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<algorithm xml:id="algorithm-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
     <statement>$2</statement>
 </algorithm>$0
