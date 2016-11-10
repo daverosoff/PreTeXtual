@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<activity xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<activity xml:id="activity-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
 </activity>$0
 ]]></content>

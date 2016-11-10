@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<theorem xml:id="theorem-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/}">
+<theorem xml:id="theorem-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
     <statement>$2</statement>
 </theorem>$0

@@ -1,0 +1,29 @@
+MBXTools, package version 0.4.5
+
+Thank you for your interest in MBXTools. Make sure to inspect the README.md
+for instructions on usage and configuring your MathBook XML files to work
+automatically with MBXTools. If you find a bug or have a feature request,
+please open an issue at
+
+    https://github.com/daverosoff/MBXTools
+
+I hope you find MBXTools useful!
+
+Release notes:
+
+    * Fixed broken snippets (either not mirroring or totally nonfunctional)
+
+Known issues:
+
+    * Mirrored title text in snippet xml:id does not always give
+      completely satisfactory results (e.g., XML tags inside)
+        - Should there be a user setting to disable this mirroring?
+        - Is this even possible?
+    * MathBook XML syntax is inappropriately applied to files of
+      other types in some instances
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite:
+      unrecognized format")
+    * Potential for confusion since Symbols List is always based on
+      the current project (or open folder) but the ref autocomplete
+      list may not be (if there is not an explicit project and the
+      root MBX file is set globally or not at all)
