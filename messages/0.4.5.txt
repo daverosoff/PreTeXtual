@@ -11,7 +11,7 @@ I hope you find MBXTools useful!
 
 Release notes:
 
-    * Fixed broken theorem-like snippets
+    * Fixed broken snippets (either not mirroring or totally nonfunctional)
 
 Known issues:
 
