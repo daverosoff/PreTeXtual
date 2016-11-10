@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<question xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<question xml:id="question-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
 </question>$0
 ]]></content>

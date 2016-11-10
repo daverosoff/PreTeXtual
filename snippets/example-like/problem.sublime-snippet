@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<problem xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<problem xml:id="problem-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
 </problem>$0
 ]]></content>

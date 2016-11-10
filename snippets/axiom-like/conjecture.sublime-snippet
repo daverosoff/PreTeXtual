@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<conjecture xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<conjecture xml:id="conjecture-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
     <statement>$2</statement>
 </conjecture>$0

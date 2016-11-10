@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<exploration xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<exploration xml:id="exploration-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
 </exploration>$0
 ]]></content>

@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<task xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<task xml:id="task-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
 </task>$0
 ]]></content>

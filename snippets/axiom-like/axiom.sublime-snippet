@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-<axiom xml:id=\"${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)\">
+<axiom xml:id="axiom-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
     <statement>$2</statement>
 </axiom>$0
