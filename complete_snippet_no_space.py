@@ -1,28 +1,28 @@
+# Copyright 2016 David W. Rosoff
+
+# This file is part of MBXTools, a package for Sublime Text.
+
+# MBXTools is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# MBXTools is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
+
 import sublime
 import sublime_plugin
 import re
-
 
 if sublime.version() < '3000':
     _ST3 = False
 else:
     _ST3 = True
-
-# try:
-#     from .mbx_ref_completions import MbxToolsReplaceCommand
-# except ImportError:
-#     from mbx_ref_completions import MbxToolsReplaceCommand
-
-# class MbxToolsReplaceCommand(sublime_plugin.TextCommand):
-#     def run(self, edit, a, b, replacement):
-#         #print("DEBUG: types of a and b are " + repr(type(a)) + " and " + repr(type(b)))
-#         # On ST2, a and b are passed as long, but received as floats
-#         # It's probably a bug. Convert to be safe.
-#         if _ST3:
-#             region = sublime.Region(a, b)
-#         else:
-#             region = sublime.Region(long(a), long(b))
-#         self.view.replace(edit, region, replacement)
 
 class CompleteSnippetNoSpaceCommand(sublime_plugin.TextCommand):
 

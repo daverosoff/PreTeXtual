@@ -1,4 +1,4 @@
-# Copyright 2016 David W. Rosoff
+# Copyright 2016-17 David W. Rosoff
 
 # This file is part of MBXTools, a package for Sublime Text.
 
@@ -29,13 +29,6 @@ try:
     from is_mbx_file import is_mbx_file
 except ImportError:
     from .is_mbx_file import is_mbx_file
-
-# the new syntax format has been added in build 3084
-# _HAS_NEW_SYNTAX = sublime.version() >= "3084"
-# if _HAS_NEW_SYNTAX:
-#     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.sublime-syntax'
-# else:
-#     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.tmLanguage'
 
 MBX_SYNTAX = 'Packages/MBXTools/mbx.sublime-syntax'
 
