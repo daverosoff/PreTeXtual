@@ -1,44 +1,49 @@
 %YAML 1.2
+# todo: incorporate latex snippets (latex-image, m, etc)
+# todo: incorporate block divisions
+# todo: lists and paragraphs
+
 ---
-name: MathBook XML
+name: PreTeXt
 file_extensions:
-  - mbx
-# first_line_match: '^<?xml version="1.0" encoding="UTF-8"?>\s*<!--\s*MBX\s*-->'
-scope: text.xml.mbx
+  - ptx
+  - mbx # legacy
+  # uncomment the next line to apply PTX styling by inline comment
+  # first_line_match: '^<?xml version="1.0" encoding="UTF-8"?\s*<!--\s*MBX\s*-->'
+scope: text.xml.pretext
 variables:
   # This is the full XML Name production, but should not be used where namespaces
   # are possible. Those locations should use a qualified_name.
-  name: '[[:alpha:]:_][[:alnum:]:_.-]*'
+  name: '([[:alpha:]:_][[:alnum:]:_.-]*)'
   # This is the form that allows a namespace prefix (ns:) followed by a local
   # name. The captures are:
   #  1: namespace prefix name
   #  2: namespace prefix colon
   #  3: local tag name
   qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
-  subdivision: '(book|article|part|chapter|(?:sub)*section|exercise(?:s|group)|references)(?=[\s>])'
+  doctype: '(book|article|letter|memo'
+  division: '(part|chapter|(?:sub)*section|exercises|references|appendix)(?=[\s>])'
   # rule out matching e.g. 'booktitle'
-  subdivision_data: '((?:sub)title|introduction|conclusion)'
+  division_data: '((?:sub)title|introduction|conclusion|notation-list|solution-list)'
+  big_deal_list: '(list)'
   list: '(ul|ol|dl)'
   list_item: '(li)'
   paragraphs: '(paragraphs)'
   p: '(p)'
   statement: '(statement)'
-  proof: '(proof)'
   conjecture_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
   definition_like: '(definition)'
   example_like: '(example|question|problem)'
   exercise_like: '(exercise)'
-  remark_like: '(remark|convention|note|observation|warning)'
-  theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
+  remark_like: '(remark|convention|note|observation|warning|insight)'
+  theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity|case|proof)'
   list_example_like: '(list_example_like)'
   project_like: '(project|activity|exploration|task|investigation)'
-  remark: '(remark)'
+  computation_like: '(computation|technology)'
   blockquote: '(blockquote)'
   attribution: '(attribution)'
   contributors: '(contributors)'
   list-of: '(list-of)'
-  solution-list: '(solution-list)'
-  notation-list: '(notation-list)'
   prompt: '(prompt)'
   input: '(input)'
   output: '(output)'
@@ -59,7 +64,7 @@ variables:
   stanza: '(stanza)'
   tex_special_char: '(nbsp|ndash|mdash|ampersand|less|greater|ellipsis|hash|dollar|percent|circumflex|underscore|lbrace|rbrace|lbracket|rbracket|ldblbracket|rdblbracket|langle|rangle|tilde|backslash|asterisk|lq|rq|lsq|rsq|midpoint|swungdash|permille|pilcrow|section-mark|dimension|slash|solidus|ie|eg|etc|circa|tex|latex|trademark|registered|today|timeofday)'
   inline_markup: '(em|alert|q|sq|braces|brackets|dblbrackets|angles|term|foreign|abbr|acro|init|fn)'
-  inline_markup_code: '(c)'
+  inline_code: '(c)'
   booktitle: '(booktitle)'
   url: '(url)'
   xref: '(xref)'
@@ -136,318 +141,188 @@ variables:
 
 contexts:
   main:
-    - match: '(<)({{subdivision}})'
+    - match: '(</?)({{division}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-subdivision
-    # - match: '(<xref\s+ref)\s*(=)\s*"({{qualified_name}})"'
-    - match: '(<)(xref)'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push: ptx-subdivision
+    - match: '(</?)(xref)'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      #   2: entity.other.attribute-name.reference.mbx
-      #   3: punctuation.separator.key-value.xml
-      #   4: entity.other.attribute-value.reference-target.mbx
-      push: mbx-xref
-    - match: '(<)({{conjecture_like}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push: ptx-xref
+    - match: '(</?)({{conjecture_like}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-conjecture-like
-    - match: '(<)({{definition_like}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push: ptx-conjecture-like
+    - match: '(</?)({{definition_like}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-definition-like
-    - match: '(<)({{example_like}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push: ptx-definition-like
+    - match: '(</?)({{example_like}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-example-like
-    - match: '(<)({{exercise_like}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push: ptx-example-like
+    - match: '(</?)({{exercise_like}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-exercise-like
-    - match: '(<)({{remark_like}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push: ptx-exercise-like
+    - match: '(</?)({{remark_like}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-remark-like
-    - match: '(<)({{theorem_like}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push: ptx-remark-like
+    - match: '(</?)({{theorem_like}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
-      push: mbx-theorem-like
-    - match: '(<\?)\s*({{qualified_name}})'
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push: ptx-theorem-like
+    - match: '(<\?)\s*({{name}})'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.localname.xml
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.preprocessor.xml
+        - meta_scope: meta.tag.preprocessor.pretext
         - match: \?>
-          scope: punctuation.definition.tag.end.xml
+          scope: punctuation.definition.tag.end.pretext
           pop: true
         - match: '\s+{{qualified_name}}'
           captures:
-            1: entity.other.attribute-name.namespace.xml
-            2: entity.other.attribute-name.xml punctuation.separator.namespace.xml
-            3: entity.other.attribute-name.localname.xml
-        - include: double-quoted-string
-        - include: single-quoted-string
-    - match: '(<!)(DOCTYPE)(?:\s+({{name}}))?'
-      captures:
-        1: punctuation.definition.tag.begin.xml
-        2: keyword.doctype.xml
-        3: variable.documentroot.xml
-      push:
-        - meta_scope: meta.tag.sgml.doctype.xml
-        - match: \s*(>)
-          captures:
-            1: punctuation.definition.tag.end.xml
-          pop: true
-        - include: internal-subset
-    - match: '<!--'
-      scope: punctuation.definition.comment.xml
-      push:
-        - meta_scope: comment.block.xml
-        - match: '-->'
-          pop: true
+            1: entity.other.attribute-name.namespace.pretext
+            2: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+            3: entity.other.attribute-name.localname.pretext
     - match: '(</?){{qualified_name}}'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: entity.name.tag.namespace.xml
-        3: entity.name.tag.xml punctuation.separator.namespace.xml
-        4: entity.name.tag.localname.xml
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.namespace.pretext
+        3: entity.name.tag.pretext punctuation.separator.namespace.pretext
+        4: entity.name.tag.localname.pretext
       push:
-        - meta_scope: meta.tag.xml
-        - match: /?>
-          scope: punctuation.definition.tag.end.xml
+        - meta_scope: meta.tag.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: tag-stuff
     - match: '(</?)([[:digit:].-][[:alnum:]:_.-]*)'
       captures:
-        1: punctuation.definition.tag.begin.xml
-        2: invalid.illegal.bad-tag-name.xml
+        1: punctuation.definition.tag.begin.pretext
+        2: invalid.illegal.bad-tag-name.pretext
       push:
-        - meta_scope: meta.tag.xml
+        - meta_scope: meta.tag.pretext
         - match: /?>
-          scope: punctuation.definition.tag.end.xml
+          scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: tag-stuff
-    - include: entity
     - match: '<!\[CDATA\['
-      scope: punctuation.definition.string.begin.xml
+      scope: punctuation.definition.string.begin.pretext
       push:
-        - meta_scope: string.unquoted.cdata.xml
+        - meta_scope: string.unquoted.cdata.pretext
         - match: ']]>'
-          scope: punctuation.definition.string.end.xml
+          scope: punctuation.definition.string.end.pretext
           pop: true
+    - include: entity
     - include: should-be-entity
-    # - include: mbx-subdivision
+    - include: comment
+    - include: single-quoted-string
+    - include: double-quoted-string
+  comment:
+    - match: '<!--'
+      scope: punctuation.definition.comment.pretext
+      push:
+        - meta_scope: comment.block.pretext
+        - match: '-->'
+          pop: true
+  entity:
+    - match: '(&)(?:{{name}}|#[0-9]+|#x\h+)(;)'
+      scope: constant.character.entity.pretext
+      captures:
+        1: punctuation.definition.constant.pretext
+        2: punctuation.definition.constant.pretext
   should-be-entity:
     - match: '&'
-      scope: invalid.illegal.bad-ampersand.xml
+      scope: invalid.illegal.bad-ampersand.pretext
     - match: '<'
-      scope: invalid.illegal.missing-entity.xml
+      scope: invalid.illegal.missing-entity.pretext
     - match: '>'
-      scope: invalid.illegal.missing-entity.xml
-  double-quoted-string:
-    - match: '"'
-      scope: punctuation.definition.string.begin.xml
+      scope: invalid.illegal.missing-entity.pretext
+  single-quoted-string:
+    - match: "'"
+      scope: punctuation.definition.string.begin.pretext
       push:
-        - meta_scope: string.quoted.double.xml
-        - match: '"'
-          scope: punctuation.definition.string.end.xml
+        - meta_scope: string.quoted.single.pretext
+        - match: "'"
+          scope: punctuation.definition.string.end.pretext
           pop: true
         - include: entity
         - include: should-be-entity
-  entity:
-    - match: '(&)(?:{{name}}|#[0-9]+|#x\h+)(;)'
-      scope: constant.character.entity.xml
-      captures:
-        1: punctuation.definition.constant.xml
-        2: punctuation.definition.constant.xml
-  internal-subset:
-    - match: \[
-      scope: punctuation.definition.constant.xml
+  double-quoted-string:
+    - match: '"'
+      scope: punctuation.definition.string.begin.pretext
       push:
-        - meta_scope: meta.internalsubset.xml
-        - match: \]
-          pop: true
-        - include: entity-decl
-        - include: element-decl
-        - include: attlist-decl
-        - include: notation-decl
-        - include: parameter-entity
-  entity-decl:
-    - match: '(<!)(ENTITY)\s+(%\s+)?({{name}})(\s+(?:SYSTEM|PUBLIC)\s+)?'
-      captures:
-        1: punctuation.definition.tag.begin.xml
-        2: keyword.entity.xml
-        3: punctuation.definition.entity.xml
-        4: variable.entity.xml
-        5: keyword.entitytype.xml
-      push:
-        - match: '>'
-          scope: punctuation.definition.tag.end.xml
-          pop: true
-        - include: double-quoted-string
-        - include: single-quoted-string
-  element-decl:
-    - match: '(<!)(ELEMENT)\s+({{name}})\s+'
-      captures:
-        1: punctuation.definition.tag.begin.xml
-        2: keyword.element.xml
-        3: variable.element.xml
-      push:
-        - match: '>'
-          scope: punctuation.definition.tag.end.xml
-          pop: true
-        - match: '\b(EMPTY|ANY)\b'
-          scope: constant.other.xml
-        - include: element-parens
-  element-parens:
-    - match: \(
-      scope: punctuation.definition.group.xml
-      push:
-        - match: (\))([*?+])?
-          captures:
-            1: punctuation.definition.group.xml
-            2: keyword.operator.xml
-          pop: true
-        - match: '#PCDATA'
-          scope: constant.other.xml
-        - match: '[*?+]'
-          scope: keyword.operator.xml
-        - match: '[,|]'
-          scope: punctuation.separator.xml
-        - include: element-parens
-  attlist-decl:
-    - match: '(<!)(ATTLIST)\s+({{name}})\s+({{name}})'
-      captures:
-        1: punctuation.definition.tag.begin.xml
-        2: keyword.attlist.xml
-        3: variable.element.xml
-        4: variable.attribute-name.xml
-      push:
-        - match: '>'
-          scope: punctuation.definition.tag.end.xml
-          pop: true
-        - include: double-quoted-string
-        - include: single-quoted-string
-  notation-decl:
-    - match: '(<!)(NOTATION)\s+({{name}})'
-      captures:
-        1: punctuation.definition.tag.begin.xml
-        2: keyword.notation.xml
-        3: variable.notation.xml
-      push:
-        - match: '>'
-          scope: punctuation.definition.tag.end.xml
-          pop: true
-        - include: double-quoted-string
-        - include: single-quoted-string
-  parameter-entity:
-    - match: '(%){{name}}(;)'
-      scope: constant.character.parameter-entity.xml
-      captures:
-        1: punctuation.definition.constant.xml
-        2: punctuation.definition.constant.xml
-  single-quoted-string:
-    - match: "'"
-      scope: punctuation.definition.string.begin.xml
-      push:
-        - meta_scope: string.quoted.single.xml
-        - match: "'"
-          scope: punctuation.definition.string.end.xml
+        - meta_scope: string.quoted.double.pretext
+        - match: '"'
+          scope: punctuation.definition.string.end.pretext
           pop: true
         - include: entity
         - include: should-be-entity
   tag-stuff:
     - match: '(?:\s+|^){{qualified_name}}\s*(=)'
       captures:
-        1: entity.other.attribute-name.namespace.xml
-        2: entity.other.attribute-name.xml punctuation.separator.namespace.xml
-        3: entity.other.attribute-name.localname.xml
-        4: punctuation.separator.key-value.xml
-    # - include: mbx-xmlid
+        1: entity.other.attribute-name.namespace.pretext
+        2: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        3: entity.other.attribute-name.localname.pretext
+        4: punctuation.separator.key-value.pretext
     - include: double-quoted-string
     - include: single-quoted-string
-  mbx-subdivision:
-    - meta_scope: tag.subdivision.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
-      pop: true
-    # - match: '(xml:id)\s*=\*"'
-    #   captures:
-    #     1: entity.other.attribute-name.xmlid.xml.mbx
-    #   push: mbx-xmlid
-    - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-  mbx-xref:
-    - meta_scope: tag.reference.internal.xml.mbx meta.tag.xml
+  ptx-subdivision:
+    - meta_scope: meta.tag.pretext
     - match: '/?>'
-      scope: punctuation.definition.tag.end.xml
-      pop: true
-    - include: single-quoted-string
-    - include: double-quoted-string
-    - include: tag-stuff
-  mbx-conjecture-like:
-    - meta_scope: tag.conjecture-like.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
+      scope: punctuation.definition.tag.end.pretext
       pop: true
     - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-  mbx-definition-like:
-    - meta_scope: tag.definition-like.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
+  ptx-xref:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
       pop: true
     - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-  mbx-example-like:
-    - meta_scope: tag.example-like.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
+  ptx-conjecture-like:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
       pop: true
     - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-  mbx-exercise-like:
-    - meta_scope: tag.exercise-like.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
+  ptx-definition-like:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
       pop: true
     - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-  mbx-remark-like:
-    - meta_scope: tag.remark-like.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
+  ptx-example-like:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
       pop: true
     - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-  mbx-theorem-like:
-    - meta_scope: tag.theorem-like.xml.mbx meta.tag.xml
-    - match: '>'
-      scope: punctuation.definition.tag.end.xml
+  ptx-exercise-like:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
       pop: true
     - include: tag-stuff
-    - include: single-quoted-string
-    - include: double-quoted-string
-    # - match: '"'
-    #   push: double-quoted-string
-    #   pop: true
-  # mbx-xmlid:
-  #   - meta_scope:
-  #   - match: '"'
-  #     pop: true
-  #   -
+  ptx-remark-like:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
+      pop: true
+    - include: tag-stuff
+  ptx-theorem-like:
+    - meta_scope: meta.tag.pretext
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.pretext
+      pop: true
+    - include: tag-stuff
