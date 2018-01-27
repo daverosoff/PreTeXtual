@@ -29,32 +29,21 @@ if sys.version_info < (3, 0):
 else:
     strbase = str
 
-def get_mbx_extensions():
+def get_pretext_extensions():
     # view = sublime.active_window().active_view()
     # You can change settings in Packages/User/MBXTools
-    # Default is that only .mbx files are recognized by extension
-    # so other .xml files will be ignored unless they carry
-    # the <!-- MBX --> magic comment in line 1
-    mbx_file_exts = get_setting('mbx_file_exts', ['.mbx'])
+    # Default is that only .mbx, .ptx files are recognized by extension
+    # so other .xml files will be ignored
+    pretext_file_exts = get_setting('pretext_file_exts', ['.ptx', '.mbx'])
 
-    # return ['mbx']
-    return [s.lower() for s in set(mbx_file_exts)]
+    return [s.lower() for s in set(pretext_file_exts)]
 
-def is_mbx_file(file_name):
+def is_pretext_file(file_name):
     if not isinstance(file_name, strbase):
         raise TypeError('file_name must be a string')
 
-    mbx_file_exts = get_mbx_extensions()
-    for ext in mbx_file_exts:
+    pretext_file_exts = get_pretext_extensions()
+    for ext in pretext_file_exts:
         if file_name.lower().endswith(ext):
             return True
-    view = sublime.active_window().active_view()
-    first_line = sublime.Region(0,view.line(0).b)
-    line = view.substr(first_line)
-    try:
-        mbx_ident = re.compile("<!--\s*MBX\s*-->")
-    except TypeError:
-        print("MEH!")
-    if mbx_ident.search(line):
-        return True
     return False
