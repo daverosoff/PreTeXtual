@@ -3,6 +3,9 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/MBXTools
 
+* Bring ref snippets in line with autoname deprecation
+* Add new snippets for new constants/entities
 * Fix snippets so they correctly handle <nonempty>tags</nonempty>
 * Text command to move to next subdiv/block lacking xml:id
-* adapt subdiv snippets for wrapping selection
+* adapt subdiv snippets for wrapping selection; also place cursor in <p> tag
+  for modification to e.g. <introduction>
