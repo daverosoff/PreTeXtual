@@ -227,7 +227,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         # Only trigger within MBX
         # Note using score_selector rather than match_selector
         if not view.score_selector(point,
-                "text.xml.mbx"):
+                "text.xml.pretext"):
             return
 
         try:
@@ -276,7 +276,7 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         print (point)
         # Only trigger within MBX
         # Note using score_selector rather than match_selector
-        if not view.score_selector(point, "text.xml.mbx"):
+        if not view.score_selector(point, "text.xml.pretext"):
             return
 
         if insert_char:

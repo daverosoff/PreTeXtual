@@ -54,7 +54,7 @@ class PretextSyntaxListener(sublime_plugin.EventListener):
         if is_mbx_file(file_name):
             view.set_syntax_file(MBX_SYNTAX)
 
-        if view.score_selector(0, "text.xml.mbx"):
+        if view.score_selector(0, "text.xml.pretext"):
             return
 
         # if not get_setting('latextools_set_syntax', True):
