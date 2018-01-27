@@ -34,12 +34,12 @@
                                 "command": "open_file"
                             },
                             {
-                                "caption": "Set MBX Root File",
-                                "command": "set_mbx_root_file"
+                                "caption": "Set PreTeXt Root File",
+                                "command": "set_pretext_root_file"
                             },
                             {
-                                "caption": "Set MBX File Extensions",
-                                "command": "set_mbx_exts"
+                                "caption": "Set PreTeXt File Extensions",
+                                "command": "set_pretext_exts"
                             },
                             {
                                 "caption": "-"
