@@ -25,6 +25,18 @@ variables:
 
 contexts:
   main:
+    - match: '(<)(xref)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: markup.reference.xref.pretext meta.tag.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(<\?)(xml)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
