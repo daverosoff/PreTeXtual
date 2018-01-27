@@ -216,7 +216,7 @@ class PretextRefCompletions(sublime_plugin.EventListener):
 
 ### Ref completions using the quick panel
 
-class MbxRefCommand(sublime_plugin.TextCommand):
+class PretextRefCommand(sublime_plugin.TextCommand):
 
     # Remember that this gets passed an edit object
     def run(self, edit):
@@ -224,7 +224,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         view = self.view
         point = view.sel()[0].b
         print (point)
-        # Only trigger within MBX
+        # Only trigger within PreTeXt
         # Note using score_selector rather than match_selector
         if not view.score_selector(point,
                 "text.xml.pretext"):
@@ -245,7 +245,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
 
         # Note we now generate refs on the fly. Less copying of vectors! Win!
         def on_done(i):
-            print ("mbx_ref_completion called with index %d" % (i,))
+            print ("pretext_ref_completion called with index %d" % (i,))
 
             # Allow user to cancel
             if i<0:
@@ -257,7 +257,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
 
             # Replace ref expression with reference and possibly post_snippet
             # The "latex_tools_replace" command is defined in latex_ref_cite_completions.py
-            view.run_command("mbx_tools_replace", {"a": new_point_a, "b": new_point_b, "replacement": ref})
+            view.run_command("pretext_tools_replace", {"a": new_point_a, "b": new_point_b, "replacement": ref})
             # Unselect the replaced region and leave the caret at the end
             caret = view.sel()[0].b
             view.sel().subtract(view.sel()[0])
@@ -266,7 +266,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         print(repr(completions))
         view.window().show_quick_panel(completions, on_done)
 
-class MbxRefCiteCommand(sublime_plugin.TextCommand):
+class PretextRefCiteCommand(sublime_plugin.TextCommand):
 
     # Remember that this gets passed an edit object
     def run(self, edit, insert_char=""):
@@ -274,7 +274,7 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         view = self.view
         point = view.sel()[0].b
         print (point)
-        # Only trigger within MBX
+        # Only trigger within PreTeXt
         # Note using score_selector rather than match_selector
         if not view.score_selector(point, "text.xml.pretext"):
             return
@@ -303,7 +303,7 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         if re.match(REF_REGEX, line):
             if do_ref:
                 print ("Dispatching ref")
-                view.run_command("mbx_ref")
+                view.run_command("pretext_ref")
             else:
                 pass # Don't do anything if we match ref completion but we turned it off
         elif re.search(COMPLETED_REF_REGEX, line):
