@@ -1,0 +1,251 @@
+%YAML 1.2
+---
+name: PreTeXt
+file_extensions:
+  - ptx
+  # legacy
+  - mbx
+first_line_match: |-
+    (?x)
+    ^(?:
+        <\?xml\s
+     |  \s*<([\w-]+):Envelope\s+xmlns:\1\s*=\s*"http://schemas.xmlsoap.org/soap/envelope/"\s*>
+     )
+scope: text.xml.pretext
+variables:
+  # This is the full XML Name production, but should not be used where namespaces
+  # are possible. Those locations should use a qualified_name.
+  name: '[[:alpha:]:_][[:alnum:]:_.-]*'
+  # This is the form that allows a namespace prefix (ns:) followed by a local
+  # name. The captures are:
+  #  1: namespace prefix name
+  #  2: namespace prefix colon
+  #  3: local tag name
+  qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
+
+contexts:
+  main:
+    - match: '(<\?)(xml)(?=\s)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.preprocessor.pretext
+        - match: \?>
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '\s+{{qualified_name}}(=)?'
+          captures:
+            1: entity.other.attribute-name.namespace.pretext
+            2: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+            3: entity.other.attribute-name.localname.pretext
+            4: punctuation.separator.key-value.pretext
+        - include: double-quoted-string
+        - include: single-quoted-string
+    - match: '(<!)(DOCTYPE)(?:\s+({{name}}))?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: keyword.doctype.pretext
+        3: variable.documentroot.pretext
+      push:
+        - meta_scope: meta.tag.sgml.doctype.pretext
+        - match: \s*(>)
+          captures:
+            1: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: internal-subset
+    - include: comment
+    - match: '(</?){{qualified_name}}([^/>\s]*)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.namespace.pretext
+        3: entity.name.tag.pretext punctuation.separator.namespace.pretext
+        4: entity.name.tag.localname.pretext
+        5: invalid.illegal.bad-tag-name.pretext
+      push:
+        - meta_scope: meta.tag.pretext
+        - match: /?>
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: tag-stuff
+    - match: '(</?)([[:digit:].-][[:alnum:]:_.-]*)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: invalid.illegal.bad-tag-name.pretext
+      push:
+        - meta_scope: meta.tag.pretext
+        - match: /?>
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: tag-stuff
+    - match: '(<\?)(xml-stylesheet|xml-model)(?=\s|\?>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.preprocessor.pretext
+        - match: \?>
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: tag-stuff
+    - match: '(<\?)((?![xX][mM][lL]){{qualified_name}})(?=\s|\?>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.preprocessor.pretext
+        - match: \?>
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+    - include: entity
+    - match: '<!\[CDATA\['
+      scope: punctuation.definition.string.begin.pretext
+      push:
+        - meta_scope: string.unquoted.cdata.pretext
+        - match: ']]>'
+          scope: punctuation.definition.string.end.pretext
+          pop: true
+    - match: ']]>'
+      scope: invalid.illegal.missing-entity.pretext
+    - include: should-be-entity
+  should-be-entity:
+    - match: '&'
+      scope: invalid.illegal.bad-ampersand.pretext
+    - match: '<'
+      scope: invalid.illegal.missing-entity.pretext
+  double-quoted-string:
+    - match: '"'
+      scope: punctuation.definition.string.begin.pretext
+      push:
+        - meta_scope: string.quoted.double.pretext
+        - match: '"'
+          scope: punctuation.definition.string.end.pretext
+          pop: true
+        - include: entity
+        - include: should-be-entity
+  entity:
+    - match: '(&)(?:{{name}}|#[0-9]+|#x\h+)(;)'
+      scope: constant.character.entity.pretext
+      captures:
+        1: punctuation.definition.constant.pretext
+        2: punctuation.definition.constant.pretext
+  comment:
+    - match: '<!--'
+      scope: punctuation.definition.comment.begin.pretext
+      push:
+        - meta_scope: comment.block.pretext
+        - match: '-->'
+          scope: punctuation.definition.comment.end.pretext
+          pop: true
+        - match: '-{2,}'
+          scope: invalid.illegal.double-hyphen-within-comment.pretext
+  internal-subset:
+    - match: \[
+      scope: punctuation.definition.constant.pretext
+      push:
+        - meta_scope: meta.internalsubset.pretext
+        - match: \]
+          pop: true
+        - include: comment
+        - include: entity-decl
+        - include: element-decl
+        - include: attlist-decl
+        - include: notation-decl
+        - include: parameter-entity
+  entity-decl:
+    - match: '(<!)(ENTITY)\s+(%\s+)?({{name}})(\s+(?:SYSTEM|PUBLIC)\s+)?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: keyword.entity.pretext
+        3: punctuation.definition.entity.pretext
+        4: variable.entity.pretext
+        5: keyword.entitytype.pretext
+      push:
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: double-quoted-string
+        - include: single-quoted-string
+  element-decl:
+    - match: '(<!)(ELEMENT)\s+({{name}})\s+'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: keyword.element.pretext
+        3: variable.element.pretext
+      push:
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '\b(EMPTY|ANY)\b'
+          scope: constant.other.pretext
+        - include: element-parens
+  element-parens:
+    - match: \(
+      scope: punctuation.definition.group.pretext
+      push:
+        - match: (\))([*?+])?
+          captures:
+            1: punctuation.definition.group.pretext
+            2: keyword.operator.pretext
+          pop: true
+        - match: '#PCDATA'
+          scope: constant.other.pretext
+        - match: '[*?+]'
+          scope: keyword.operator.pretext
+        - match: '[,|]'
+          scope: punctuation.separator.pretext
+        - include: element-parens
+  attlist-decl:
+    - match: '(<!)(ATTLIST)\s+({{name}})\s+({{name}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: keyword.attlist.pretext
+        3: variable.element.pretext
+        4: variable.attribute-name.pretext
+      push:
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: double-quoted-string
+        - include: single-quoted-string
+  notation-decl:
+    - match: '(<!)(NOTATION)\s+({{name}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: keyword.notation.pretext
+        3: variable.notation.pretext
+      push:
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: double-quoted-string
+        - include: single-quoted-string
+  parameter-entity:
+    - match: '(%){{name}}(;)'
+      scope: constant.character.parameter-entity.pretext
+      captures:
+        1: punctuation.definition.constant.pretext
+        2: punctuation.definition.constant.pretext
+  single-quoted-string:
+    - match: "'"
+      scope: punctuation.definition.string.begin.pretext
+      push:
+        - meta_scope: string.quoted.single.pretext
+        - match: "'"
+          scope: punctuation.definition.string.end.pretext
+          pop: true
+        - include: entity
+        - include: should-be-entity
+  tag-stuff:
+    - match: '(?:\s+|^){{qualified_name}}\s*(=)'
+      captures:
+        1: entity.other.attribute-name.namespace.pretext
+        2: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        3: entity.other.attribute-name.localname.pretext
+        4: punctuation.separator.key-value.pretext
+    - match: '(?:\s+|^)([[:alnum:]:_.-]+)\s*(=)'
+      captures:
+        1: invalid.illegal.bad-attribute-name.pretext
+        2: punctuation.separator.key-value.pretext
+    - include: double-quoted-string
+    - include: single-quoted-string
