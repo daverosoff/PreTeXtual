@@ -26,9 +26,9 @@ import sublime_plugin
 #     from .latextools_utils.is_tex_file import is_tex_file
 
 try:
-    from is_mbx_file import is_mbx_file
+    from is_pretext_file import is_pretext_file
 except ImportError:
-    from .is_mbx_file import is_mbx_file
+    from .is_pretext_file import is_pretext_file
 
 # the new syntax format has been added in build 3084
 # _HAS_NEW_SYNTAX = sublime.version() >= "3084"
@@ -37,7 +37,7 @@ except ImportError:
 # else:
 #     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.tmLanguage'
 
-MBX_SYNTAX = 'Packages/MBXTools/PreTeXt.sublime-syntax'
+PRETEXT_SYNTAX = 'Packages/MBXTools/PreTeXt.sublime-syntax'
 
 class PretextSyntaxListener(sublime_plugin.EventListener):
     def on_load(self, view):
@@ -51,8 +51,8 @@ class PretextSyntaxListener(sublime_plugin.EventListener):
             return
 
         file_name = view.file_name()
-        if is_mbx_file(file_name):
-            view.set_syntax_file(MBX_SYNTAX)
+        if is_pretext_file(file_name):
+            view.set_syntax_file(PRETEXT_SYNTAX)
 
         if view.score_selector(0, "text.xml.pretext"):
             return

@@ -8,22 +8,6 @@ if sublime.version() < '3000':
 else:
     _ST3 = True
 
-# try:
-#     from .mbx_ref_completions import MbxToolsReplaceCommand
-# except ImportError:
-#     from mbx_ref_completions import MbxToolsReplaceCommand
-
-# class MbxToolsReplaceCommand(sublime_plugin.TextCommand):
-#     def run(self, edit, a, b, replacement):
-#         #print("DEBUG: types of a and b are " + repr(type(a)) + " and " + repr(type(b)))
-#         # On ST2, a and b are passed as long, but received as floats
-#         # It's probably a bug. Convert to be safe.
-#         if _ST3:
-#             region = sublime.Region(a, b)
-#         else:
-#             region = sublime.Region(long(a), long(b))
-#         self.view.replace(edit, region, replacement)
-
 class CompleteSnippetNoSpaceCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):

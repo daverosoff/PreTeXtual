@@ -38,9 +38,9 @@ class SetPretextRootFileCommand(sublime_plugin.WindowCommand):
         else:
             current_root = get_setting('pretext_root_file')
             if current_root:
-                window.show_input_panel("Absolute path to root MBX file:",
+                window.show_input_panel("Absolute path to root PreTeXt file:",
                     current_root, on_done, None, None)
             else:
-                window.show_input_panel("Absolute path to root MBX file:",
+                window.show_input_panel("Absolute path to root PreTeXt file:",
                     "", on_done, None, None)
 
