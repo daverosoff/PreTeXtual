@@ -1,4 +1,4 @@
-Copyright 2016-18 David W. Rosoff
+Copyright 2016-2018-18 David W. Rosoff
 
 This file is part of MBXTools, a package for Sublime Text.
 
