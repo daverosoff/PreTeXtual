@@ -20,37 +20,37 @@ along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
 [
     {   "keys": ["ctrl+l","ctrl+l"],
         "context":  [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}],
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"}],
         "command": "expand_selection", "args": {"to": "line"} },
 
     {
         "keys": ["ctrl+l", "ctrl+space"],
         "context": [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"}
         ],
-        "command": "mbx_ref_cite"
+        "command": "pretext_ref_cite"
     },
     {
         "keys": ["ctrl+l", "x"],
         "context": [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"}
         ],
-        "command": "mbx_ref_cite"
+        "command": "pretext_ref_cite"
     },
     {   "keys": ["\""],
         "context":  [
-            {"key": "setting.disable_mbx_ref_auto_trigger", "operator": "not_equal", "operand": true},
-            {"key": "selector", "operator": "equal", "operand": "tag.reference.internal.xml.mbx"},
+            {"key": "setting.disable_pretext_ref_auto_trigger", "operator": "not_equal", "operand": true},
+            {"key": "selector", "operator": "equal", "operand": "tag.reference.internal.xml.pretext"},
             {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true},
             {"key": "preceding_text", "operator": "regex_contains",
                 "operand": "<\\s*xref\\s+ref\\s*=\\s*", "match_all": true}
         ],
-        "command": "mbx_ref_cite", "args": {"insert_char": "\""}
+        "command": "pretext_ref_cite", "args": {"insert_char": "\""}
     },
     {
         "keys": ["ctrl+alt+."],
         "context": [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"},
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"},
             {"key": "selector", "operator": "not_equal", "operand": "string"},
             {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true}
         ],
