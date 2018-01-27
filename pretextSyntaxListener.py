@@ -37,9 +37,9 @@ except ImportError:
 # else:
 #     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.tmLanguage'
 
-MBX_SYNTAX = 'Packages/MBXTools/mbx.sublime-syntax'
+MBX_SYNTAX = 'Packages/MBXTools/PreTeXt.sublime-syntax'
 
-class MbxSyntaxListener(sublime_plugin.EventListener):
+class PretextSyntaxListener(sublime_plugin.EventListener):
     def on_load(self, view):
         self.detect_and_apply_syntax(view)
 
