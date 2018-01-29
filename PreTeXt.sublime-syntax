@@ -22,9 +22,39 @@ variables:
   #  2: namespace prefix colon
   #  3: local tag name
   qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
-
+  axiom_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
+  definition_like: '(definition)'
+  division: '(book|article|part|chapter|(?:sub)*section)'
+  example_like: '(example|question|problem)'
+  exercise_like: '(exercise)'
+  remark_like: '(remark|convention|note|observation|warning|insight)'
+  project_like: '(project|activity|exploration|investigation|task)'
+  theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
 contexts:
   main:
+    - match: '(<)({{axiom_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext
+        - match: '(>)'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '<{{axiom-like}}'
+      push:
+        - meta_scope: markup.other.axiom-like.pretext
+        - match: '</{{axiom-like'
+          pop: true
+    - match: '(<)({{division}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: markup.other.division.pretext markup.heading meta.tag.pretext
     - match: '(<)(xref)'
       captures:
         1: punctuation.definition.tag.begin.pretext
