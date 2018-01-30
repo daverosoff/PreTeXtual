@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-(<xref ref="$1" autoname="${2:yes}" />)
+(<xref ref="$1" text="${2:type-global}" />)
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
     <tabTrigger>refpa</tabTrigger>
