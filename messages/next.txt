@@ -13,12 +13,13 @@ Release notes:
 
     * Package name will change when this version is bumped to 0.5.0
     * Discontinue support for first-line <!--MBX--> comment file recognition
-    * Simplified syntax and updated scopes to match current ST scope
-      naming recommendations (https://www.sublimetext.com/docs/3/scope_naming.html)
-    * Change many names to PreTeXt (but the rest will wait for the next version)
+    * Simplified syntax and updated scopes to match current ST scope naming
+      recommendations (https://www.sublimetext.com/docs/3/scope_naming.html)
+    * Change many names to PreTeXt (but the rest, including a package rename,
+      will wait for the official version)
     * Change some snippets to reflect extensive changes/deprecations in schema
 
-Known issues (none of these have been fixed from 0.4.5):
+Known issues from 0.4.5 (none fixed in this release):
 
     * Mirrored title text in snippet xml:id does not always give
       completely satisfactory results (e.g., XML tags inside)
