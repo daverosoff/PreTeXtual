@@ -2,7 +2,7 @@
     <content><![CDATA[
 <chapter xml:id="chapter-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
     <title>$1</title>
-    <p>$2</p>
+    $0
 </chapter>
 ]]>
 </content>
