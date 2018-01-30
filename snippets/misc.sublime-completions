@@ -1,5 +1,5 @@
 {
-    "scope": "meta.tag.xml",
+    "scope": "meta.tag.pretext",
     "completions":
     [
         { "trigger": "x\txml:id", "contents": "xml:id=\"$1\"$0"}

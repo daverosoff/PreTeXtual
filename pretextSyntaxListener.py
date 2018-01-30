@@ -1,4 +1,4 @@
-# Copyright 2016-17 David W. Rosoff
+# Copyright 2016-2018 David W. Rosoff
 
 # This file is part of MBXTools, a package for Sublime Text.
 
@@ -26,13 +26,20 @@ import sublime_plugin
 #     from .latextools_utils.is_tex_file import is_tex_file
 
 try:
-    from is_mbx_file import is_mbx_file
+    from is_pretext_file import is_pretext_file
 except ImportError:
-    from .is_mbx_file import is_mbx_file
+    from .is_pretext_file import is_pretext_file
 
-MBX_SYNTAX = 'Packages/MBXTools/mbx.sublime-syntax'
+# the new syntax format has been added in build 3084
+# _HAS_NEW_SYNTAX = sublime.version() >= "3084"
+# if _HAS_NEW_SYNTAX:
+#     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.sublime-syntax'
+# else:
+#     LATEX_SYNTAX = 'Packages/LaTeX/LaTeX.tmLanguage'
 
-class MbxSyntaxListener(sublime_plugin.EventListener):
+PRETEXT_SYNTAX = 'Packages/MBXTools/PreTeXt.sublime-syntax'
+
+class PretextSyntaxListener(sublime_plugin.EventListener):
     def on_load(self, view):
         self.detect_and_apply_syntax(view)
 
@@ -44,10 +51,10 @@ class MbxSyntaxListener(sublime_plugin.EventListener):
             return
 
         file_name = view.file_name()
-        if is_mbx_file(file_name):
-            view.set_syntax_file(MBX_SYNTAX)
+        if is_pretext_file(file_name):
+            view.set_syntax_file(PRETEXT_SYNTAX)
 
-        if view.score_selector(0, "text.xml.mbx"):
+        if view.score_selector(0, "text.xml.pretext"):
             return
 
         # if not get_setting('latextools_set_syntax', True):

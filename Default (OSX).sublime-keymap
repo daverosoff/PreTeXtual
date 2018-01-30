@@ -1,38 +1,57 @@
+/*
+Mathbook XML Package keymap for OS X
+Copyright 2016-2018 David W. Rosoff
+
+This file is part of MBXTools, a package for Sublime Text.
+
+MBXTools is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MBXTools is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MBXTools.  If not, see <http://www.gnu.org/licenses/>.
+*/
 [
     {   "keys": ["super+l","super+l"],
         "context":  [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}],
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"}],
         "command": "expand_selection", "args": {"to": "line"} },
 
     {
         "keys": ["super+l", "super+space"],
         "context": [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"}
         ],
-        "command": "mbx_ref_cite"
+        "command": "pretext_ref_cite"
     },
     {
         "keys": ["super+l", "x"],
         "context": [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"}
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"}
         ],
-        "command": "mbx_ref_cite"
+        "command": "pretext_ref_cite"
     },
     {
         "keys": ["\""],
         "context":  [
-            {"key": "setting.disable_mbx_ref_auto_trigger", "operator": "not_equal", "operand": true},
-            {"key": "selector", "operator": "equal", "operand": "tag.reference.internal.xml.mbx"},
+            {"key": "setting.disable_pretext_ref_auto_trigger", "operator": "not_equal", "operand": true},
+            {"key": "selector", "operator": "equal", "operand": "tag.reference.internal.xml.pretext"},
             {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true},
             {"key": "preceding_text", "operator": "regex_contains",
                 "operand": "<\\s*xref\\s+ref\\s*=\\s*", "match_all": true}
         ],
-        "command": "mbx_ref_cite", "args": {"insert_char": "\""}
+        "command": "pretext_ref_cite", "args": {"insert_char": "\""}
     },
     {
         "keys": ["ctrl+alt+."],
         "context": [
-            {"key": "selector", "operator": "equal", "operand": "text.xml.mbx"},
+            {"key": "selector", "operator": "equal", "operand": "text.xml.pretext"},
             {"key": "selector", "operator": "not_equal", "operand": "string"},
             {"key": "selection_empty", "operator": "equal", "operand": true, "match_all": true}
         ],

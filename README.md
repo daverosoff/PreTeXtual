@@ -1,8 +1,8 @@
-# MBXTools: a Sublime Text package for MathBook XML
+# MBXTools: a Sublime Text package for PreTeXt
 
-MBXTools is a Sublime Text package designed to assist authors using
-[MathBook XML](https://github.com/rbeezer/mathbook). It is very experimental
-and may behave unexpectedly.
+MBXTools is a Sublime Text 3 package designed to assist authors using
+[PreTeXt](https://github.com/rbeezer/mathbook) (formerly known as MathBook
+XML). It is very experimental and may behave unexpectedly.
 
 The package is inspired by the excellent
 [LaTeXTools](https://github.com/SublimeText/LaTeXTools) package, which I have
@@ -11,16 +11,23 @@ LaTeXTools codebase in order to implement the features I thought would be most
 useful to MBX authors. Please let me know of any bugs you find or any features
 you would like to include.
 
+Support for Sublime Text 2 is limited and there are no plans to extend it.
+
 ### Installation
 
-It is recommended to install MBXTools via [Package
-Control](https://packagecontrol.io). If you have not installed Package Control
-yet, you should do that first (and restart Sublime Text afterward).
+*Note: We assume you are familiar with running Sublime Text commands via the
+Command Palette. To bring up the palette, hit <kbd>Ctrl+p</kbd>
+(<kbd>Cmd+p</kbd> on OS X). Then start typing the name of the command you want
+to filter the list of results.*
 
-After Package Control is installed, use the `Install Package` command to search
-for the MBXTools package, and select it from the Quick Panel to install. This
-method of installation allows Package Control to automatically update your
-installation and show you appropriate release notes.
+It is recommended to install MBXTools via Package Control. If you have not
+installed Package Control yet, you should
+[do that first](https://packagecontrol.io) (and restart Sublime Text afterward).
+
+After Package Control is installed, use the `Install Package` command to
+search for the MBXTools package, and select it from the Quick Panel to
+install. This method of installation allows Package Control to automatically
+update your installation and show you appropriate release notes.
 
 You may also install MBXTools via `git`. Change directories into your
 `Packages` folder. To find the `Packages` folder, select Browse Packages from
@@ -45,33 +52,33 @@ like this.
 
 ### Usage
 
-You can activate the package features by enabling the MathBook XML syntax. The
-syntax definition looks for `.mbx` file extensions, which most of us don't use
-(yet?). If your MathBook XML files end with `.xml`, you have several choices.
+You can activate the package features by enabling the PreTeXt syntax. The
+syntax definition looks for `.ptx` or the legacy `.mbx` file extension. If
+your MathBook XML files end with `.xml` (or something else), you have several
+choices.
 
-1. Use the Preferences menu or the Command Palette to run the command
-   `Set MBX File Extensions`, and use the input panel to add `.xml` to the
-   comma-separated list. Sublime will look for a project settings file first,
-   then update user preferences if it doesn't find one. If you have multiple
-   MBX projects, or if you edit XML other than MBX, it is best to start using
-   projects so that you can have project-specific settings.
-
-2. Add a comment `<!-- MBX -->` to the first line of each file (after the XML
-   declaration).
+1. Use the Preferences menu or the Command Palette to run the command `Set
+   PreTeXt File Extensions`, and use the input panel to add `.xml` or other
+   extensions of your choice to the comma-separated list. Sublime will look
+   for a project settings file first, then update user preferences if it
+   doesn't find one. If you have multiple PreTeXt projects, or if you edit XML
+   other than PreTeXt, it is best to start using Sublime Text projects so that
+   you can have project-specific settings.
 
 3. Enable the syntax manually using the command palette. To enable it
-   manually, open an MathBook XML file and press <kbd>Ctrl+Shift+P</kbd>
-   (<kbd>Cmd+Shift+P</kbd> on OS X) and type `mbx`. Select
-   `Set Syntax: MathBook XML` from the list of options.
+   manually, open a PreTeXt file and press <kbd>Ctrl+Shift+P</kbd>
+   (<kbd>Cmd+Shift+P</kbd> on OS X) and type `ptx`. Select `Set Syntax:
+   PreTeXt` from the list of options.
 
-You should see the text `MathBook XML` in the lower right corner if you have
-the status bar visible (command palette: Toggle Status Bar).
+You should see the text `PreTeXt` in the lower right corner if you have
+the status bar visible (command palette: Toggle Status Bar). Please excuse
+the image which still shows the former name `MathBook XML`.
 
 ![Image of status bar showing MathBook XML active](media/mbx-syntax-active.png)
 
 There are only a few features implemented so far.
 
-1. If you have some subdivisions (with `xml:id`) in your MathBook XML file, hit
+1. If you have some subdivisions (with `xml:id`) in your PreTeXt file, hit
    <kbd>Ctrl+R</kbd> (<kbd>Cmd+R</kbd> on OS X) to run the Goto Symbol command.
    You should see a panel showing all your available sections. Select one to
    jump to it in the active view. This tool does not index subdivisions without
@@ -79,11 +86,10 @@ There are only a few features implemented so far.
 
 ![Image of quick panel showing sections](media/quickpanel-sections.png)
 
-2. Open your entire source folder as a project and use
-   Goto Symbol in Project (<kbd>Ctrl+Shift+R</kbd>/<kbd>Cmd+Shift+R</kbd>) to
-   see all the `xml:id` for all the MathBook XML files in the project (must use
-   either `.mbx` extension or `&lt;!-- MBX --&gt;` comment in first line of
-   each file for indexing to succeed).
+2. Open your entire source folder as a project and use Goto Symbol in Project
+   (<kbd>Ctrl+Shift+R</kbd>/<kbd>Cmd+Shift+R</kbd>) to see all the `xml:id`
+   for all the MathBook XML files in the project (must use `.mbx` or `.ptx`
+   extension for indexing to succeed).
 
 3. If you have been using `xml:id` to label your stuff, try typing `<xref
    ref="` (the beginning of a cross-reference). Sublime Text should show you a
@@ -96,9 +102,9 @@ There are only a few features implemented so far.
 
 ![Image of quick panel showing xml id values](media/quickpanel-xrefs.png)
 
-4. If you set an MBX root file, then ref completion as described above will
+4. If you set a PreTeXt root file, then ref completion as described above will
    recursively search for `xml:id` through all your `xi:includes` starting with
-   the indicated root file. Run the command "Set MBX Root File" from the
+   the indicated root file. Run the command "Set PreTeXt Root File" from the
    Preferences menu or the Command Palette. Be sure to use an absolute path
    name for the value of the setting.
 
@@ -110,4 +116,3 @@ There are only a few features implemented so far.
 ### Known issues
 
 * The `ref` snippet does not bring up the quick panel. Should it?
-* Nothing has been tested on OS X or Linux.

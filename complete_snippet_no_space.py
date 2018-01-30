@@ -32,9 +32,10 @@ class CompleteSnippetNoSpaceCommand(sublime_plugin.TextCommand):
             "ell": "<ellipsis />",
             "md": "<mdash />",
             "nd": "<ndash />",
-            "pct": "<percent />"
+            "pct": "<percent />",
+            "ptx": "<pretext />",
         }
-        print("YES!!")
+        # print("YES!!")
         view = self.view
         sels = view.sel()
         for s in sels:
@@ -50,7 +51,7 @@ class CompleteSnippetNoSpaceCommand(sublime_plugin.TextCommand):
                     new_a = new_b - len(k)
                     # new_a = point
                     region = sublime.Region(new_a, new_b)
-                    print("YES!")
+                    # print("YES!")
                     view.replace(edit, region, v)
                     return
 

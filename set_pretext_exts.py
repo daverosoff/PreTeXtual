@@ -24,7 +24,7 @@ try:
 except:
     from get_setting import get_setting
 
-class SetMbxExtsCommand(sublime_plugin.WindowCommand):
+class SetPretextExtsCommand(sublime_plugin.WindowCommand):
 
     def run(self, **kwargs):
         window = self.window
@@ -47,15 +47,15 @@ class SetMbxExtsCommand(sublime_plugin.WindowCommand):
             if window.project_file_name():
                 data = window.project_data()
                 if 'settings' not in data:
-                    data['settings'] = {'mbx_file_exts': exts_list}
+                    data['settings'] = {'pretext_file_exts': exts_list}
                 else:
-                    data['settings'].update({'mbx_file_exts': exts_list})
+                    data['settings'].update({'pretext_file_exts': exts_list})
                 window.set_project_data(data)
             else: # fall back on user prefs
                 plugin_settings = sublime.load_settings('Preferences.sublime-settings')
-                plugin_settings.set('mbx_file_exts', exts_list)
+                plugin_settings.set('pretext_file_exts', exts_list)
                 sublime.save_settings('Preferences.sublime-settings')
-            sublime.status_message('MBX file extensions: ' + exts_pretty)
+            sublime.status_message('PreTeXt file extensions: ' + exts_pretty)
 
         def on_done(exts):
             set_user_prefs(str_to_li(exts))
@@ -63,7 +63,7 @@ class SetMbxExtsCommand(sublime_plugin.WindowCommand):
         if 'exts' in kwargs:
             set_user_prefs(kwargs['exts'])
         else:
-            current_exts = get_setting('mbx_file_exts')
+            current_exts = get_setting('pretext_file_exts')
             if current_exts:
                 window.show_input_panel("Extensions for MBXTools to recognize:",
                     li_to_str(current_exts), on_done, None, None)

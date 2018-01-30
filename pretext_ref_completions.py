@@ -1,4 +1,4 @@
-# Copyright 2016-17 David W. Rosoff
+# Copyright 2016-2018 David W. Rosoff
 
 # This file is part of MBXTools, a package for Sublime Text.
 
@@ -19,16 +19,9 @@ from __future__ import print_function
 import sublime, sublime_plugin
 
 if sublime.version() < '3000':
-    # we are on ST2 and Python 2.X
     _ST3 = False
-    # import getTeXRoot
-    # from latextools_utils.is_tex_file import is_tex_file, get_tex_extensions
-    # from latextools_utils import get_setting
 else:
     _ST3 = True
-    # from . import getTeXRoot
-    # from .latextools_utils.is_tex_file import is_tex_file, get_tex_extensions
-    # from .latextools_utils import get_setting
 
 import os, os.path, sys
 import re
@@ -40,45 +33,14 @@ else:
     strbase = str
 
 try:
-    from is_mbx_file import is_mbx_file
+    from is_pretext_file import is_pretext_file
 except ImportError:
-    from .is_mbx_file import is_mbx_file
+    from .is_pretext_file import is_pretext_file
 
 try:
     from get_setting import get_setting
 except ImportError:
     from .get_setting import get_setting
-
-# def get_setting(setting, default=None):
-#     global_settings = sublime.load_settings('MBXTools.sublime-settings')
-
-#     try:
-#         result = sublime.active_window().active_view().settings().get(setting)
-#     except AttributeError:
-#         # no view defined
-#         result = None
-
-#     if result is None:
-#         result = global_settings.get(setting, default)
-
-#     if result is None:
-#         result = default
-
-#     # if isinstance(result, sublime.Settings) or isinstance(result, dict):
-#     #     result = SettingsWrapper(setting, result)
-
-#     return result
-
-
-# def is_mbx_file(file_name):
-#     if not isinstance(file_name, strbase):
-#         raise TypeError('file_name must be a string')
-
-#     mbx_file_exts = ['.mbx', '.xml']
-#     for ext in mbx_file_exts:
-#         if file_name.lower().endswith(ext):
-#             return True
-#     return False
 
 class UnrecognizedRefFormatError(Exception): pass
 
@@ -99,19 +61,17 @@ def match(rex, str):
     else:
         return None
 
-
-# recursively search all linked mbx files to find all
+# recursively search all linked files to find all
 # included <... xml:id=""> attrs in the document and extract
 def find_xmlids_in_files(rootdir, src, xmlids):
-    if not is_mbx_file(src):
-        src_mbx_file = None
-        for ext in get_mbx_extensions():
-        # for ext in ['.xml', '.mbx']:
-            src_mbx_file = ''.join((src, ext))
-            if os.path.exists(os.path.join(rootdir, src_mbx_file)):
-                src = src_mbx_file
+    if not is_pretext_file(src):
+        src_pretext_file = None
+        for ext in get_pretext_extensions():
+            src_pretext_file = ''.join((src, ext))
+            if os.path.exists(os.path.join(rootdir, src_pretext_file)):
+                src = src_pretext_file
                 break
-        if src != src_mbx_file:
+        if src != src_pretext_file:
             print("Could not find file {0}".format(src))
             return
 
@@ -204,8 +164,8 @@ def get_ref_completions(view, point, autocompleting=False):
     #    2) if this file is unnamed and unsaved, get_tex_root will fail
     view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_\-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_\-]*)"\s*>', 0, '\\1: \\2', completions)
 
-    root = get_setting('mbx_root_file')
-    print ("MBX root: " + repr(root))
+    root = get_setting('pretext_root_file')
+    print ("PreTeXt root: " + repr(root))
     if root and not root == view.file_name():
         find_xmlids_in_files(os.path.dirname(root), root, completions)
 
@@ -223,7 +183,7 @@ def get_ref_completions(view, point, autocompleting=False):
 # ST3 cannot use an edit object after the TextCommand has returned; and on_done gets
 # called after TextCommand has returned. Thus, we need this work-around (works on ST2, too)
 # Used by both cite and ref completion
-class MbxToolsReplaceCommand(sublime_plugin.TextCommand):
+class PretextToolsReplaceCommand(sublime_plugin.TextCommand):
     def run(self, edit, a, b, replacement):
         #print("DEBUG: types of a and b are " + repr(type(a)) + " and " + repr(type(b)))
         # On ST2, a and b are passed as long, but received as floats
@@ -235,12 +195,12 @@ class MbxToolsReplaceCommand(sublime_plugin.TextCommand):
         self.view.replace(edit, region, replacement)
 
 
-class MbxRefCompletions(sublime_plugin.EventListener):
+class PretextRefCompletions(sublime_plugin.EventListener):
 
     def on_query_completions(self, view, prefix, locations):
-        # Only trigger within MBX xref
+        # Only trigger within xref
         if not view.match_selector(locations[0],
-                "tag.reference.internal.xml.mbx"):
+                "markup.reference.xref.pretext"):
             return []
 
         point = locations[0]
@@ -256,7 +216,7 @@ class MbxRefCompletions(sublime_plugin.EventListener):
 
 ### Ref completions using the quick panel
 
-class MbxRefCommand(sublime_plugin.TextCommand):
+class PretextRefCommand(sublime_plugin.TextCommand):
 
     # Remember that this gets passed an edit object
     def run(self, edit):
@@ -264,10 +224,10 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         view = self.view
         point = view.sel()[0].b
         print (point)
-        # Only trigger within MBX
+        # Only trigger within PreTeXt
         # Note using score_selector rather than match_selector
         if not view.score_selector(point,
-                "text.xml.mbx"):
+                "text.xml.pretext"):
             return
 
         try:
@@ -285,7 +245,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
 
         # Note we now generate refs on the fly. Less copying of vectors! Win!
         def on_done(i):
-            print ("mbx_ref_completion called with index %d" % (i,))
+            print ("pretext_ref_completion called with index %d" % (i,))
 
             # Allow user to cancel
             if i<0:
@@ -297,7 +257,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
 
             # Replace ref expression with reference and possibly post_snippet
             # The "latex_tools_replace" command is defined in latex_ref_cite_completions.py
-            view.run_command("mbx_tools_replace", {"a": new_point_a, "b": new_point_b, "replacement": ref})
+            view.run_command("pretext_tools_replace", {"a": new_point_a, "b": new_point_b, "replacement": ref})
             # Unselect the replaced region and leave the caret at the end
             caret = view.sel()[0].b
             view.sel().subtract(view.sel()[0])
@@ -306,7 +266,7 @@ class MbxRefCommand(sublime_plugin.TextCommand):
         print(repr(completions))
         view.window().show_quick_panel(completions, on_done)
 
-class MbxRefCiteCommand(sublime_plugin.TextCommand):
+class PretextRefCiteCommand(sublime_plugin.TextCommand):
 
     # Remember that this gets passed an edit object
     def run(self, edit, insert_char=""):
@@ -314,9 +274,9 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         view = self.view
         point = view.sel()[0].b
         print (point)
-        # Only trigger within MBX
+        # Only trigger within PreTeXt
         # Note using score_selector rather than match_selector
-        if not view.score_selector(point, "text.xml.mbx"):
+        if not view.score_selector(point, "text.xml.pretext"):
             return
 
         if insert_char:
@@ -343,7 +303,7 @@ class MbxRefCiteCommand(sublime_plugin.TextCommand):
         if re.match(REF_REGEX, line):
             if do_ref:
                 print ("Dispatching ref")
-                view.run_command("mbx_ref")
+                view.run_command("pretext_ref")
             else:
                 pass # Don't do anything if we match ref completion but we turned it off
         elif re.search(COMPLETED_REF_REGEX, line):

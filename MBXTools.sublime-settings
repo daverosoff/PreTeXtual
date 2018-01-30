@@ -2,12 +2,12 @@
 // Packages/User/MBXTools.sublime-settings
 // and make changes there.
 
-// You can set "mbx_root_file" here, but that would
+// You can set "pretext_root_file" here, but that would
 // be better in a project-specific settings file
 // unless you don't mind changing your settings every
-// time you switch to a new MBX project.
+// time you switch to a new PreTeXt project.
 
 {
     "ref_auto_trigger": true,
-    "mbx_file_exts": [".mbx"]
+    "pretext_file_exts": [".mbx", ".ptx"]
 }
