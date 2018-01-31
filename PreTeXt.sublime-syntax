@@ -22,9 +22,11 @@ variables:
   #  2: namespace prefix colon
   #  3: local tag name
   qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
+  aside_like: '(aside|biographical|historical)'
   axiom_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
+  computation_like: '(computation|technology)'
   definition_like: '(definition)'
-  division: '(book|article|part|chapter|(?:sub)*section)'
+  division: '(part|chapter|(?:sub)*section|appendix|exercises|references|index|paragraphs)'
   example_like: '(example|question|problem)'
   exercise_like: '(exercise)\b'
   remark_like: '(remark|convention|note|observation|warning|insight)'
@@ -32,25 +34,25 @@ variables:
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
 contexts:
   main:
-    - match: '(<)({{axiom_like}})'
+    - match: '(</?)({{axiom_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.axiom-like.pretext
-        - match: '(>)'
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)({{axiom_like}})'
+    - match: '(</?)({{axiom_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.axiom-like.pretext
-        - match: '(>)'
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
@@ -68,61 +70,97 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)({{example_like}})'
+    - match: '(</?)({{example_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.example-like.pretext
-        - match: '(>)'
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)({{exercise_like}})'
+    - match: '(</?)({{exercise_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.exercise-like.pretext
-        - match: '(>)'
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)({{remark_like}})'
+    - match: '(</?)({{remark_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.remark-like.pretext
-        - match: '(>)'
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)({{division}})'
+    - match: '(</?)({{division}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.division.pretext
-        - match: '(>)'
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)({{theorem_like}})'
+    - match: '(</?)({{aside_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.aside-like.pretext
+        - match: '(/?>)'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{theorem_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.theorem-like.pretext
-        - match: '(>)'
+        - match: '(/?>)'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{project_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.project-like.pretext
+        - match: '(/?>)'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{computation_like}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.computation-like.pretext
+        - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
@@ -134,6 +172,42 @@ contexts:
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: markup.reference.xref.pretext meta.tag.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(md|me|mdn|men)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.math.displayed.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(m)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.math.inline.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(<)(m)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.math.inline.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
