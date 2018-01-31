@@ -32,6 +32,15 @@ variables:
   remark_like: '(remark|convention|note|observation|warning|insight)'
   project_like: '(project|activity|exploration|investigation|task)'
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
+  character_delimiter: '([lr]?s?q)'
+  character_dash: '(nbsp|ndash|mdash)'
+  character_exotic: '(ellipsis|asterisk|slash|midpoint|swungdash|permille|pilcrow|section-mark|copyright|registered|trademark)'
+  character_escape_xml: '(greater-than|less-than|ampersand|squote|quote)'
+  character_escape_latex: '(hash|dollar|percent|tilde|underscore|circumflex|backslash|lbrace|rbrace)'
+  character_fillin: '(fillin)'
+  character_arithmetic: '(solidus|times)'
+  character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n|chord|alteration)'
+
 contexts:
   main:
     - match: '(</?)({{axiom_like}})'
