@@ -21,7 +21,7 @@
 	<key>name</key>
 	<string>Symbol List - Subdivision</string>
 	<key>scope</key>
-	<string>tag.subdivision.xml.mbx</string>
+	<string>markup.other.division.pretext</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

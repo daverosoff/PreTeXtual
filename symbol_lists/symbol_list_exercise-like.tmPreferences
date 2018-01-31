@@ -21,7 +21,7 @@
 	<key>name</key>
 	<string>Symbol List - Exercise-like</string>
 	<key>scope</key>
-	<string>tag.exercise-like.xml.mbx</string>
+	<string>markup.other.exercise-like.pretext</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

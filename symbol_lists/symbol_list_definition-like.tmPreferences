@@ -21,7 +21,7 @@
 	<key>name</key>
 	<string>Symbol List - Definition-like</string>
 	<key>scope</key>
-	<string>tag.definition-like.xml.mbx</string>
+	<string>markup.other.definition-like.pretext</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

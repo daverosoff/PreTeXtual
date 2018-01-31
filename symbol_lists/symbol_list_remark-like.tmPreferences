@@ -21,7 +21,7 @@
 	<key>name</key>
 	<string>Symbol List - Remark-like</string>
 	<key>scope</key>
-	<string>tag.remark-like.xml.mbx</string>
+	<string>markup.other.remark-like.pretext</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
