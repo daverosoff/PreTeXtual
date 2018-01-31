@@ -26,7 +26,7 @@ variables:
   definition_like: '(definition)'
   division: '(book|article|part|chapter|(?:sub)*section)'
   example_like: '(example|question|problem)'
-  exercise_like: '(exercise)'
+  exercise_like: '(exercise)\b'
   remark_like: '(remark|convention|note|observation|warning|insight)'
   project_like: '(project|activity|exploration|investigation|task)'
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
