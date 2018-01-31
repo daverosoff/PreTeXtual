@@ -168,7 +168,9 @@ def get_ref_completions(view, point, autocompleting=False):
     print ("PreTeXt root: " + repr(root))
     if root and not root == view.file_name():
         find_xmlids_in_files(os.path.dirname(root), root, completions)
-
+    # else:
+    #     vu = sublime.active_window().active_view()
+    #     find_xmlids_in_files(os.path.dirname(vu), os.path.basename(vu), completions)
     # remove duplicates
     completions = list(set(completions))
     # this screws up the list for some reason?
