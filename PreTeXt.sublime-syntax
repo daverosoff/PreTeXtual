@@ -297,6 +297,14 @@ contexts:
     - match: ']]>'
       scope: invalid.illegal.missing-entity.pretext
     - include: should-be-entity
+    - include: trailing-whitespace
+    - include: tab-character
+  trailing-whitespace:
+    - match: '[ ]+$'
+      scope: invalid.illegal.trailing-whitespace.pretext
+  tab-character:
+    - match: '\t'
+      scope: invalid.illegal.tab-character.pretext
   should-be-entity:
     - match: '&'
       scope: invalid.illegal.bad-ampersand.pretext
