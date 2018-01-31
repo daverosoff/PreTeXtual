@@ -223,6 +223,126 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)(title)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.heading.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(list)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.list.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(ol)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.list.numbered.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(ul)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.list.unnumbered.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(dl)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.list.definitional.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(quotes|squotes|braces|angles|brackets|dblbrackets)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.delimiter-group.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(em|term|alert|foreign|booktitle)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.highlight-group.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(abbr)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.abbr.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(acro)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.acro.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(init)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.init.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(<\?)(xml)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
