@@ -34,12 +34,11 @@ else:
 
 try:
     from is_pretext_file import is_pretext_file
-except ImportError:
-    from .is_pretext_file import is_pretext_file
-
-try:
+    from is_pretext_file import get_pretext_extensions
     from get_setting import get_setting
 except ImportError:
+    from .is_pretext_file import is_pretext_file
+    from .is_pretext_file import get_pretext_extensions
     from .get_setting import get_setting
 
 class UnrecognizedRefFormatError(Exception): pass
