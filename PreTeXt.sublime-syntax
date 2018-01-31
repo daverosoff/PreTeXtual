@@ -26,7 +26,7 @@ variables:
   axiom_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
   computation_like: '(computation|technology)'
   definition_like: '(definition)'
-  division: '(part|chapter|(?:sub)*section|appendix|exercises|references|index|paragraphs)'
+  division: '(part|chapter|(?:sub)*section|appendix|exercises|references|index|paragraphs)(?=\s)'
   example_like: '(example|question|problem)'
   exercise_like: '(exercise)\b'
   remark_like: '(remark|convention|note|observation|warning|insight)'
