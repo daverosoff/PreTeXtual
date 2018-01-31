@@ -367,6 +367,102 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)({{character_delimiter}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.delimiter.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_dash}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.dash.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_exotic}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.exotic.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_escape_xml}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.escape.xml.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_escape_latex}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.escape.latex.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_fillin}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.fillin.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_arithmetic}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.arithmetic.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_music}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.music.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(<\?)(xml)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
