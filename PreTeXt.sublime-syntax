@@ -288,7 +288,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.delimiter-group.pretext
+        - meta_scope: meta.tag.pretext markup.other.delimiter-group.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -300,7 +300,31 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.highlight-group.pretext
+        - meta_scope: meta.tag.pretext markup.other.highlight-group.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(delete|insert|stale)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.editing-group.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(taxon|genus|species)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.scientific-name-group.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -312,7 +336,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.abbr.pretext
+        - meta_scope: meta.tag.pretext markup.other.abbr.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -324,7 +348,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.acro.pretext
+        - meta_scope: meta.tag.pretext markup.other.acro.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -336,7 +360,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.init.pretext
+        - meta_scope: meta.tag.pretext markup.other.init.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
