@@ -87,7 +87,8 @@ def find_xmlids_in_files(rootdir, src, xmlids):
         print ("WARNING! I can't find it! Check your xi:include's." )
         return
 
-    src_content = re.sub("%.*", "", src_file.read())
+    # src_content = re.sub("%.*", "", src_file.read())
+    src_content = src_file.read()
     src_file.close()
 
     m = re.search(r"<\?xml.*encoding=\"([^\"]*)\"", src_content)
