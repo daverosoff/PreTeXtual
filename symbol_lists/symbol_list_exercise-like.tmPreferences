@@ -32,6 +32,7 @@
 			s/&lt;(?i:e)(?:xercise)\s+(?:[^&gt;]*)number\s*=\s*(?:[^&gt;]*)&gt;/\u$1 $2/g;
 			s/&lt;(?i:e)(?:xercise)\s+(?:[^&gt;]*)(number|xml:id)\s*=\s*\"([^\"]+)\"\s*(number|xml:id)\s*=\s*\"([^\"]+)\"&gt;/\u$1 $2, $3/g;
 			s/&lt;(?i:exercise)&gt;//g;
+			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
@@ -41,6 +42,7 @@
 			s/&lt;(?i:e)(?:xercise)\s+(?:[^&gt;]*)number\s*=\s*(?:[^&gt;]*)&gt;/\u$1 $2/g;
 			s/&lt;(?i:e)(?:xercise)\s+(?:[^&gt;]*)(number|xml:id)\s*=\s*\"([^\"]+)\"\s*(number|xml:id)\s*=\s*\"([^\"]+)\"&gt;/\u$1 $2, $3/g;
 			s/&lt;(?i:exercise)&gt;//g;
+			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>

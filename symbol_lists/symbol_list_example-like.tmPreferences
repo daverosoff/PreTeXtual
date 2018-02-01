@@ -30,6 +30,7 @@
 		<string>
 			s/&lt;(.)(?:xample)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
 			s/&lt;(example)&gt;//g;
+			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
@@ -37,6 +38,7 @@
 		<string>
 			s/&lt;(.)(?:xample)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
 			s/&lt;(example)&gt;//g;
+			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>
