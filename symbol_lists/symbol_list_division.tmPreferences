@@ -28,24 +28,24 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art)&gt;//g;
-			s/&lt;(exercise(?:s|group)|references)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(exercise(?:s|group)|references)&gt;/\u$1/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs|xercise(?:s|group)|eferences)\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs)&gt;//g;
+			s/&lt;(exercise(?:s|group)|references)\s+[^&gt;]*\s+xml:id\s*=\s*\"([^\"]+)\"\s*[^&gt;]*&gt;/\u$1 $2/g;
+			s/&lt;(exercise(?:s|group)|references)\s+[^&gt;]*&gt;/\u$1/g;
 			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
 		<string>
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|xercise(?:s|group)|eferences)\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art)&gt;//g;
-			s/&lt;(exercise(?:s|group)|references)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(exercise(?:s|group)|references)&gt;/\u$1/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs|xercise(?:s|group)|eferences)\s+xml:id\s*=\s*\"([^\"]+)\"\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs|xercise(?:s|group)|eferences)\s+xmlns:xi\s*=\s*\"(?:[^\"]+)\"\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
+			s/&lt;(?:sub)*(.)(?:rticle|ection|hapter|art|ppendix|aragraphs)&gt;//g;
+			s/&lt;(exercise(?:s|group)|references)\s+[^&gt;]*\s+xml:id\s*=\s*\"([^\"]+)\"\s*[^&gt;]*&gt;/\u$1 $2/g;
+			s/&lt;(exercise(?:s|group)|references)\s+[^&gt;]*&gt;/\u$1/g;
 			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
