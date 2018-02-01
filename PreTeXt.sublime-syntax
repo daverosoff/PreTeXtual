@@ -26,12 +26,14 @@ variables:
   axiom_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
   computation_like: '(computation|technology)'
   definition_like: '(definition)'
-  division: '(part|chapter|(?:sub)*section|appendix|exercises|references|index|paragraphs)(?=\s)'
+  division: '(part|chapter|(?:sub)*section|appendix|introduction|conclusion|exercises|references|index|paragraphs)(?=\s)'
   example_like: '(example|question|problem)'
   exercise_like: '(exercise)\b'
   remark_like: '(remark|convention|note|observation|warning|insight)'
   project_like: '(project|activity|exploration|investigation|task)'
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
+  footnote: '(fn)'
+  index: '(index|h(?=\b)|idx|index-list|index-part)'
   character_delimiter: '([lr]?s?q)'
   character_dash: '(nbsp|ndash|mdash)'
   character_exotic: '(ellipsis|asterisk|slash|midpoint|swungdash|permille|pilcrow|section-mark|copyright|registered|trademark)'
@@ -39,7 +41,11 @@ variables:
   character_escape_latex: '(hash|dollar|percent|tilde|underscore|circumflex|backslash|lbrace|rbrace)'
   character_fillin: '(fillin)'
   character_arithmetic: '(solidus|times)'
-  character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n|chord|alteration)'
+  character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n(?=\b)|chord|alteration)'
+  generator: '(today|timeofday|tex|latex|pretext|webwork|eg|ie|circa|etc)'
+  block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
+  verbatimdisplay: '(cd|cline|pre|console|prompt|input|output|program)'
+  interactive: '(jsxgraph|musescore)'
 
 contexts:
   main:
@@ -175,12 +181,48 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)({{footnote}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.footnote.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(notation)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.reference.notation.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(<)(xref)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
-        - meta_scope: markup.reference.xref.pretext meta.tag.pretext
+        - meta_scope: meta.tag.pretext markup.other.reference.xref.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(<)(url)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.reference.url.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -192,7 +234,19 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.other.math.displayed.pretext
+        - meta_scope: meta.tag.pretext markup.other.math.display.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(mrow)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.math.display.mrow.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -200,18 +254,6 @@ contexts:
         - include: double-quoted-string
         - include: tag-stuff
     - match: '(</?)(m)(?=\s)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.math.inline.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
-    - match: '(<)(m)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
@@ -325,6 +367,102 @@ contexts:
         2: entity.name.tag.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.scientific-name-group.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{block_component}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.block-component.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{verbatimdisplay}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.verbatimdisplay.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(figure)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.figure.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(table)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.table.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(listing)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.listing.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(image)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.image.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(poem)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.poem.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)(video)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.video.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -457,6 +595,18 @@ contexts:
         2: entity.name.tag.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.music.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{generator}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.generator.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
