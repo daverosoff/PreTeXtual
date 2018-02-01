@@ -29,7 +29,17 @@
 		<key>symbolTransformation</key>
 		<string>
 			s/&lt;(.)(?:emark)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:onvention)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:ote)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:bservation)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:arning)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:nsight)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
 			s/&lt;(remark)&gt;//g;
+			s/&lt;(convention)&gt;//g;
+			s/&lt;(note)&gt;//g;
+			s/&lt;(observation)&gt;//g;
+			s/&lt;(warning)&gt;//g;
+			s/&lt;(insight)&gt;//g;
 			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
@@ -37,7 +47,17 @@
 		<key>symbolIndexTransformation</key>
 		<string>
 			s/&lt;(.)(?:emark)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:onvention)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:ote)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:bservation)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:arning)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
+			s/&lt;(.)(?:nsight)\s+(?:[^&gt;]*)xml:id\s*=\s*\"([^\"]+)\"(?:[^&gt;]*)&gt;/\u$1 $2/g;
 			s/&lt;(remark)&gt;//g;
+			s/&lt;(convention)&gt;//g;
+			s/&lt;(note)&gt;//g;
+			s/&lt;(observation)&gt;//g;
+			s/&lt;(warning)&gt;//g;
+			s/&lt;(insight)&gt;//g;
 			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
