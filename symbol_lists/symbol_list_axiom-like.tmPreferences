@@ -34,6 +34,7 @@
 			s/&lt;(?:conjecture)&gt;//g;
 			s/&lt;(?:axiom)&gt;//g;
 			s/&lt;(?:principle)&gt;//g;
+			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
@@ -45,6 +46,7 @@
 			s/&lt;(?:conjecture)&gt;//g;
 			s/&lt;(?:axiom)&gt;//g;
 			s/&lt;(?:principle)&gt;//g;
+			s/&lt;\/[^&gt;]+&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>
