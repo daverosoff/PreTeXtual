@@ -1,0 +1,13 @@
+<snippet>
+    <content><![CDATA[
+<conclusion xml:id="conclusion-${1/([A-Z])|(\s*<[^>]+>)|(\W+)/(?1\l$1:)(?2-:)(?3-:)/g}">
+    <title>$1</title>
+    $0
+</conclusion>
+]]>
+</content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>conc</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>text.xml.pretext</scope>
+</snippet>
