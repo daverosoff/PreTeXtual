@@ -3,6 +3,7 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/MBXTools
 
+* Change snippets, etc. to use 2-space indentation
 * Add command for "make current file project root"
 * Bring ref snippets in line with autoname deprecation
 * Add new snippets for new constants/entities
