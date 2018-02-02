@@ -278,6 +278,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)(caption)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.caption.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(</?)(list)'
       captures:
         1: punctuation.definition.tag.begin.pretext
