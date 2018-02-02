@@ -26,10 +26,10 @@ except ImportError:
 PRETEXT_SYNTAX = 'Packages/MBXTools/PreTeXt.sublime-syntax'
 
 class PretextSyntaxListener(sublime_plugin.EventListener):
-    def on_load(self, view):
+    def on_load_async(self, view):
         self.detect_and_apply_syntax(view)
 
-    def on_post_save(self, view):
+    def on_post_save_async(self, view):
         self.detect_and_apply_syntax(view)
 
     def detect_and_apply_syntax(self, view):
