@@ -36,4 +36,3 @@ def get_setting(setting, default=None):
     #     result = SettingsWrapper(setting, result)
 
     return result
-

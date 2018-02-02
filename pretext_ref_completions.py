@@ -43,12 +43,6 @@ except ImportError:
 
 class UnrecognizedRefFormatError(Exception): pass
 
-# _ref_special_commands = "|".join(["", "eq", "page", "v", "V", "auto", "name", "c", "C", "cpage"])[::-1]
-
-# OLD_STYLE_REF_REGEX = re.compile(r"([^_]*_)?(p)?fer(" + _ref_special_commands + r")?(?:\\|\b)")
-# NEW_STYLE_REF_REGEX = re.compile(r"([^{}]*)\{fer(" + _ref_special_commands + r")?\\(\()?")
-# REF_REGEX = re.compile(r'<\s*xref\s*ref\s*=\s*[\'"]([A-Za-z][A-Za-z0-9_-]*)[\'"]\s*/>')
-# REF_REGEX = re.compile(r'<\s*xref\s+ref\s*=\s*[\'"]')
 REF_REGEX = re.compile(r'[\'"]\s*=\s*(?:fer)(?:.*)\s+ferx<')
 # forward: <xref\s+(?:(?:ref|provisional|autoname|detail|first|last)\s*=\s*(['"])([^'"]+)\1\s*)*\s*/>
 COMPLETED_REF_REGEX = re.compile(r'([\'"])(?:[^\'"]+)\1\s*=\s*(?:fer)(?:.*)\s+ferx<')

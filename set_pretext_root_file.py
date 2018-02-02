@@ -60,4 +60,3 @@ class SetPretextRootFileCommand(sublime_plugin.WindowCommand):
             else:
                 window.show_input_panel("Absolute path to root PreTeXt file:",
                     "", on_done, None, None)
-
