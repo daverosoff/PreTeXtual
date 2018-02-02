@@ -1,0 +1,36 @@
+MBXTools, package version 0.5.0-rc.3
+Thank you for your interest in MBXTools. Make sure to inspect the README.md
+for instructions on usage and configuring your MathBook XML files to work
+automatically with MBXTools. If you find a bug or have a feature request,
+please open an issue at
+
+    https://github.com/daverosoff/MBXTools
+
+I hope you find MBXTools useful!
+
+Release notes:
+
+    * Package name will change when this version is bumped to 0.5.0
+    * Discontinue support for first-line <!--MBX--> comment file recognition
+    * Simplified syntax and updated scopes to match current ST scope naming
+      recommendations (https://www.sublimetext.com/docs/3/scope_naming.html)
+    * Change many names to PreTeXt (but the rest, including a package rename,
+      will wait for the official version)
+    * Change some snippets to reflect extensive changes/deprecations in schema
+
+Known issues from 0.4.5 (none fixed in this release):
+
+    * Mirroring title text to get xml:id is good for divisions, but less
+      good for theorems (often not titled)
+    * Mirrored title text in snippet xml:id does not always give
+      completely satisfactory results (e.g., XML tags inside)
+        - Should there be a user setting to disable this mirroring?
+        - Is this even possible?
+    * PreTeXt syntax is inappropriately applied to files of
+      other types in some instances
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite:
+      unrecognized format")
+    * Potential for confusion since Symbols List is always based on
+      the current project (or open folder) but the ref autocomplete
+      list may not be (if there is not an explicit project and the
+      root PreTeXt file is set globally or not at all)
