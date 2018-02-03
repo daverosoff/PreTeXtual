@@ -12,3 +12,5 @@ want to suggest a feature, open an issue at
 * Text command to move to next subdiv/block lacking xml:id
 * adapt subdiv snippets for wrapping selection; also place cursor in <p> tag
   for modification to e.g. <introduction>
+* Settings for PreTeXt repository location for e.g. build systems, schema
+* Build systems
