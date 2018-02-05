@@ -3,6 +3,7 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/MBXTools
 
+* Set tabs to spaces and width 2 on apply syntax
 * Fix non-division snippet title/xmlid capture
 * Change snippets, etc. to use 2-space indentation
 * Add command for "make current file project root"
