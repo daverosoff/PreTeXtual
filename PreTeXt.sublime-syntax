@@ -45,7 +45,7 @@ variables:
   generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|eg|ie|circa|etc)'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
   verbatim: '(c(?=\s)|email)'
-  verbatimdisplay: '(cd|cline|pre|console|prompt|input|output|program)'
+  verbatimdisplay: '(cd|cline|pre(?=\s)|console|prompt|input|output|program)'
   interactive: '(jsxgraph|musescore)'
 
 contexts:
