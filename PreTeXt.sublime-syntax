@@ -506,6 +506,39 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(<)(jsxgraph)[^>]*?(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.interactive.pretext
+        - match: '(<)(input)[^>]*(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          push:
+            - meta_scope: source.js.embedded.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+              # clear_scopes: 1
+            - include: 'scope:source.js'
+        - match: '(</)(jsxgraph)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.end.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
+        - include: tag-stuff
+        - include: single-quoted-string
+        - include: double-quoted-string
     - match: '(</?)({{interactive}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -759,6 +792,22 @@ contexts:
     - include: should-be-entity
     - include: trailing-whitespace
     - include: tab-character
+  embed-javascript:
+    - match: '(<)(input)[^>]*?(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext
+      push:
+        - meta_scope: source.javascript
+        - match: '(</)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
   trailing-whitespace:
     - match: '[ ]+$'
       scope: invalid.illegal.trailing-whitespace.pretext
