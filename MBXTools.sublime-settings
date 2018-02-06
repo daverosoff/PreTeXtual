@@ -9,5 +9,7 @@
 
 {
     "ref_auto_trigger": true,
-    "pretext_file_exts": [".mbx", ".ptx"]
+    "pretext_file_exts": [".mbx", ".ptx"],
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true
 }
