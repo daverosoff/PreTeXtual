@@ -506,29 +506,34 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)(jsxgraph)[^>]*?(>)'
+    - match: '(<)(jsxgraph)[^>]*?'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
+        0: meta.tag.pretext markup.other.interactive.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.other.interactive.pretext
+        # - meta_scope: meta.tag.pretext markup.other.interactive.pretext
         - match: '(<)(input)[^>]*(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
           push:
-            - meta_scope: source.js.embedded.pretext
+            - meta_content_scope: source.js.embedded.pretext
+            - include: 'scope:source.js'
+          with_prototype:
             - match: '(</)(input)(>)'
               captures:
                 1: punctuation.definition.tag.begin.pretext
                 2: entity.name.tag.localname.pretext
                 3: punctuation.definition.tag.end.pretext
-                0: meta.tag.pretext
+                0: meta.tag.pretext markup.other.interactive.pretext
               pop: true
               # clear_scopes: 1
-            - include: 'scope:source.js'
         - match: '(</)(jsxgraph)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.end.pretext
@@ -536,9 +541,6 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
           pop: true
-        - include: tag-stuff
-        - include: single-quoted-string
-        - include: double-quoted-string
     - match: '(</?)({{interactive}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
