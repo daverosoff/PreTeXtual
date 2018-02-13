@@ -3,18 +3,30 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/MBXTools
 
+Definitely before 0.5.0 (official release with new name)
+
+* New name
 * Fix broken lookarounds
-* Finish syntax inclusion for LaTeX
-* Investigate why <jsxgraph> tags don't close properly
+* Finish syntax inclusion for LaTeX/JS
 * Set tabs to spaces and width 2 on apply syntax
-* Fix non-division snippet title/xmlid capture
-* Change snippets, etc. to use 2-space indentation
-* Add command for "make current file project root"
 * Bring ref snippets in line with autoname deprecation
-* Add new snippets for new constants/entities
+
+Features for 0.5.x
+
+* Change snippets, etc. to use 2-space indentation (or package settings)
+* Investigate why <jsxgraph> tags don't close properly
+* Fix non-division snippet title/xmlid capture
 * Fix snippets so they correctly handle <nonempty>tags</nonempty>
-* Text command to move to next subdiv/block lacking xml:id
 * adapt subdiv snippets for wrapping selection; also place cursor in <p> tag
   for modification to e.g. <introduction>
+
+Features for 0.6.0
+
+* Text command to move to next subdiv/block lacking xml:id
+* Add command for "make current file project root"
+* Add new snippets for new constants/entities
+
+Features longer-term
+
 * Settings for PreTeXt repository location for e.g. build systems, schema
 * Build systems
