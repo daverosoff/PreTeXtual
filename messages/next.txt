@@ -1,4 +1,4 @@
-MBXTools, package version 0.5.0-rc.3
+MBXTools, package version 0.5.0
 Thank you for your interest in MBXTools. Make sure to inspect the README.md
 for instructions on usage and configuring your MathBook XML files to work
 automatically with MBXTools. If you find a bug or have a feature request,
@@ -11,14 +11,21 @@ I hope you find MBXTools useful!
 Release notes:
 
     * Package name will change when this version is bumped to 0.5.0
-    * Discontinue support for first-line <!--MBX--> comment file recognition
+    * Discontinue support for first-line <!--MBX--> comment file recognition;
+      only extension-based recognition is supported
     * Simplified syntax and updated scopes to match current ST scope naming
       recommendations (https://www.sublimetext.com/docs/3/scope_naming.html)
+    * Improved scoping supports embedded LaTeX, Python/Sage, R, Javascript
+      syntax definitions in appropriate contexts
     * Change many names to PreTeXt (but the rest, including a package rename,
       will wait for the official version)
     * Change some snippets to reflect extensive changes/deprecations in schema
 
-Known issues from 0.4.5 (none fixed in this release):
+Known issues:
+
+    * The scoping for embedded syntaxes is not completely satisfactory
+
+Known issues from 0.4.5 not fixed in this release:
 
     * Mirroring title text to get xml:id is good for divisions, but less
       good for theorems (often not titled)
