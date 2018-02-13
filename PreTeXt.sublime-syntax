@@ -545,6 +545,26 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.image.latex.pretext
           pop: true
+    - match: '(<)(macros)[^>]*?(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '<!\[CDATA\['
+          scope: punctuation.definition.string.begin.pretext
+        - match: ']]>'
+          scope: punctuation.definition.string.end.pretext
+        - meta_content_scope: text.tex.latex.pretext
+        - include: 'scope:text.tex.latex'
+        - match: '(</)(macros)(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext markup.other.image.latex.pretext
+          pop: true
     - match: '(<)(jsxgraph)[^>]*?'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -581,6 +601,49 @@ contexts:
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.interactive.pretext
+          pop: true
+    - match: '(<)(sage)[^>]*?(language\s*)(=)(\s*"r")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.r.embedded.pretext
+            - include: 'scope:source.r'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(sage)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.end.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
           pop: true
     - match: '(</?)({{interactive}})'
       captures:
