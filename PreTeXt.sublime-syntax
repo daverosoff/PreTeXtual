@@ -47,7 +47,7 @@ variables:
   verbatim: '(c(?=\s)|email)'
   verbatimdisplay: '(cd|cline|pre(?=\s)|console|prompt|input|output|program)'
   interactive: '(jsxgraph|musescore)'
-  latex_image: '(latex-image(?=\s))'
+  latex_image: '(latex-image(?:-preamble)?)'
 
 contexts:
   main:
@@ -532,14 +532,12 @@ contexts:
         3: punctuation.definition.tag.end.pretext
         0: meta.tag.pretext markup.other.image.latex.pretext
       push:
-        - meta_scope: text.tex.latex.pretext
-          with_prototype:
-            - match: '<!\[CDATA\['
-              scope: punctuation.definition.string.begin.pretext
-            - match: ']]>'
-              scope: punctuation.definition.string.end.pretext
+        - match: '<!\[CDATA\['
+          scope: punctuation.definition.string.begin.pretext
+        - match: ']]>'
+          scope: punctuation.definition.string.end.pretext
+        - meta_content_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
-        # - include: tag-stuff
         - match: '(</)({{latex_image}})(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
@@ -553,7 +551,6 @@ contexts:
         2: entity.name.tag.localname.pretext
         0: meta.tag.pretext markup.other.interactive.pretext
       push:
-        # - meta_scope: meta.tag.pretext markup.other.interactive.pretext
         - match: '(<)(input)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
@@ -578,13 +575,12 @@ contexts:
                 3: punctuation.definition.tag.end.pretext
                 0: meta.tag.pretext markup.other.interactive.pretext
               pop: true
-              # clear_scopes: 1
         - match: '(</)(jsxgraph)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.end.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
-            0: meta.tag.pretext
+            0: meta.tag.pretext markup.other.interactive.pretext
           pop: true
     - match: '(</?)({{interactive}})'
       captures:
