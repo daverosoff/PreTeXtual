@@ -47,6 +47,7 @@ variables:
   verbatim: '(c(?=\s)|email)'
   verbatimdisplay: '(cd|cline|pre(?=\s)|console|prompt|input|output|program)'
   interactive: '(jsxgraph|musescore)'
+  latex_image: '(latex-image(?=\s))'
 
 contexts:
   main:
@@ -242,18 +243,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(mrow)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.math.display.mrow.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
+    # - match: '(</?)(mrow)'
+    #   captures:
+    #     1: punctuation.definition.tag.begin.pretext
+    #     2: entity.name.tag.localname.pretext
+    #   push:
+    #     - meta_scope: meta.tag.pretext markup.other.math.display.mrow.pretext
+    #     - match: '/?>'
+    #       scope: punctuation.definition.tag.end.pretext
+    #       pop: true
+    #     - include: single-quoted-string
+    #     - include: double-quoted-string
+    #     - include: tag-stuff
     - match: '(</?)(m)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -506,6 +507,46 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(<)(mrow)[^>]*?(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext markup.other.math.display.mrow.pretext
+      push:
+        - meta_scope: text.tex.latex.pretext
+        - include: 'scope:text.tex.latex'
+        # - include: tag-stuff
+      # with_prototype:
+        - match: '(</)(mrow)(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext markup.other.math.display.mrow.pretext
+          pop: true
+    - match: '(<)({{latex_image}})[^>]*?(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext markup.other.image.latex.pretext
+      push:
+        - meta_scope: text.tex.latex.pretext
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+        - include: 'scope:text.tex.latex'
+        # - include: tag-stuff
+        - match: '(</)({{latex_image}})(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext markup.other.image.latex.pretext
+          pop: true
     - match: '(<)(jsxgraph)[^>]*?'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -513,7 +554,7 @@ contexts:
         0: meta.tag.pretext markup.other.interactive.pretext
       push:
         # - meta_scope: meta.tag.pretext markup.other.interactive.pretext
-        - match: '(<)(input)[^>]*(>)'
+        - match: '(<)(input)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
@@ -526,6 +567,10 @@ contexts:
             - meta_content_scope: source.js.embedded.pretext
             - include: 'scope:source.js'
           with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
             - match: '(</)(input)(>)'
               captures:
                 1: punctuation.definition.tag.begin.pretext
@@ -577,7 +622,7 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(init)'
+    - match: '(</?)(init)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
