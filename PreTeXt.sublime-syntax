@@ -63,12 +63,12 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)({{axiom_like}})'
+    - match: '(</?)({{computation_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.other.axiom-like.pretext
+        - meta_scope: meta.tag.pretext markup.other.computation-like.pretext
         - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -165,18 +165,6 @@ contexts:
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.project-like.pretext
-        - match: '(/?>)'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
-    - match: '(</?)({{computation_like}})'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.computation-like.pretext
         - match: '(/?>)'
           scope: punctuation.definition.tag.end.pretext
           pop: true
