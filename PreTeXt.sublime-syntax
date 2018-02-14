@@ -296,7 +296,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.list.pretext
+        - meta_scope: meta.tag.pretext markup.other.list.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -308,7 +308,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.list.numbered.pretext
+        - meta_scope: meta.tag.pretext markup.other.list.numbered.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -320,7 +320,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.list.unnumbered.pretext
+        - meta_scope: meta.tag.pretext markup.other.list.unnumbered.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -332,7 +332,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.list.item.pretext
+        - meta_scope: meta.tag.pretext markup.other.list.item.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
@@ -344,7 +344,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.list.definitional.pretext
+        - meta_scope: meta.tag.pretext markup.other.list.definitional.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
