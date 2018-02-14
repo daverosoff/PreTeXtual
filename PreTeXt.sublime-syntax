@@ -45,7 +45,7 @@ variables:
   generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|eg|ie|circa|etc)'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
   verbatim: '(c(?=\s)|email)'
-  verbatimdisplay: '(cd|cline|pre(?=\s)|console|prompt|input|output|program)'
+  verbatimdisplay: '(cd|cline|pre(?=\s)|console|prompt|input|output)'
   interactive: '(jsxgraph|musescore)'
   latex_image: '(latex-image(?:-preamble)?)'
 
@@ -639,6 +639,178 @@ contexts:
                 0: meta.tag.pretext
               pop: true
         - match: '(</)(sage)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.end.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
+    - match: '(<)(program)[^>]*?(language\s*)(=)(\s*"python")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.python.embedded.pretext
+            - include: 'scope:source.python'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(program)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.end.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
+    - match: '(<)(program)[^>]*?(language\s*)(=)(\s*"julia")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.julia.embedded.pretext
+            - include: 'scope:source.julia'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(program)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.end.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
+    - match: '(<)(program)[^>]*?(language\s*)(=)(\s*"c")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.c.embedded.pretext
+            - include: 'scope:source.c'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(program)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.end.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
+    - match: '(<)(program)[^>]*?(language\s*)(=)(\s*"cpp")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.c++.embedded.pretext
+            - include: 'scope:source.c++'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(program)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.end.pretext
             2: entity.name.tag.localname.pretext
