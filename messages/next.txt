@@ -15,8 +15,8 @@ Release notes:
       only extension-based recognition is supported
     * Simplified syntax and updated scopes to match current ST scope naming
       recommendations (https://www.sublimetext.com/docs/3/scope_naming.html)
-    * Improved scoping supports embedded LaTeX, Python/Sage, R, Javascript
-      syntax definitions in appropriate contexts
+    * Improved scoping supports embedded LaTeX, Python/Sage, R, Javascript,
+      Julia, C, C++ syntax definitions in appropriate contexts
     * Change many names to PreTeXt (but the rest, including a package rename,
       will wait for the official version)
     * Change some snippets to reflect extensive changes/deprecations in schema
