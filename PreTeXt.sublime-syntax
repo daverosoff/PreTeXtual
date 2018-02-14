@@ -55,7 +55,7 @@ contexts:
     - match: '(</?)({{axiom_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.axiom-like.pretext
         - match: '(/?>)'
@@ -67,7 +67,7 @@ contexts:
     - match: '(</?)({{computation_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.computation-like.pretext
         - match: '(/?>)'
@@ -79,7 +79,7 @@ contexts:
     - match: '(<)({{definition_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.definition-like.pretext
         - match: '(>)'
@@ -91,7 +91,7 @@ contexts:
     - match: '(</?)({{example_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.example-like.pretext
         - match: '(/?>)'
@@ -103,7 +103,7 @@ contexts:
     - match: '(</?)({{exercise_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.exercise-like.pretext
         - match: '(/?>)'
@@ -115,7 +115,7 @@ contexts:
     - match: '(</?)({{remark_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.remark-like.pretext
         - match: '(/?>)'
@@ -127,7 +127,7 @@ contexts:
     - match: '(</?)({{division}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.structure.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.division.pretext
         - match: '(/?>)'
@@ -139,7 +139,7 @@ contexts:
     - match: '(</?)({{aside_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.aside-like.pretext
         - match: '(/?>)'
@@ -151,7 +151,7 @@ contexts:
     - match: '(</?)({{theorem_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.theorem-like.pretext
         - match: '(/?>)'
@@ -163,7 +163,7 @@ contexts:
     - match: '(</?)({{project_like}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.project-like.pretext
         - match: '(/?>)'
@@ -175,7 +175,7 @@ contexts:
     - match: '(</?)({{footnote}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.structure.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.footnote.pretext
         - match: '/?>'
@@ -187,7 +187,7 @@ contexts:
     - match: '(</?)(notation)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.block.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.reference.notation.pretext
         - match: '/?>'
@@ -199,7 +199,7 @@ contexts:
     - match: '(<)(xref)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.reference.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.reference.xref.pretext
         - match: '/?>'
@@ -211,7 +211,7 @@ contexts:
     - match: '(<)(url)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
+        2: entity.name.tag.reference.any.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.reference.url.pretext
         - match: '/?>'
@@ -259,7 +259,7 @@ contexts:
     - match: '(</?)(title)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.heading.pretext
         - match: '/?>'
@@ -271,7 +271,7 @@ contexts:
     - match: '(</?)(caption)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.caption.pretext
         - match: '/?>'
@@ -283,7 +283,7 @@ contexts:
     - match: '(</?)(list)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.list.pretext
         - match: '/?>'
@@ -295,7 +295,7 @@ contexts:
     - match: '(</?)(ol)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.list.numbered.pretext
         - match: '/?>'
@@ -307,7 +307,7 @@ contexts:
     - match: '(</?)(ul)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.list.unnumbered.pretext
         - match: '/?>'
@@ -319,7 +319,7 @@ contexts:
     - match: '(</?)(li)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.list.item.pretext
         - match: '/?>'
@@ -331,7 +331,7 @@ contexts:
     - match: '(</?)(dl)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.list.definitional.pretext
         - match: '/?>'
@@ -343,7 +343,7 @@ contexts:
     - match: '(</?)(quotes|squotes|braces|angles|brackets|dblbrackets)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.delimiter-group.pretext
         - match: '/?>'
@@ -355,7 +355,7 @@ contexts:
     - match: '(</?)(em|term|alert|foreign|booktitle)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.highlight-group.pretext
         - match: '/?>'
@@ -367,7 +367,7 @@ contexts:
     - match: '(</?)(delete|insert|stale)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.editing-group.pretext
         - match: '/?>'
@@ -379,7 +379,7 @@ contexts:
     - match: '(</?)(taxon|genus|species)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.scientific-name-group.pretext
         - match: '/?>'
@@ -821,7 +821,7 @@ contexts:
     - match: '(</?)(abbr)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.abbr.pretext
         - match: '/?>'
@@ -833,7 +833,7 @@ contexts:
     - match: '(</?)(acro)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.acro.pretext
         - match: '/?>'
@@ -845,7 +845,7 @@ contexts:
     - match: '(</?)(init)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.init.pretext
         - match: '/?>'
@@ -857,7 +857,7 @@ contexts:
     - match: '(</?)({{character_delimiter}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.delimiter.pretext
         - match: '/?>'
@@ -869,7 +869,7 @@ contexts:
     - match: '(</?)({{character_dash}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.dash.pretext
         - match: '/?>'
@@ -881,7 +881,7 @@ contexts:
     - match: '(</?)({{character_exotic}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.exotic.pretext
         - match: '/?>'
@@ -893,7 +893,7 @@ contexts:
     - match: '(</?)({{character_escape_xml}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.escape.xml.pretext
         - match: '/?>'
@@ -905,7 +905,7 @@ contexts:
     - match: '(</?)({{character_escape_latex}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.escape.latex.pretext
         - match: '/?>'
@@ -917,7 +917,7 @@ contexts:
     - match: '(</?)({{character_fillin}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.fillin.pretext
         - match: '/?>'
@@ -929,7 +929,7 @@ contexts:
     - match: '(</?)({{character_arithmetic}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.arithmetic.pretext
         - match: '/?>'
@@ -941,7 +941,7 @@ contexts:
     - match: '(</?)({{character_music}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.music.pretext
         - match: '/?>'
@@ -953,7 +953,7 @@ contexts:
     - match: '(</?)({{generator}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.generator.pretext
         - match: '/?>'
@@ -965,7 +965,7 @@ contexts:
     - match: '(</?)(geogebra-applet|demonstration)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext invalid.deprecated.badbank.pretext
         - match: '/?>'
@@ -977,7 +977,7 @@ contexts:
     - match: '(<\?)(xml)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.preprocessor.pretext
         - match: \?>
@@ -1008,7 +1008,7 @@ contexts:
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.namespace.pretext
-        3: entity.name.tag.pretext punctuation.separator.namespace.pretext
+        3: punctuation.separator.namespace.pretext
         4: entity.name.tag.localname.pretext
         5: invalid.illegal.bad-tag-name.pretext
       push:
@@ -1030,7 +1030,7 @@ contexts:
     - match: '(<\?)(xml-stylesheet|xml-model)(?=\s|\?>)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.preprocessor.pretext
         - match: \?>
@@ -1040,7 +1040,7 @@ contexts:
     - match: '(<\?)((?![xX][mM][lL]){{qualified_name}})(?=\s|\?>)'
       captures:
         1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.pretext
+        2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.preprocessor.pretext
         - match: \?>
