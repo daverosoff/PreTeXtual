@@ -282,6 +282,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)({{index}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.index.pretext
+        - match: '/?>'
+          scope: punctuation.definition.end.tag.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(</?)(list)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
