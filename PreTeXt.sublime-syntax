@@ -33,7 +33,8 @@ variables:
   project_like: '(project|activity|exploration|investigation|task)'
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
   footnote: '(fn)'
-  character_delimiter: '([lr]?s?q)'
+  character_delimiter: '([lr]s?q)'
+  # They are all dashes in the PTX schema, as of 2018-02-15
   character_dash: '(nbsp|ndash|mdash)'
   character_exotic: '(ellipsis|asterisk|slash|midpoint|swungdash|permille|pilcrow|section-mark|copyright|registered|trademark)'
   character_escape_xml: '(greater-than|less-than|ampersand|squote|quote)'
@@ -341,7 +342,7 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(quotes|squotes|braces|angles|brackets|dblbrackets)'
+    - match: '(</?)(q(?=\s)|sq(?=\s)|braces|angles|brackets|dblbrackets)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
