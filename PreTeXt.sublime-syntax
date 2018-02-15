@@ -641,6 +641,12 @@ contexts:
                 3: punctuation.definition.tag.end.pretext
                 0: meta.tag.pretext
               pop: true
+            - match: '(</?)(output)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
         - match: '(</)(sage)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.end.pretext
