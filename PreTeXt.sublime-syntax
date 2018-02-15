@@ -610,7 +610,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         3: entity.other.attribute-name.namespace.pretext
-        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
         5: entity.other.attribute-name.localname.pretext
         0: meta.tag.pretext
       push:
@@ -653,7 +653,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         3: entity.other.attribute-name.namespace.pretext
-        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
         5: entity.other.attribute-name.localname.pretext
         0: meta.tag.pretext
       push:
@@ -696,7 +696,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         3: entity.other.attribute-name.namespace.pretext
-        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
         5: entity.other.attribute-name.localname.pretext
         0: meta.tag.pretext
       push:
@@ -739,7 +739,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         3: entity.other.attribute-name.namespace.pretext
-        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
         5: entity.other.attribute-name.localname.pretext
         0: meta.tag.pretext
       push:
@@ -782,7 +782,7 @@ contexts:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         3: entity.other.attribute-name.namespace.pretext
-        4: entity.other.attribute-name.pretext punctuation.separator.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
         5: entity.other.attribute-name.localname.pretext
         0: meta.tag.pretext
       push:
