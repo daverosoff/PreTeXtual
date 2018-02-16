@@ -600,7 +600,7 @@ contexts:
               pop: true
         - match: '(</)(jsxgraph)[^>]*?(>)'
           captures:
-            1: punctuation.definition.tag.end.pretext
+            1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.interactive.pretext
@@ -649,7 +649,7 @@ contexts:
                 0: meta.tag.pretext
         - match: '(</)(sage)[^>]*?(>)'
           captures:
-            1: punctuation.definition.tag.end.pretext
+            1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
@@ -695,7 +695,7 @@ contexts:
     #           pop: true
     #     - match: '(</)(sage)[^>]*?(>)'
     #       captures:
-    #         1: punctuation.definition.tag.end.pretext
+    #         1: punctuation.definition.tag.begin.pretext
     #         2: entity.name.tag.localname.pretext
     #         3: punctuation.definition.tag.end.pretext
     #         0: meta.tag.pretext markup.other.interactive.pretext
@@ -738,7 +738,7 @@ contexts:
               pop: true
         - match: '(</)(program)[^>]*?(>)'
           captures:
-            1: punctuation.definition.tag.end.pretext
+            1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
@@ -781,7 +781,7 @@ contexts:
               pop: true
         - match: '(</)(program)[^>]*?(>)'
           captures:
-            1: punctuation.definition.tag.end.pretext
+            1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
@@ -824,7 +824,7 @@ contexts:
               pop: true
         - match: '(</)(program)[^>]*?(>)'
           captures:
-            1: punctuation.definition.tag.end.pretext
+            1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
@@ -867,7 +867,7 @@ contexts:
               pop: true
         - match: '(</)(program)[^>]*?(>)'
           captures:
-            1: punctuation.definition.tag.end.pretext
+            1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
