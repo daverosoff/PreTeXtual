@@ -6,7 +6,6 @@ want to suggest a feature, open an issue at
 Definitely before 0.5.0 (official release with new name)
 
 * New name
-* Syntax highlighting for sage/python needs work
 * Fix broken lookarounds
 * Fix 'localname' scope names
 
