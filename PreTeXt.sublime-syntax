@@ -945,6 +945,92 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
           pop: true
+    - match: '(<)(program)[^>]*?(language\s*)(=)(\s*"r")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.r.embedded.pretext
+            - include: 'scope:source.r'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(program)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
+    - match: '(<)(program)[^>]*?(language\s*)(=)(\s*"xslt")[^>]*?'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: entity.other.attribute-name.namespace.pretext
+        4: entity.other.attribute-name.pretext punctuation.separator.key-value.pretext
+        5: entity.other.attribute-name.localname.pretext
+        0: meta.tag.pretext
+      push:
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+          push:
+            - meta_content_scope: source.xslt.embedded.pretext
+            - include: 'scope:text.xml'
+          with_prototype:
+            - match: '<!\[CDATA\['
+              scope: punctuation.definition.string.begin.pretext
+            - match: ']]>'
+              scope: punctuation.definition.string.end.pretext
+            - match: '(</)(input)(>)'
+              captures:
+                1: punctuation.definition.tag.begin.pretext
+                2: entity.name.tag.localname.pretext
+                3: punctuation.definition.tag.end.pretext
+                0: meta.tag.pretext
+              pop: true
+        - match: '(</)(program)[^>]*?(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+          pop: true
     - match: '(</?)({{interactive}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
