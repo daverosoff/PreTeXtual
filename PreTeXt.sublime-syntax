@@ -200,6 +200,23 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)(usage)[^>]*(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.block.any.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext markup.other.math.notation.pretext
+      push:
+        - meta_scope: text.tex.latex.pretext
+        - include: 'scope:text.tex.latex'
+        # - include: tag-stuff
+        - match: '(</)(\2)(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext markup.other.math.display.pretext
+          pop: true
     - match: '(<)(xref)'
       captures:
         1: punctuation.definition.tag.begin.pretext
