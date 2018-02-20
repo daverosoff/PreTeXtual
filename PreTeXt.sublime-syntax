@@ -622,13 +622,18 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.image.latex.pretext
           pop: true
+    - match: '(<)(input)[^>]*(/>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        0: meta.tag.pretext
     - match: '(<)(jsxgraph)[^>]*?'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         0: meta.tag.pretext markup.other.interactive.pretext
       push:
-        - match: '(<)(input)[^>]*?(>)'
+        - match: '(<)(input)[^>]*?([^/]>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
