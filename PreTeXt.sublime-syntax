@@ -26,7 +26,9 @@ variables:
   axiom_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
   computation_like: '(computation|technology)'
   definition_like: '(definition)'
-  division: '(part|chapter|(?:sub)*section|appendix|introduction|conclusion|exercises|references|index|paragraphs)'
+  # strange terminator for sub*section because - matched \b; need lookahead to not consume space which need
+  # to match tag-stuff
+  division: '(part|chapter|(?:sub)*section(?=[^>-])|appendix|introduction|conclusion|exercises|references|index|paragraphs)'
   example_like: '(example|question|problem)'
   exercise_like: '(exercise)(?=\b)'
   remark_like: '(remark|convention|note|observation|warning|insight)'
