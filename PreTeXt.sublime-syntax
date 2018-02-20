@@ -38,7 +38,7 @@ variables:
   character_delimiter: '([lr]s?q)'
   # They are all dashes in the PTX schema, as of 2018-02-15
   character_dash: '(nbsp|ndash|mdash)'
-  character_exotic: '(ellipsis|asterisk|slash|midpoint|swungdash|permille|pilcrow|section-mark|copyright|registered|trademark)'
+  character_exotic: '(ellipsis|asterisk|slash|midpoint|swungdash|permille|pilcrow|section-mark|copyright|registered|trademark|backtick)'
   character_escape_xml: '(greater-than|less-than|ampersand|squote|quote)'
   character_escape_latex: '(hash|dollar|percent|tilde|underscore|circumflex|backslash|lbrace|rbrace)'
   character_fillin: '(fillin)'
