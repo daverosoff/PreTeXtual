@@ -622,26 +622,31 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.image.latex.pretext
           pop: true
-    - match: '(<)(input)[^>]*(/>)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-        0: meta.tag.pretext
     - match: '(<)(jsxgraph)[^>]*?'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         0: meta.tag.pretext markup.other.interactive.pretext
       push:
-        - match: '(<)(input)[^>]*?([^/]>)'
+        - include: tag-stuff
+        - match: '>'
+          scope: punctuation.definition.tag.end.pretext
+        - match: '/>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - match: '(<)(input)([^>]*)(/>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.fake.pretext
+            3: entity.other.attribute-name.kludge.pretext
+            4: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext
+        - match: '(<)(input)[^>]*?(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext
-        - include: tag-stuff
-        - match: '>'
-          scope: punctuation.definition.tag.end.pretext
           push:
             - meta_content_scope: source.js.embedded.pretext
             - include: 'scope:source.js'
@@ -664,6 +669,15 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.interactive.pretext
           pop: true
+        - match: '(</?)({{name}})'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+          push:
+            - match: '/?>'
+              scope: punctuation.definition.tag.end.pretext
+              pop: true
+            - include: tag-stuff
     - match: '(<)(sage)[^>]*?(language\s*)(=)(\s*"r")[^>]*?'
       captures:
         1: punctuation.definition.tag.begin.pretext
