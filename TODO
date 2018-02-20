@@ -11,6 +11,10 @@ Definitely before 0.5.0 (official release with new name)
 
 Features for 0.5.x
 
+* Syntax highlighting for sage/python needs work
+* fillin does not highlight inside math
+* Symbol list for other xml:id targetables, esp equation
+  - get a comprehensive list of these
 * Set tabs to spaces and width 2 on apply syntax
 * Change snippets, etc. to use 2-space indentation (or package settings)
 * Investigate why <jsxgraph> tags don't close properly
