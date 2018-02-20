@@ -241,18 +241,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(md|me|mdn|men)(?=\s)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.math.display.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
+    # - match: '(</?)(md|me|mdn|men)(?=\s)'
+    #   captures:
+    #     1: punctuation.definition.tag.begin.pretext
+    #     2: entity.name.tag.localname.pretext
+    #   push:
+    #     - meta_scope: meta.tag.pretext markup.other.math.display.pretext
+    #     - match: '/?>'
+    #       scope: punctuation.definition.tag.end.pretext
+    #       pop: true
+    #     - include: single-quoted-string
+    #     - include: double-quoted-string
+    #     - include: tag-stuff
     # - match: '(</?)(mrow)'
     #   captures:
     #     1: punctuation.definition.tag.begin.pretext
@@ -265,18 +265,18 @@ contexts:
     #     - include: single-quoted-string
     #     - include: double-quoted-string
     #     - include: tag-stuff
-    - match: '(</?)(m)(?=\s)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.math.inline.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
+    # - match: '(</?)(m)(?=\s)'
+    #   captures:
+    #     1: punctuation.definition.tag.begin.pretext
+    #     2: entity.name.tag.localname.pretext
+    #   push:
+    #     - meta_scope: meta.tag.pretext markup.other.math.inline.pretext
+    #     - match: '/?>'
+    #       scope: punctuation.definition.tag.end.pretext
+    #       pop: true
+    #     - include: single-quoted-string
+    #     - include: double-quoted-string
+    #     - include: tag-stuff
     - match: '(</?)(title)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -529,23 +529,58 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)(mrow)[^>]*?(>)'
+    - match: '(<)(mrow|me(?=\b)|men)[^>]*?(>)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
         3: punctuation.definition.tag.end.pretext
-        0: meta.tag.pretext markup.other.math.display.mrow.pretext
+        0: meta.tag.pretext markup.other.math.display.pretext
+      push:
+        - meta_scope: text.tex.latex.pretext
+        - include: 'scope:text.tex.latex'
+        # - include: tag-stuff
+        - match: '(</)(\2)(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext markup.other.math.display.pretext
+          pop: true
+    - match: '(<)(m(?=\b))[^>]*?(>)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext markup.other.math.inline.pretext
       push:
         - meta_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
         # - include: tag-stuff
       # with_prototype:
-        - match: '(</)(mrow)(>)'
+        - match: '(</)(\2)(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
-            0: meta.tag.pretext markup.other.math.display.mrow.pretext
+            0: meta.tag.pretext markup.other.math.inline.pretext
+          pop: true
+    - match: '(</?)(asymptote)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: markup.other.image.asymptote.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+    - match: '(</?)(sageplot)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: markup.other.image.sageplot.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
           pop: true
     - match: '(<)({{latex_image}})[^>]*?(>)'
       captures:
