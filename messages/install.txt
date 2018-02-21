@@ -1,13 +1,13 @@
-MBXTools package, public (pre-)release:
+PreTeXtual package, public (pre-)release:
 
-Thank you for your interest in MBXTools. Make sure to inspect the README.md
+Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
 for instructions on usage and configuring your MathBook XML files to work
-automatically with MBXTools. If you find a bug or have a feature request,
+automatically with PreTeXtual. If you find a bug or have a feature request,
 please open an issue at
 
-    https://github.com/daverosoff/MBXTools
+    https://github.com/daverosoff/PreTeXtual
 
-I hope you find MBXTools useful!
+I hope you find PreTeXtual useful!
 
 Known issues:
 
@@ -15,9 +15,9 @@ Known issues:
       completely satisfactory results (e.g., XML tags inside)
         - Should there be a user setting to disable this mirroring?
         - Is this even possible?
-    * MathBook XML syntax is inappropriately applied to files of 
+    * MathBook XML syntax is inappropriately applied to files of
       other types in some instances
-    * Typing '<xref ref=""' results in a spurious error ("ref/cite: 
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite:
       unrecognized format")
     * Potential for confusion since Symbols List is always based on
       the current project (or open folder) but the ref autocomplete
