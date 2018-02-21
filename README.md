@@ -1,6 +1,6 @@
-# MBXTools: a Sublime Text package for PreTeXt
+# PreTeXtual: a Sublime Text package for PreTeXt
 
-MBXTools is a Sublime Text 3 package designed to assist authors using
+PreTeXtual is a Sublime Text 3 package designed to assist authors using
 [PreTeXt](https://github.com/rbeezer/mathbook) (formerly known as MathBook
 XML). It is very experimental and may behave unexpectedly.
 
@@ -20,34 +20,34 @@ Command Palette. To bring up the palette, hit <kbd>Ctrl+p</kbd>
 (<kbd>Cmd+p</kbd> on OS X). Then start typing the name of the command you want
 to filter the list of results.*
 
-It is recommended to install MBXTools via Package Control. If you have not
+It is recommended to install PreTeXtual via Package Control. If you have not
 installed Package Control yet, you should
 [do that first](https://packagecontrol.io) (and restart Sublime Text afterward).
 
 After Package Control is installed, use the `Install Package` command to
-search for the MBXTools package, and select it from the Quick Panel to
+search for the PreTeXtual package, and select it from the Quick Panel to
 install. This method of installation allows Package Control to automatically
 update your installation and show you appropriate release notes.
 
-You may also install MBXTools via `git`. Change directories into your
+You may also install PreTeXtual via `git`. Change directories into your
 `Packages` folder. To find the `Packages` folder, select Browse Packages from
 the Preferences menu (from the Sublime Text 3 menu on OS X). Make sure you are
 in the `Packages` folder and *not* `Packages/User`.
 
 Then, run
 ```
-git clone https://github.com/daverosoff/MBXTools.git
+git clone https://github.com/daverosoff/PreTeXtual.git
 ```
 and restart Sublime Text (probably not necessary).
 
 ### Keybindings
 
-MBXTools is inspired by
+PreTeXtual is inspired by
 [LaTeXTools](https://packagecontrol.io/packages/LaTeXTools), and like that
 package uses a <kbd>Ctrl+l</kbd> prefix for many commands. The Expand Selection
-to Line command is bound to <kbd>Ctrl+l</kbd> by default. MBXTools rebinds that
+to Line command is bound to <kbd>Ctrl+l</kbd> by default. PreTeXtual rebinds that
 command to <kbd>Ctrl+l, Ctrl+l</kbd>. Note that this is a keyboard shortcut
-consisting of two separate keystroke combinations. Most MBXTools shortcuts are
+consisting of two separate keystroke combinations. Most PreTeXtual shortcuts are
 like this.
 
 ### Usage

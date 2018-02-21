@@ -1,24 +1,24 @@
 [
     {
-        "caption": "Preferences: MBXTools Settings – Default",
+        "caption": "Preferences: PreTeXtual Settings – Default",
         "command": "open_file",
         "args": {
-            "file": "${packages}/MBXTools/MBXTools.sublime-settings"
+            "file": "${packages}/PreTeXtual/PreTeXtual.sublime-settings"
         }
     },
     {
-        "caption": "Preferences: MBXTools Settings – User",
+        "caption": "Preferences: PreTeXtual Settings – User",
         "command": "open_file",
         "args": {
-            "file": "${packages}/User/MBXTools.sublime-settings"
+            "file": "${packages}/User/PreTeXtual.sublime-settings"
         }
     },
     {
-        "caption": "MBXTools: Set PreTeXt Root File",
+        "caption": "PreTeXtual: Set PreTeXt Root File",
         "command": "set_pretext_root_file"
     },
     {
-        "caption": "MBXTools: Set PreTeXt File Extensions",
+        "caption": "PreTeXtual: Set PreTeXt File Extensions",
         "command": "set_pretext_exts"
     }
 ]
