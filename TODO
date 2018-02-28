@@ -23,6 +23,7 @@ Features for 0.5.x
 
 Features for 0.6.0
 
+* Text command based on scopes to add similar tag on Ctrl+Enter
 * Text command to move to next subdiv/block lacking xml:id
 * Add command for "make current file project root"
 * Add new snippets for new constants/entities
