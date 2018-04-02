@@ -537,15 +537,24 @@ contexts:
         0: meta.tag.pretext markup.other.math.display.pretext
       push:
         - meta_scope: text.tex.latex.pretext
-        - include: 'scope:text.tex.latex'
-        # - include: tag-stuff
-        - match: '(</)(\2)(>)'
+        - include: 'scope:text.tex.latex#math-content'
+        - match: '(?=(</)(\2)(>))'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.math.display.pretext
           pop: true
+      with_prototype:
+        - match: '(</?)(var|xref|fillin)[^/>]*?(/?>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+          # include: tag-stuff
+          # push:
+          #   - match: ''
+          #     pop: true
     - match: '(<)(m(?=\b))[^>]*?(>)'
       captures:
         1: punctuation.definition.tag.begin.pretext

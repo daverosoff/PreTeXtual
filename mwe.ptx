@@ -1,0 +1,7 @@
+<solution>
+                <p>We <em>add</em> the exponents as follows:</p>
+                <md>
+                    <mrow><var name="$expression" />\amp=x^{<var name="$a" />+<var name="$b" />}</mrow>
+                    <mrow>\amp=x^{<var name="$c" />}</mrow>
+                </md>
+            </solution>
