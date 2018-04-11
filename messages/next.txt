@@ -1,4 +1,4 @@
-PreTeXtual, package version 0.5.0
+PreTeXtual, package version 0.6.0-rc.1
 Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
 for instructions on usage and configuring your MathBook XML files to work
 automatically with PreTeXtual. If you find a bug or have a feature request,
@@ -10,15 +10,12 @@ I hope you find PreTeXtual useful!
 
 Release notes:
 
-    * Discontinue support for first-line <!--MBX--> comment file recognition;
-      only extension-based recognition is supported
-    * Simplified syntax and updated scopes to match current ST scope naming
-      recommendations (https://www.sublimetext.com/docs/3/scope_naming.html)
-    * Improved scoping supports embedded LaTeX, Python/Sage, R, Javascript,
-      Julia, C, C++ syntax definitions in appropriate contexts: scoping is
-      not perfect and you will notice aberrations, please feel free to report them
-    * Change many names to PreTeXt, including package name
-    * Change some snippets to reflect extensive changes/deprecations in schema
+    * This is a release candidate version of PreTeXtual and may be buggier
+      than usual.
+    * Sublime Text build system added. Use Ctrl+Shift+B from within a 
+      PreTeXt file to process source from within Sublime Text. The build
+      system assumes certain structure about your filesystem and you may
+      need to edit it by hand to make it work.
 
 Known issues:
 
