@@ -1,5 +1,10 @@
 [
     {
+        "caption": "PreTeXtual: Clone repository",
+        "command": "clone_project",
+        "args": {}
+    },
+    {
         "caption": "Preferences: PreTeXtual Settings – Default",
         "command": "open_file",
         "args": {
