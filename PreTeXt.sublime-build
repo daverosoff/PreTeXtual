@@ -17,8 +17,8 @@
             "cmd": "vagrant ssh -- 'mkdir -p /vagrant/MAT101AlgebraProbability/output/images; /vagrant/mathbook/script/mbx -vv -c latex-image -d /vagrant/MAT101AlgebraProbability/output/images/ -f all /vagrant/MAT101AlgebraProbability/src/$file_name'; echo 'Build complete.'"
         }
     ],
-    "working_dir": "C:/Users/drosoff/pv",
-    "env": {"mathbook": "C:/Users/drosoff/pv/mathbook"},
+    "working_dir": "C:/PreTeXt/MAT101AlgebraProbability",
+    "env": {"mathbook": "C:/PreTeXt"},
     "shell": true,
     "word_wrap": true,
 }
