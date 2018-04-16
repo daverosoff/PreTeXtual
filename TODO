@@ -3,10 +3,6 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/PreTeXtual
 
-Definitely before 0.5.0 (official release with new name)
-
-* New name
-
 Features for 0.5.x
 
 * Syntax highlighting for sage/python needs work
@@ -20,9 +16,12 @@ Features for 0.5.x
 * Fix snippets so they correctly handle <nonempty>tags</nonempty>
 * adapt subdiv snippets for wrapping selection; also place cursor in <p> tag
   for modification to e.g. <introduction>
-
+* command to clear root file, set current file as root file, set some open file
+  as root file (use quick panel)
+* auto-detect stale options from earlier versions and migrate them, purge old
 Features for 0.6.0
 
+* Build systems with Vagrant
 * Text command to move to next subdiv/block lacking xml:id
 * Add command for "make current file project root"
 * Add new snippets for new constants/entities
