@@ -3,6 +3,18 @@
     "file_patterns": ["*.ptx", "*.mbx"],
     "variants": [
         {
+            "name": "Process PreTeXt to HTML (beta)",
+            "target": "beta",
+            "cmd": "xsltproc",
+            "xinclude": "true",
+            "output": "/vagrant/MAT101AlgebraProbability/output",
+            "stringparam": {
+                "html.css.file": "\\\"mathbook-2.css\\\""
+            },
+            "xsl": "/vagrant/mathbook/xsl/mathbook-html.xsl",
+            "pretext": "/vagrant/MAT101AlgebraProbability/src/index.mbx"
+        },
+        {
             "name": "Process PreTeXt to HTML (Idaho)",
             "cmd": "vagrant ssh -- xsltproc --xinclude --stringparam \"html.css.file\" mathbook-2.css --output /vagrant/MAT101AlgebraProbability/output/ /vagrant/mathbook/user/idaho-html.xsl /vagrant/MAT101AlgebraProbability/src/$file_name; echo 'Build complete.'"
         },
@@ -17,8 +29,8 @@
             "cmd": "vagrant ssh -- 'mkdir -p /vagrant/MAT101AlgebraProbability/output/images; /vagrant/mathbook/script/mbx -vv -c latex-image -d /vagrant/MAT101AlgebraProbability/output/images/ -f all /vagrant/MAT101AlgebraProbability/src/$file_name'; echo 'Build complete.'"
         },
     ],
-    "working_dir": "C:/PreTeXt/MAT101AlgebraProbability",
-    "env": {"mathbook": "C:/PreTeXt"},
-    "shell": true,
-    "word_wrap": true,
+    // "working_dir": "C:/PreTeXt/MAT101AlgebraProbability",
+    // "env": {"mathbook": "C:/PreTeXt"},
+    // "shell": true,
+    // "word_wrap": true,
 }
