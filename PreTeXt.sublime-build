@@ -6,13 +6,14 @@
             "name": "Process PreTeXt to HTML (beta)",
             "target": "beta",
             "cmd": "xsltproc",
-            "xinclude": "true",
-            "output": "/vagrant/MAT101AlgebraProbability/output",
-            "stringparam": {
-                "html.css.file": "\\\"mathbook-2.css\\\""
-            },
-            "xsl": "/vagrant/mathbook/xsl/mathbook-html.xsl",
-            "pretext": "/vagrant/MAT101AlgebraProbability/src/index.mbx"
+            "format": "html"
+            // "xinclude": "true",
+            // "output": "/vagrant/MAT101AlgebraProbability/output",
+            // "stringparam": {
+            //     "html.css.file": "\\\"mathbook-2.css\\\""
+            // },
+            // "xsl": "/vagrant/mathbook/xsl/mathbook-html.xsl",
+            // "pretext": "/vagrant/MAT101AlgebraProbability/src/index.mbx"
         },
         {
             "name": "Process PreTeXt to HTML (Idaho)",
@@ -27,6 +28,11 @@
             "name": "Build PreTeXt images (LaTeX)",
             "shell": true,
             "cmd": "vagrant ssh -- 'mkdir -p /vagrant/MAT101AlgebraProbability/output/images; /vagrant/mathbook/script/mbx -vv -c latex-image -d /vagrant/MAT101AlgebraProbability/output/images/ -f all /vagrant/MAT101AlgebraProbability/src/$file_name'; echo 'Build complete.'"
+        },
+        {
+            "name": "Update PreTeXt",
+            "shell": true,
+            "cmd": "vagrant ssh -- 'cd /vagrant/mathbook; git pull origin dev'; echo 'Installation up to date.'"
         },
     ],
     // "working_dir": "C:/PreTeXt/MAT101AlgebraProbability",
