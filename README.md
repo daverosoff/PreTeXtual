@@ -76,7 +76,13 @@ the image which still shows the former name `MathBook XML`.
 
 ![Image of status bar showing MathBook XML active](media/mbx-syntax-active.png)
 
-There are only a few features implemented so far.
+Here is a (non-exhaustive) list of features.
+
+1. New in 0.6.0: an extensive interface with Vagrant virtual machine management
+   software is included, to enable Sublime Text 3 to behave more like an API
+   for PreTeXt. See the
+   [PreTeXt Author's Guide](https://mathbook.pugetsound.edu/doc/author-guide/html/author-guide.html)
+   for more information.
 
 1. If you have some subdivisions (with `xml:id`) in your PreTeXt file, hit
    <kbd>Ctrl+R</kbd> (<kbd>Cmd+R</kbd> on OS X) to run the Goto Symbol command.
@@ -103,10 +109,11 @@ There are only a few features implemented so far.
 ![Image of quick panel showing xml id values](media/quickpanel-xrefs.png)
 
 4. If you set a PreTeXt root file, then ref completion as described above will
-   recursively search for `xml:id` through all your `xi:includes` starting with
-   the indicated root file. Run the command "Set PreTeXt Root File" from the
-   Preferences menu or the Command Palette. Be sure to use an absolute path
-   name for the value of the setting.
+   recursively search for `xml:id` through all your `xi:includes` starting
+   with the indicated root file. Run the command "Set PreTeXt Root File" from
+   the Preferences menu or the Command Palette. Be sure to use an absolute
+   path name for the value of the setting, as well as forward slashes (yes,
+   Windows too).
 
 5. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
    subdivision snippets. A blank `title` element is provided and the cursor
@@ -116,3 +123,5 @@ There are only a few features implemented so far.
 ### Known issues
 
 * The `ref` snippet does not bring up the quick panel. Should it?
+* Some of the snippets could be improved.
+* Symbol finding could be improved.
