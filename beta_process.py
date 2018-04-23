@@ -49,6 +49,9 @@ class BetaCommand(sublime_plugin.WindowCommand):
         if not pretext_stylesheets:
             print("Cannot find PreTeXt stylesheets, check settings :(")
             return
+        if not pretext_root_file:
+            print("Need to set PreTeXt root file :(")
+            return
         if cmd == "xsltproc":
             print("Invoking xsltproc...{}".format(time.gmtime(time.time())))
             if xinclude:
