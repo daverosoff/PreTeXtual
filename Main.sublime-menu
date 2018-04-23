@@ -34,11 +34,19 @@
                                 "command": "open_file"
                             },
                             {
-                                "caption": "Set PreTeXt Root File",
+                                "caption": "Set PreTeXt root file",
                                 "command": "set_pretext_root_file"
                             },
                             {
-                                "caption": "Set PreTeXt File Extensions",
+                                "caption": "Set current file as PreTeXt root file",
+                                "command": "set_current_file_as_root"
+                            },
+                            {
+                                "caption": "Clear PreTeXt root file",
+                                "command": "clear_pretext_root_file"
+                            },
+                            {
+                                "caption": "Set PreTeXt file extensions",
                                 "command": "set_pretext_exts"
                             },
                             {

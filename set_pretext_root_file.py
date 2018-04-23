@@ -28,13 +28,13 @@ class SetPretextRootFileCommand(sublime_plugin.WindowCommand):
     def run(self, **kwargs):
         window = self.window
         # view = self.active_view()
-        # project = window.project_file_name()
+        project = window.project_file_name()
 
-        def load_settings(self):
+        def load_settings():
             return sublime.load_settings('Preferences.sublime-settings')
 
         def set_user_prefs(filename):
-            if window.project_file_name():
+            if project:
                 data = window.project_data()
                 if 'settings' not in data:
                     data['settings'] = {'pretext_root_file': filename}
@@ -42,7 +42,7 @@ class SetPretextRootFileCommand(sublime_plugin.WindowCommand):
                     data['settings'].update({'pretext_root_file': filename})
                 window.set_project_data(data)
             else: # fall back on user prefs
-                plugin_settings = sublime.load_settings('Preferences.sublime-settings')
+                plugin_settings = load_settings()
                 plugin_settings.set('pretext_root_file', filename)
                 sublime.save_settings('Preferences.sublime-settings')
             sublime.status_message('PreTeXt root file: ' + filename)
@@ -60,3 +60,18 @@ class SetPretextRootFileCommand(sublime_plugin.WindowCommand):
             else:
                 window.show_input_panel("Absolute path to root PreTeXt file:",
                     "", on_done, None, None)
+
+class ClearPretextRootFileCommand(SetPretextRootFileCommand):
+    def run(self):
+        SetPretextRootFileCommand.run(self, filename="")
+
+class SetCurrentFileAsRootCommand(SetPretextRootFileCommand):
+    def is_enabled(self):
+        if self.window.active_view().file_name():
+            return True
+        return False
+
+    def run(self):
+        import re
+        fn = self.window.active_view().file_name()
+        SetPretextRootFileCommand.run(self, filename=re.sub(r"\\", '/', fn))
