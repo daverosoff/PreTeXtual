@@ -34,16 +34,20 @@
                                 "command": "open_file"
                             },
                             {
+                                "caption": "Initialize PreTeXt Vagrant",
+                                "command": "initialize_pretext_vagrant"
+                            },
+                            {
+                                "caption": "Clear PreTeXt root file",
+                                "command": "clear_pretext_root_file"
+                            },
+                            {
                                 "caption": "Set PreTeXt root file",
                                 "command": "set_pretext_root_file"
                             },
                             {
                                 "caption": "Set current file as PreTeXt root file",
                                 "command": "set_current_file_as_root"
-                            },
-                            {
-                                "caption": "Clear PreTeXt root file",
-                                "command": "clear_pretext_root_file"
                             },
                             {
                                 "caption": "Set PreTeXt file extensions",

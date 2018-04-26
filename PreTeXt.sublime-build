@@ -19,7 +19,7 @@
             "target": "beta",
             "cmd": "mbx",
             "format": "latex-image"
-        }
+        },
         {
             "name": "Update PreTeXt",
             "shell": true,

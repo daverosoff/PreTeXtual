@@ -19,6 +19,10 @@
         }
     },
     {
+        "caption": "PreTeXtual: Initialize PreTeXt Vagrant",
+        "command": "initialize_pretext_vagrant"
+    },
+    {
         "caption": "PreTeXtual: Clear PreTeXt root file",
         "command": "clear_pretext_root_file"
     },
