@@ -70,20 +70,30 @@ class BetaCommand(sublime_plugin.WindowCommand):
             print("Calling: {}".format(cmd_string))
             print("Please wait a few moments...")
             # subprocess.run is not available in python 3.3.6 which ST3 uses as of 3162
-            proc = subprocess.Popen(cmd_string,
-                cwd=from_vagrant(os.path.dirname(pretext_root_file)), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            while proc.poll() is None:
-                try:
-                    data = proc.stdout.readline().decode(encoding="UTF-8")
-                    if re.match("VM must be running", data):
-                        sublime.message_dialog("Start your Vagrant box by running the `vagrant up` command (using Command+Shift+P or Ctrl+Shift+P to bring up the command palette).")
-                        # built = False
-                    print(data, end="")
-                except:
-                    # if built:
-                    sublime.message_dialog("Build complete.")
-                    return
-            # if built:
-            sublime.message_dialog("Build complete.")
+        elif cmd == "mbx":
+            print("Invoking mbx...{}".format(time.gmtime(time.time())))
+            mbx_prefix = vagrantroot + "mathbook/script/mbx"
+            mbx_switches = {'c': "latex-image", 'd': pretext_images, 'f': "all"}
+            for k, v in mbx_switches.items():
+                mbx_prefix = mbx_prefix + " -{} {}".format(k, v)
+            mbx_suffix = " {}".format(to_vagrant(pretext_root_file))
+            cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix + mbx_suffix)
+            print("Calling: {}".format(cmd_string))
+            print("Please wait a few moments...")
+        proc = subprocess.Popen(cmd_string,
+            cwd=from_vagrant(os.path.dirname(pretext_root_file)), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        while proc.poll() is None:
+            try:
+                data = proc.stdout.readline().decode(encoding="UTF-8")
+                if re.match("VM must be running", data):
+                    sublime.message_dialog("Start your Vagrant box by running the `vagrant up` command (using Command+Shift+P or Ctrl+Shift+P to bring up the command palette).")
+                    # built = False
+                print(data, end="")
+            except:
+                # if built:
+                sublime.message_dialog("Build complete.")
+                return
+        # if built:
+        sublime.message_dialog("Build complete.")
 
 
