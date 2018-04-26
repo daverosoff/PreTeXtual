@@ -12,10 +12,14 @@ Release notes:
 
     * This is a release candidate version of PreTeXtual and may be buggier
       than usual.
-    * Sublime Text build system added. Use Ctrl+Shift+B from within a 
-      PreTeXt file to process source from within Sublime Text. The build
-      system assumes certain structure about your filesystem and you may
-      need to edit it by hand to make it work.
+    * Sublime Text build system added. Use Ctrl+Shift+B from within a PreTeXt
+      file to process source from within Sublime Text. The build system
+      assumes certain structure about your filesystem and you may need to edit
+      it by hand to make it work, or move some files and directories on your
+      system. The build system is intended for beginning users of PreTeXt at
+      the moment and it does not support much customization natively. The
+      official release of 0.6.0 will be more customizable and in particular
+      will not require the use of the Vagrant box.
 
 Known issues:
 
