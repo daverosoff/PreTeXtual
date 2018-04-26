@@ -80,6 +80,9 @@ class BetaCommand(sublime_plugin.WindowCommand):
             cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix + mbx_suffix)
             print("Calling: {}".format(cmd_string))
             print("Please wait a few moments...")
+        else:
+            sublime.message_dialog("Error 4: Something bad happened")
+            return
         proc = subprocess.Popen(cmd_string,
             cwd=from_vagrant(os.path.dirname(pretext_root_file)), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
