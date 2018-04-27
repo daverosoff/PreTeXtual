@@ -11,7 +11,24 @@ LaTeXTools codebase in order to implement the features I thought would be most
 useful to MBX authors. Please let me know of any bugs you find or any features
 you would like to include.
 
-Support for Sublime Text 2 is limited and there are no plans to extend it.
+As of version 0.5.0, Sublime Text 2 is no longer supported.
+
+<!-- MarkdownTOC -->
+
+- Installation
+- Additional setup to use the automatic build systems
+   - Read before continuing
+   - Install other required software
+   - Choose a Vagrant box
+   - Install PreTeXt with one easy step
+   - Populate your environment
+   - Compiling to HTML or PDF
+   - Building images
+- Keybindings
+- Usage
+- Known issues
+
+<!-- /MarkdownTOC -->
 
 ### Installation
 
@@ -24,10 +41,10 @@ It is recommended to install PreTeXtual via Package Control. If you have not
 installed Package Control yet, you should
 [do that first](https://packagecontrol.io) (and restart Sublime Text afterward).
 
-After Package Control is installed, use the `Install Package` command to
-search for the PreTeXtual package, and select it from the Quick Panel to
-install. This method of installation allows Package Control to automatically
-update your installation and show you appropriate release notes.
+After Package Control is installed, use the `Install Package` command (in the
+Command Palette) to search for the PreTeXtual package, and select it from the
+Quick Panel to install. This method of installation allows Package Control to
+automatically update your installation and show you appropriate release notes.
 
 You may also install PreTeXtual via `git`. Change directories into your
 `Packages` folder. To find the `Packages` folder, select Browse Packages from
@@ -39,6 +56,128 @@ Then, run
 git clone https://github.com/daverosoff/PreTeXtual.git
 ```
 and restart Sublime Text (probably not necessary).
+
+### Additional setup to use the automatic build systems
+
+PreTeXtual now comes with build systems that can process your PreTeXt source
+into HTML or LaTeX and build your latex-image images into all image formats.
+The result is output that is ready to preview in a browser (HTML) or compile
+to PDF (LaTeX). All of this can be done from the command palette, if you
+carefully follow the directions below.
+
+#### Read before continuing
+
+The build systems are intended primarily for Windows users, since PreTeXt is
+much more difficult and tedious to install on Windows. As of this release, it
+has only been successfully used on Windows 10. Windows 7 users are welcome to
+try to follow the directions, but Windows 7 seems to have some difficulty
+installing current versions of Vagrant, see below. Future support for Windows
+7 is devoutly to be wished.
+
+If your Windows 7 is 32-bits, it is unlikely that you will be able to use the
+build system. Please open an issue if you need 32-bit support. If there is
+sufficient demand, it is possible to create compatible Vagrant boxes. (However
+you will still need to use Vagrant, which may not always play nice with
+Windows 7, as described above)
+
+Users of other operating systems will not find the build systems in this
+release useful without manual editing of some of the package resources. You
+are welcome to [open an
+issue](https://github.com/daverosoff/PreTeXtual/issues) with questions about
+how to accomplish this. A future release will support use of the build systems
+without Vagrant, which is preferable for any Mac OS or Linux users who might
+want to use the build systems for convenience.
+
+#### Install other required software
+
+At present, the build systems require the use of two other applications,
+Virtualbox and Vagrant. Install these on your computer. Agree to the default
+whenever you are prompted for a decision. *Not choosing default values will
+break the PreTeXtual build systems.*
+
+1. In Sublime Text, use Package Control to install the SideBarEnhancements
+   plugin
+1. [Download Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+2. [Download Vagrant](https://www.vagrantup.com/downloads.html)
+
+#### Choose a Vagrant box
+
+After downloading and installing from the above links, open a Sublime Text
+window and run the command (from the Command Palette) "Initialize PreTeXt
+Vagrant". This will take some time, depending on your selections. You will see
+a menu with several choices. Most people will want either "PreTeXt" or
+"PreTeXt-lite". If you need Sage or Asymptote, choose "PreTeXt" (note that
+these image types are not supported in this release but support is coming very
+soon). If you need a full LaTeX installation but not Sage or Asymptote, choose
+"PreTeXt-lite". If you only need to process HTML, you can try "PreTeXt-
+barebones". The last option, "PreTeXt-no-images", is only for testing.
+
+The full "PreTeXt" option will take between 45 and 60 minutes to download and
+install. The others will take less time, but even the barebones option might
+take 10 to 15 minutes. You should see new windows opening to advise you of
+progress and reassure you that something is happening. When no more of these
+windows are visible, go on to the next step.
+
+#### Install PreTeXt with one easy step
+
+Note: This step will merge with the previous one in a future release.
+
+From the Command Palette, run the command "Clone repository". You will see a
+message at the bottom of the screen prompting you for a URL. Enter the text
+
+    https://github.com/rbeezer/mathbook.git
+
+and hit Enter. Another new window will pop up during the installation, which
+should only take a few seconds.
+
+#### Populate your environment
+
+The previous sections created a new folder `C:\PreTeXt` on your machine. This
+is where all your writing projects will live. You have a few ways to get them
+into place.
+
+* Move existing projects to the `C:\PreTeXt` folder. This is probably be st to
+  do using the Windows file browser.
+* Clone existing git repositories using the "Clone repository" command.
+* Create an empty folder for a new project. Put it under `C:\PreTeXt` and call
+  it whatever you want (no spaces!)
+
+Whatever way you choose, verify the following for each project you add.
+
+1. Project folder has subfolder called `src`
+2. `src` folder contains all PreTeXt source files for the project
+
+#### Compiling to HTML or PDF
+
+Now the fun starts. In an existing writing project, open the root PreTeXt file
+(the one with the `<mathbook>` element). Use the Command Palette
+(<kbd>Ctrl+Shift+P</kbd>) to run the command "Set current file as PreTeXt
+root". Then, bring up the build menu by pressing <kbd>Ctrl+Shift+B</kbd>.
+Select "Process PreTeXt to HTML" from the menu. If you are watching the
+sidebar, you will see an `output` folder appear next to your `src` folder. If
+you expand it in the sidebar you can watch the HTML files appear as they are
+generated. When the build is finished, Sublime Text should alert you to this
+fact with a dialog box.
+
+Open the `output\html` folder and right-click one of the HTML files. Select
+"Open in browser". Marvel at the relative simplicity of this process.
+
+To compile to LaTeX, you can select "Process PreTeXt to LaTeX" from the menu.
+To convert to PDF, I recommend you use the excellent LaTeXtools plugin, to
+which PreTeXtual owes a great deal. A future version (coming very soon) will
+support compilation from within Sublime Text without the use of LaTeXtools.
+
+#### Building images
+
+Note: this part of the build system may still be a bit buggy. In particular it
+will probably fail if you chose `pretext-barebones` above.
+
+Building images should be as simple as processing to HTML or LaTeX. Use the
+<kbd>Ctrl+Shift+B</kbd> menu to select "Build images" (this will take a while
+if you have a large project). Then refresh your HTML output in the browser to
+check that the images appear.
+
+This concludes the tour of the build system.
 
 ### Keybindings
 
@@ -76,7 +215,13 @@ the image which still shows the former name `MathBook XML`.
 
 ![Image of status bar showing MathBook XML active](media/mbx-syntax-active.png)
 
-There are only a few features implemented so far.
+Here is a (non-exhaustive) list of features.
+
+1. New in 0.6.0: an extensive interface with Vagrant virtual machine management
+   software is included, to enable Sublime Text 3 to behave more like an API
+   for PreTeXt. See the
+   [PreTeXt Author's Guide](https://mathbook.pugetsound.edu/doc/author-guide/html/author-guide.html)
+   for more information.
 
 1. If you have some subdivisions (with `xml:id`) in your PreTeXt file, hit
    <kbd>Ctrl+R</kbd> (<kbd>Cmd+R</kbd> on OS X) to run the Goto Symbol command.
@@ -103,10 +248,11 @@ There are only a few features implemented so far.
 ![Image of quick panel showing xml id values](media/quickpanel-xrefs.png)
 
 4. If you set a PreTeXt root file, then ref completion as described above will
-   recursively search for `xml:id` through all your `xi:includes` starting with
-   the indicated root file. Run the command "Set PreTeXt Root File" from the
-   Preferences menu or the Command Palette. Be sure to use an absolute path
-   name for the value of the setting.
+   recursively search for `xml:id` through all your `xi:includes` starting
+   with the indicated root file. Run the command "Set PreTeXt Root File" from
+   the Preferences menu or the Command Palette. Be sure to use an absolute
+   path name for the value of the setting, as well as forward slashes (yes,
+   Windows too).
 
 5. Type `chp`, `sec`, `ssec`, or `sssec` and hit `Tab` to activate the
    subdivision snippets. A blank `title` element is provided and the cursor
@@ -115,4 +261,8 @@ There are only a few features implemented so far.
 
 ### Known issues
 
+* There are quite a few edge cases and bugs in the build system left to fix in
+  the next rc version.
 * The `ref` snippet does not bring up the quick panel. Should it?
+* Some of the snippets could be improved.
+* Symbol finding could be improved.

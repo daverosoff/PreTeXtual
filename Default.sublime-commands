@@ -1,5 +1,10 @@
 [
     {
+        "caption": "PreTeXtual: Clone repository",
+        "command": "clone_project",
+        "args": {}
+    },
+    {
         "caption": "Preferences: PreTeXtual Settings – Default",
         "command": "open_file",
         "args": {
@@ -14,11 +19,23 @@
         }
     },
     {
-        "caption": "PreTeXtual: Set PreTeXt Root File",
+        "caption": "PreTeXtual: Initialize PreTeXt Vagrant",
+        "command": "initialize_pretext_vagrant"
+    },
+    {
+        "caption": "PreTeXtual: Clear PreTeXt root file",
+        "command": "clear_pretext_root_file"
+    },
+    {
+        "caption": "PreTeXtual: Set PreTeXt root file",
         "command": "set_pretext_root_file"
     },
     {
-        "caption": "PreTeXtual: Set PreTeXt File Extensions",
+        "caption": "PreTeXtual: Set current file as PreTeXt root",
+        "command": "set_current_file_as_root"
+    },
+    {
+        "caption": "PreTeXtual: Set PreTeXt file extensions",
         "command": "set_pretext_exts"
     }
 ]

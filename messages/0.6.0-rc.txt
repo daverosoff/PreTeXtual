@@ -1,4 +1,4 @@
-PreTeXtual, package version 0.6.0-rc.1
+PreTeXtual, package version 0.6.0-rc
 Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
 for instructions on usage and configuring your MathBook XML files to work
 automatically with PreTeXtual. If you find a bug or have a feature request,

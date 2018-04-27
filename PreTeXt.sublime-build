@@ -1,0 +1,29 @@
+{
+    "selector": "text.xml.pretext",
+    "file_patterns": ["*.ptx", "*.mbx"],
+    "variants": [
+        {
+            "name": "Process PreTeXt to HTML (beta)",
+            "target": "beta",
+            "cmd": "xsltproc",
+            "fmt": "html"
+        },
+        {
+            "name": "Process PreTeXt to LaTeX (beta)",
+            "target": "beta",
+            "cmd": "xsltproc",
+            "fmt": "latex"
+        },
+        {
+            "name": "Build latex-image images (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "latex-image"
+        },
+        {
+            "name": "Update PreTeXt",
+            "shell": true,
+            "cmd": "vagrant ssh -- 'cd /vagrant/mathbook; git pull origin dev'; echo 'Installation up to date.'"
+        },
+    ],
+}
