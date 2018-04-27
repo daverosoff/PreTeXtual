@@ -6,19 +6,19 @@
             "name": "Process PreTeXt to HTML (beta)",
             "target": "beta",
             "cmd": "xsltproc",
-            "format": "html"
+            "fmt": "html"
         },
         {
             "name": "Process PreTeXt to LaTeX (beta)",
             "target": "beta",
             "cmd": "xsltproc",
-            "format": "latex"
+            "fmt": "latex"
         },
         {
             "name": "Build latex-image images (beta)",
             "target": "beta",
             "cmd": "mbx",
-            "format": "latex-image"
+            "fmt": "latex-image"
         },
         {
             "name": "Update PreTeXt",
