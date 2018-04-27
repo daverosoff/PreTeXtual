@@ -25,10 +25,10 @@ class BetaCommand(sublime_plugin.WindowCommand):
     # output: string (absolute path name for vagrant)
     # stringparams: dict{string:string}
 
-    def run(self, cmd, format):
-        sublime.set_timeout_async(lambda: self.doit(cmd, format), 0)
+    def run(self, cmd, fmt):
+        sublime.set_timeout_async(lambda: self.doit(cmd, fmt), 0)
 
-    def doit(self, cmd, format):
+    def doit(self, cmd, fmt):
 
         print("This is the beta processing command...")
         filename = self.window.active_view().file_name()
@@ -42,8 +42,22 @@ class BetaCommand(sublime_plugin.WindowCommand):
         xinclude = get_setting('xinclude', True)
         stringparam = get_setting('stringparam', {})
         pretext_root_file = get_setting('pretext_root_file', filename)
-        pretext_output = get_setting('pretext_output', "/".join([filepath, "output/"]))
-        pretext_images = get_setting('pretext_images', "/".join([filepath, "output", "images/"]))
+        pretext_output = get_setting('pretext_output')
+        if not pretext_output:
+            pretext_output = filepath.split('/')[:-1]
+            pretext_output.append("output")
+            if cmd == "xsltproc":
+                pretext_output.append(fmt)
+            pretext_output = '/'.join(pretext_output)
+        pretext_images = get_setting('pretext_images')
+        pretext_html_images = get_setting('pretext_html_images')
+        pretext_latex_images = get_setting('pretext_latex_images')
+        if not pretext_images:
+            pretext_images = '/'.join([pretext_output, 'images'])
+        if not pretext_html_images:
+            pretext_html_images = '/'.join([pretext_output, 'html', 'images'])
+        if not pretext_latex_images:
+            pretext_latex_images = '/'.join([pretext_output, 'latex', 'images'])
         pretext_stylesheets = get_setting('pretext_stylesheets', {
             "html": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-html.xsl"),
             "latex": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-latex.xsl"),
@@ -65,7 +79,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
             if stringparam:
                 for k, v in stringparam.items():
                     xp_sps = "{} --stringparam {} \\\"{}\\\"".format(xp_sps, k, v)
-            xp_suffix = " {} {}".format(pretext_stylesheets[format], to_vagrant(pretext_root_file))
+            xp_suffix = " {} {}".format(pretext_stylesheets[fmt], to_vagrant(pretext_root_file))
             cmd_string = "{} \"{}\"".format(vagrantcommand, xp_prefix + xp_sps + xp_suffix)
             print("Calling: {}".format(cmd_string))
             print("Please wait a few moments...")
@@ -73,7 +87,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
         elif cmd == "mbx":
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
             mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(to_vagrant(pretext_images), to_vagrant(vagrantroot))
-            mbx_switches = {'c': "latex-image", 'd': to_vagrant(pretext_images), 'f': "all"}
+            mbx_switches = {'v': "", 'c': fmt, 'd': to_vagrant(pretext_images), 'f': "all"}
             for k, v in mbx_switches.items():
                 mbx_prefix = mbx_prefix + " -{} {}".format(k, v)
             mbx_suffix = " {}".format(to_vagrant(pretext_root_file))
@@ -97,6 +111,15 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 sublime.message_dialog("Build complete.")
                 return
         # if built:
+        if cmd == "mbx":
+            print("Copying images from {} to {}...".format(pretext_images, pretext_html_images))
+            import shutil
+            if os.access(pretext_html_images, os.F_OK):
+                shutil.rmtree(pretext_html_images)
+            if os.access(pretext_latex_images, os.F_OK):
+                shutil.rmtree(pretext_latex_images)
+            shutil.copytree(pretext_images, pretext_html_images)
+            shutil.copytree(pretext_images, pretext_latex_images)
         sublime.message_dialog("Build complete.")
 
 
