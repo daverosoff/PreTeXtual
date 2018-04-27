@@ -1,0 +1,43 @@
+PreTeXtual, package version 0.6.0-rc
+Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
+for instructions on usage and configuring your MathBook XML files to work
+automatically with PreTeXtual. If you find a bug or have a feature request,
+please open an issue at
+
+    https://github.com/daverosoff/PreTeXtual
+
+I hope you find PreTeXtual useful!
+
+Release notes:
+
+    * This is a release candidate version of PreTeXtual and may be buggier
+      than usual.
+    * Sublime Text build system added. Use Ctrl+Shift+B from within a PreTeXt
+      file to process source from within Sublime Text. The build system
+      assumes certain structure about your filesystem and you may need to edit
+      it by hand to make it work, or move some files and directories on your
+      system. The build system is intended for beginning users of PreTeXt at
+      the moment and it does not support much customization natively. The
+      official release of 0.6.0 will be more customizable and in particular
+      will not require the use of the Vagrant box. See README.md for complete details on setting up your environment to use the build system commands.
+
+Known issues from 0.5.0 not fixed in this release:
+
+    * The scoping for embedded syntaxes is not completely satisfactory
+    * Symbol recognition is not as good as before
+
+Known issues from 0.4.5 not fixed in this release:
+
+    * Symbol recognition lists are incomplete
+    * Mirroring title text to get xml:id is good for divisions, but less
+      good for theorems (often not titled)
+    * Mirrored title text in snippet xml:id does not always give
+      completely satisfactory results (e.g., XML tags inside)
+        - Should there be a user setting to disable this mirroring?
+        - Is this even possible?
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite:
+      unrecognized format")
+    * Potential for confusion since Symbols List is always based on
+      the current project (or open folder) but the ref autocomplete
+      list may not be (if there is not an explicit project and the
+      root PreTeXt file is set globally or not at all)
