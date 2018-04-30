@@ -16,8 +16,50 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
     #     return not (self.pretext_vagrant_root_exists and self.pretext_vagrantfile_exists)
 
     def run(self):
-        print("pretext_vagrant_root: {}".format(self.pretext_vagrant_root))
-        print("pretext_vagrantfile: {}".format(self.pretext_vagrantfile))
+
+        default_pretext_vagrant_root = "C:/PreTeXt"
+
+        projdata = self.window.project_data()
+        if projdata is None or "folders" not in projdata:
+        # no open folder, setup defaults
+            # test for existence of default folder
+            if not os.access(default_pretext_vagrant_root, os.F_OK):
+                create_folder_ok = sublime.ok_cancel_dialog("OK to create\
+                    default folder C:/PreTeXt? (Cancel, create new folder,\
+                    add to project, and initialize again to override default")
+                if create_folder_ok:
+                    os.mkdir(default_pretext_vagrant_root)
+                else:
+                    sublime.message_dialog("PreTeXt Vagrant initialization\
+                    cancelled.")
+                    return
+            projdata = {"folders": [{"path": "C:/PreTeXt"}]}
+            pretext_vagrant_root = projdata['folders'][0]['path']
+            projdata['pretext_vagrant_root'] = pretext_vagrant_root
+            self.window.set_project_data(projdata)
+        elif len(projdata['folders']) > 1:
+        # close all but top folder after user confirms
+            remove_ok = sublime.ok_cancel_dialog("Multiple folders are open in\
+                the project. OK to remove all folders except {} and make {}\
+                the root PreTeXt folder?".format(projdata['folders'][0]))
+            if remove_ok:
+                projdata['folders'] = projdata['folders'][0:1]
+                pretext_vagrant_root = projdata['folders'][0]['path']
+                projdata['pretext_vagrant_root'] = pretext_vagrant_root
+                self.window.set_project_data(projdata)
+            else:
+                sublime.message_dialog("PreTeXt Vagrant initialization\
+                    cancelled.")
+                return
+
+        pretext_vagrant_root = projdata['pretext_vagrant_root']
+        pretext_vagrantfile = os.sep.join([pretext_vagrant_root,
+            "Vagrantfile"])
+        pretext_vagrant_root_exists = os.access(pretext_vagrant_root, os.F_OK)
+        pretext_vagrantfile_exists = os.access(pretext_vagrantfile, os.F_OK)
+
+        # print("pretext_vagrant_root: {}".format(self.pretext_vagrant_root))
+        # print("pretext_vagrantfile: {}".format(self.pretext_vagrantfile))
 
         def acquire_vagrantfile(n, loc):
             if n == -1:
