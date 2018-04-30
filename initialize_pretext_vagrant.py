@@ -107,12 +107,18 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             #         print("Writing {}...{}, {}".format(self.pretext_vagrantfile, e.args, e.filename))
             #         sublime.message_dialog("Error 12: Couldn't open Vagrantfile location")
 
-        if not self.pretext_vagrant_root_exists:
-            try:
-                os.mkdir(self.pretext_vagrant_root)
-            except FileExistsError as e:
-                sublime.message_dialog("Error 6: Directory already exists; continuing")
-        if not self.pretext_vagrantfile_exists:
+        if not pretext_vagrant_root_exists:
+            # this should never happen since either we created the default
+            # or the user added an existing folder
+            sublime.message_dialog("Error 14: something bad happened")
+            raise VagrantException
+
+            # try:
+            #     os.mkdir(self.pretext_vagrant_root)
+            # except FileExistsError as e:
+            #     sublime.message_dialog("Error 6: Directory already exists; continuing")
+
+        if not pretext_vagrantfile_exists:
             self.window.show_quick_panel(
                 [
                     "Install PreTeXt",
