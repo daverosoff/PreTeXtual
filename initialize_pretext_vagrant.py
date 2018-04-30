@@ -207,9 +207,9 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             sublime.message_dialog("No root files set. You can add these "
                 "later in the user settings.")
 
-        usersettings = sublime.load_settings("User.sublime-settings")
+        usersettings = sublime.load_settings("Preferences.sublime-settings")
         usersettings.set('vagrant_projects', projdata['vagrant_projects'])
-        sublime.save_settings("User.sublime-settings")
+        sublime.save_settings("Preferences.sublime-settings")
 
         # sublime.message_dialog("Click OK to bring up a quick panel to select "
         #     "a PreTeXt installation. This step can take a long time, perhaps "
