@@ -3,8 +3,6 @@ want to suggest a feature, open an issue at
 
     https://github.com/daverosoff/PreTeXtual
 
-Features for 0.5.x
-
 * Syntax highlighting for sage/python needs work
 * fillin does not highlight inside math
 * Symbol list for other xml:id targetables, esp equation
@@ -19,11 +17,8 @@ Features for 0.5.x
 * command to clear root file, set current file as root file, set some open file
   as root file (use quick panel)
 * auto-detect stale options from earlier versions and migrate them, purge old
-Features for 0.6.0
-
-* Build systems with Vagrant
+* Text command based on scopes to add similar tag on Ctrl+Enter
 * Text command to move to next subdiv/block lacking xml:id
-* Add command for "make current file project root"
 * Add new snippets for new constants/entities
 
 Features longer-term
