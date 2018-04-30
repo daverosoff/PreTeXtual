@@ -152,50 +152,59 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 len(projlist)
             )
         )
-        if add_all == sublime.DIALOG_YES:
-            for rel, absol in projlist:
-                if 'vagrant_projects' not in projdata:
-                    projdata['vagrant_projects'] = []
-                if not is_present(rel, projdata['vagrant_projects']):
-                    projdata['vagrant_projects'].append({"path": absol, "name": rel})
-        elif add_all == sublime.DIALOG_CANCEL:
-            sublime.message_dialog("No projects added.")
-            return
-        elif add_all == sublime.DIALOG_NO:
-            for rel, absol in projlist:
-                add = sublime.yes_no_cancel_dialog(
-                    "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(rel))
-                if add == sublime.DIALOG_YES:
+
+        def add_some_projects(add_q, projli):
+            """
+            add_q is one of sublime.DIALOG_YES, _NO, or _CANCEL
+            projli is of type [{'name': {}}]
+            """
+            if add_q == sublime.DIALOG_YES:
+                for rel, absol in projli:
                     if 'vagrant_projects' not in projdata:
-                        projdata['vagrant_projects'] = []
+                        projdata['vagrant_projects'] = {}
                     if not is_present(rel, projdata['vagrant_projects']):
-                        projdata['vagrant_projects'].append({"path": absol, "name": rel})
-                elif add == sublime.DIALOG_CANCEL:
-                    sublime.message_dialog("Project addition cancelled.")
-                    return
-                elif add == sublime.DIALOG_NO:
-                    continue
-                else:
-                    sublime.message_dialog("Error 18: something bad happened")
-                    raise VagrantException
-        else:
-            sublime.message_dialog("Error 16: something bad happened")
-            raise VagrantException
+                        projdata['vagrant_projects'].update({rel: {"path": absol, "name": rel}})
+            elif add_q == sublime.DIALOG_CANCEL:
+                sublime.message_dialog("No projects added.")
+                return
+            elif add_q == sublime.DIALOG_NO:
+                for rel, absol in projli:
+                    add = sublime.yes_no_cancel_dialog(
+                        "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(rel))
+                    if add == sublime.DIALOG_YES:
+                        if 'vagrant_projects' not in projdata:
+                            projdata['vagrant_projects'] = {}
+                        if not is_present(rel, projdata['vagrant_projects']):
+                            projdata['vagrant_projects'].update({rel: {"path": absol, "name": rel}})
+                    elif add == sublime.DIALOG_CANCEL:
+                        sublime.message_dialog("Project addition cancelled.")
+                        return
+                    elif add == sublime.DIALOG_NO:
+                        continue
+                    else:
+                        sublime.message_dialog("Error 18: something bad happened")
+                        raise VagrantException
+            else:
+                sublime.message_dialog("Error 16: something bad happened")
+                raise VagrantException
+
+        add_some_projects(add_all, projlist)
 
         self.window.set_project_data(projdata)
+        vagrant_projects = projdata['vagrant_projects']
 
         set_root_files = sublime.ok_cancel_dialog("Do you want to set "
             "root files for the projects you just added?")
 
-        def set_root_file(projname):
+        def set_root_file(proj):
             def on_done_root(st):
                 projdata = self.window.project_data()
                 projli = projdata['vagrant_projects']
                 for d in projli:
-                    if d['name'] == projname:
-                        d.update({'root_file': st})
+                    if projli['d']['name'] == proj:
+                        projli['d'].update({'root_file': st})
             self.window.show_input_panel("Enter full path to root "
-                "file for project {}:".format(projname),
+                "file for project {}:".format(proj),
                 pretext_vagrant_root, on_done_root, None, None)
 
         if set_root_files:
