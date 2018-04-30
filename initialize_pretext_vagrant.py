@@ -122,17 +122,6 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             # except FileExistsError as e:
             #     sublime.message_dialog("Error 6: Directory already exists; continuing")
 
-        if not pretext_vagrantfile_exists:
-            self.window.show_quick_panel(
-                [
-                    "Install PreTeXt",
-                    "Install PreTeXt-lite",
-                    "Install PreTeXt-barebones",
-                    "Install PreTeXt-no-images",
-                ],
-                lambda n: self.acquire_vagrantfile(n, pretext_vagrant_root)
-            )
-
         # now get the rest of the settings in place to manage projects
 
         projdata = self.window.project_data()
@@ -186,4 +175,19 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         else:
             sublime.message_dialog("Error 16: something bad happened")
             raise VagrantException
+
         self.window.set_project_data(projdata)
+
+        options = [
+                    "Install PreTeXt",
+                    "Install PreTeXt-lite",
+                    "Install PreTeXt-barebones",
+                    "Install PreTeXt-no-images"
+                ],
+
+        def on_done(n):
+            return self.acquire_vagrantfile(n, pretext_vagrant_root)
+
+        if not pretext_vagrantfile_exists:
+            # sublime.message_dialog("Here I am! Because {} doesn't exist".format(pretext_vagrantfile))
+            self.window.show_quick_panel(options, on_done)
