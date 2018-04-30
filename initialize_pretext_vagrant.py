@@ -142,7 +142,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     return True
             return False
 
-        projlist = [d, os.path.join(pretext_vagrant_root, d)) for d in ls if is_project(d)]
+        projlist = [(d, os.path.join(pretext_vagrant_root, d)) for d in ls if is_project(d)]
 
         # Add all or some project folders to the settings file, converting to absolute paths
         # so projlist is a list of pairs of paths
@@ -195,7 +195,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     if d['name'] == projname:
                         d.update({'root_file': st})
             self.window.show_input_panel("Enter full path to root "
-                "file for project {}:".format(reverse_virgules(projname)),
+                "file for project {}:".format(projname),
                 pretext_vagrant_root, on_done_root, None, None)
 
         if set_root_files:
