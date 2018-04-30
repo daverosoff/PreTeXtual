@@ -15,6 +15,53 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
     #     print("Checking {}...{}".format(self.pretext_vagrantfile, self.pretext_vagrantfile_exists))
     #     return not (self.pretext_vagrant_root_exists and self.pretext_vagrantfile_exists)
 
+    def acquire_vagrantfile(self, n, loc):
+        if n == -1:
+            # quick panel was cancelled
+            return
+        base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
+        url_exts = ["", "-lite", "-barebones", "-no-images"]
+        box_name = "daverosoff/pretext" + url_exts[n]
+        proc = subprocess.Popen("vagrant init {}".format(box_name), cwd=loc,
+            shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        while proc.poll() is None:
+            try:
+                data = proc.stdout.readline().decode(encoding="UTF-8")
+                print(data, end="")
+            except:
+                return
+        # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
+        proc = subprocess.Popen("vagrant up", cwd=loc,
+            )
+        while proc.poll() is None:
+            try:
+                data = proc.stdout.readline().decode(encoding="UTF-8")
+                print(data, end="")
+            except:
+                return
+        # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
+        proc = subprocess.Popen("vagrant suspend", cwd=loc,
+            shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        while proc.poll() is None:
+            try:
+                data = proc.stdout.readline().decode(encoding="UTF-8")
+                print(data, end="")
+            except:
+                return
+        # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
+        # with urllib.request.urlopen(base_url + url_exts[n]) as url:
+        #     try:
+        #         with open(loc, 'wb') as u:
+        #             u.write(url.read())
+        #             sett = sublime.load_settings("Vagrant.sublime-settings")
+        #             sett.set('vagrantfile_path', re.sub('/', r"\\", os.path.dirname(self.pretext_vagrantfile)))
+        #             print("Attempting to set {}: {}".format('vagrantfile_path', sett.get('vagrantfile_path')))
+        #             sublime.save_settings("Vagrant.sublime-settings")
+        #     except OSError as e:
+        #         print("Writing {}...{}, {}".format(self.pretext_vagrantfile, e.args, e.filename))
+        #         sublime.message_dialog("Error 12: Couldn't open Vagrantfile location")
+
+
     def run(self):
 
         default_pretext_vagrant_root = "C:/PreTeXt"
@@ -61,52 +108,6 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         # print("pretext_vagrant_root: {}".format(self.pretext_vagrant_root))
         # print("pretext_vagrantfile: {}".format(self.pretext_vagrantfile))
 
-        def acquire_vagrantfile(n, loc):
-            if n == -1:
-                # quick panel was cancelled
-                return
-            base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
-            url_exts = ["", "-lite", "-barebones", "-no-images"]
-            box_name = "daverosoff/pretext" + url_exts[n]
-            proc = subprocess.Popen("vagrant init {}".format(box_name), cwd=loc,
-                shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            while proc.poll() is None:
-                try:
-                    data = proc.stdout.readline().decode(encoding="UTF-8")
-                    print(data, end="")
-                except:
-                    return
-            # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
-            proc = subprocess.Popen("vagrant up", cwd=loc,
-                )
-            while proc.poll() is None:
-                try:
-                    data = proc.stdout.readline().decode(encoding="UTF-8")
-                    print(data, end="")
-                except:
-                    return
-            # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
-            proc = subprocess.Popen("vagrant suspend", cwd=loc,
-                shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            while proc.poll() is None:
-                try:
-                    data = proc.stdout.readline().decode(encoding="UTF-8")
-                    print(data, end="")
-                except:
-                    return
-            # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
-            # with urllib.request.urlopen(base_url + url_exts[n]) as url:
-            #     try:
-            #         with open(loc, 'wb') as u:
-            #             u.write(url.read())
-            #             sett = sublime.load_settings("Vagrant.sublime-settings")
-            #             sett.set('vagrantfile_path', re.sub('/', r"\\", os.path.dirname(self.pretext_vagrantfile)))
-            #             print("Attempting to set {}: {}".format('vagrantfile_path', sett.get('vagrantfile_path')))
-            #             sublime.save_settings("Vagrant.sublime-settings")
-            #     except OSError as e:
-            #         print("Writing {}...{}, {}".format(self.pretext_vagrantfile, e.args, e.filename))
-            #         sublime.message_dialog("Error 12: Couldn't open Vagrantfile location")
-
         if not pretext_vagrant_root_exists:
             # this should never happen since either we created the default
             # or the user added an existing folder
@@ -126,7 +127,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     "Install PreTeXt-barebones",
                     "Install PreTeXt-no-images",
                 ],
-                lambda n: acquire_vagrantfile(n, pretext_vagrant_root)
+                lambda n: self.acquire_vagrantfile(n, pretext_vagrant_root)
             )
 
         # now get the rest of the settings in place to manage projects
