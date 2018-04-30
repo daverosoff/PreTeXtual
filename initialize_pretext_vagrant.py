@@ -195,5 +195,4 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             return self.acquire_vagrantfile(n, pretext_vagrant_root)
 
         if not pretext_vagrantfile_exists:
-            # sublime.message_dialog("Here I am! Because {} doesn't exist".format(pretext_vagrantfile))
             self.window.show_quick_panel(options, on_done)
