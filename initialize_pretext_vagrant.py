@@ -6,6 +6,12 @@ class VagrantException(Exception):
     def is_vagrant_exception(self):
         return True
 
+def reverse_virgules(st):
+    return re.sub(os.path.altsep, os.path.sep, st)
+
+def slashes(st):
+    return re.sub(os.path.sep, os.path.altsep, st)
+
 class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
 
     # def is_enabled(self):
