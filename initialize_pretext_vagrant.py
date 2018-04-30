@@ -67,7 +67,6 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         #         print("Writing {}...{}, {}".format(self.pretext_vagrantfile, e.args, e.filename))
         #         sublime.message_dialog("Error 12: Couldn't open Vagrantfile location")
 
-
     def run(self):
 
         default_pretext_vagrant_root = "C:/PreTeXt"
@@ -87,9 +86,6 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     cancelled.")
                     return
             projdata = {"folders": [{"path": "C:/PreTeXt"}]}
-            pretext_vagrant_root = projdata['folders'][0]['path']
-            projdata['pretext_vagrant_root'] = pretext_vagrant_root
-            self.window.set_project_data(projdata)
         elif len(projdata['folders']) > 1:
         # close all but top folder after user confirms
             remove_ok = sublime.ok_cancel_dialog("Multiple folders are open in\
@@ -97,15 +93,15 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 the root PreTeXt folder?".format(projdata['folders'][0]))
             if remove_ok:
                 projdata['folders'] = projdata['folders'][0:1]
-                pretext_vagrant_root = projdata['folders'][0]['path']
-                projdata['pretext_vagrant_root'] = pretext_vagrant_root
-                self.window.set_project_data(projdata)
             else:
                 sublime.message_dialog("PreTeXt Vagrant initialization\
                     cancelled.")
                 return
 
-        pretext_vagrant_root = projdata['pretext_vagrant_root']
+        pretext_vagrant_root = projdata['folders'][0]['path']
+        projdata['pretext_vagrant_root'] = pretext_vagrant_root
+        self.window.set_project_data(projdata)
+
         pretext_vagrantfile = os.sep.join([pretext_vagrant_root,
             "Vagrantfile"])
         pretext_vagrant_root_exists = os.access(pretext_vagrant_root, os.F_OK)
