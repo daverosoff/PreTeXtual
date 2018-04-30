@@ -126,13 +126,60 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     "Install PreTeXt-barebones",
                     "Install PreTeXt-no-images",
                 ],
-                lambda n: acquire_vagrantfile(n, self.pretext_vagrant_root)
-                #<flags>,
-                #<selected_index>,
-                #<on_highlighted>
+                lambda n: acquire_vagrantfile(n, pretext_vagrant_root)
             )
-        projdata = self.window.project_data() or {}
-        if not projdata["folders"]:
-            projdata["folders"] = []
-        projdata["folders"].append({"path": "C:/PreTeXt"})
+
+        # now get the rest of the settings in place to manage projects
+
+        projdata = self.window.project_data()
+        projdata['pretext_vagrant_root'] = pretext_vagrant_root
+        projdata['pretext_vagrantfile'] = pretext_vagrantfile
+        ls = os.listdir(pretext_vagrant_root)
+
+        def is_project(dirnm):
+            dotted = dirnm[0] == '.'
+            isdir = os.path.isdir(os.path.join(pretext_vagrant_root, dirnm))
+            return not dotted and isdir
+
+        def is_present(dirnm, projli):
+            for d in projli:
+                if "path" in d and d['path'] == dirnm:
+                    return True
+            return False
+
+        projlist = [d for d in ls if is_project(d)]
+        add_all = sublime.yes_no_cancel_dialog(
+            "OK to add {} writing projects to PreTeXtual management? (Select No to add one by one.)".format(
+                len(projlist)
+            )
+        )
+        if add_all == sublime.DIALOG_YES:
+            for d in projlist:
+                if "projects" not in projdata:
+                    projdata['projects'] = []
+                if not is_present(d, projdata['projects']):
+                    projdata['projects'].append({"path": d, "name": d})
+        elif add_all == sublime.DIALOG_CANCEL:
+            sublime.message_dialog("No projects added.")
+            return
+        elif add_all == sublime.DIALOG_NO:
+            for d in projlist:
+                add = sublime.yes_no_cancel_dialog(
+                    "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(d))
+                if add == sublime.DIALOG_YES:
+                    if "projects" not in projdata:
+                        projdata['projects'] = []
+                    if not is_present(d, projdata['projects']):
+                        projdata['projects'].append({"path": d, "name": d})
+                elif add == sublime.DIALOG_CANCEL:
+                    sublime.message_dialog("Project addition cancelled.")
+                    return
+                elif add == sublime.DIALOG_NO:
+                    continue
+                else:
+                    sublime.message_dialog("Error 18: something bad happened")
+                    raise VagrantException
+        else:
+            sublime.message_dialog("Error 16: something bad happened")
+            raise VagrantException
         self.window.set_project_data(projdata)
