@@ -15,22 +15,6 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
     #     print("Checking {}...{}".format(self.pretext_vagrantfile, self.pretext_vagrantfile_exists))
     #     return not (self.pretext_vagrant_root_exists and self.pretext_vagrantfile_exists)
 
-    # def install_vagrant_box(st):
-    #     allowed = ["PreTeXt","PreTeXt-lite","PreTeXt-barebones","PreTeXt-no-images"]
-    #     allowed_ext = lambda x: x.split('-')[-1]
-    #     if st in allowed:
-    #         base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
-    #         url = '-'.join(base_url, allowed_ext(st))
-    #         with urllib.request.urlopen(url, unverifiable=True) as vagrantfile_data:
-    #             with open(self.pretext_vagrantfile) as vf:
-    #                 try:
-    #                     vf.write(vagrantfile_data.read())
-    #                 except OSError as e:
-    #                     sublime.message_dialog("Error 10: Couldn't write Vagrantfile")
-    #     else:
-    #         sublime.message_dialog("Error 8: Invalid Vagrantfile")
-    #         raise VagrantException
-
     def run(self):
         print("pretext_vagrant_root: {}".format(self.pretext_vagrant_root))
         print("pretext_vagrantfile: {}".format(self.pretext_vagrantfile))
