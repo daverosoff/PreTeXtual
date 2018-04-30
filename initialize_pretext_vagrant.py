@@ -135,35 +135,41 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             return not dotted and isdir
 
         def is_present(dirnm, projli):
+            # projli is a list of dict with entries name and path
+            # name is typically a relative path from the vagrant root
             for d in projli:
-                if "path" in d and d['path'] == dirnm:
+                if "name" in d and d['name'] == dirnm:
                     return True
             return False
 
-        projlist = [d for d in ls if is_project(d)]
+        projlist = [(d, os.path.join(pretext_vagrant_root, d)) for d in ls if is_project(d)]
+
+        # Add all or some project folders to the settings file, converting to absolute paths
+        # so projlist is a list of pairs of paths
+
         add_all = sublime.yes_no_cancel_dialog(
             "OK to add {} writing projects to PreTeXtual management? (Select No to add one by one.)".format(
                 len(projlist)
             )
         )
         if add_all == sublime.DIALOG_YES:
-            for d in projlist:
+            for rel, absol in projlist:
                 if "projects" not in projdata:
                     projdata['projects'] = []
-                if not is_present(d, projdata['projects']):
-                    projdata['projects'].append({"path": d, "name": d})
+                if not is_present(rel, projdata['projects']):
+                    projdata['projects'].append({"path": absol, "name": rel})
         elif add_all == sublime.DIALOG_CANCEL:
             sublime.message_dialog("No projects added.")
             return
         elif add_all == sublime.DIALOG_NO:
-            for d in projlist:
+            for rel, absol in projlist:
                 add = sublime.yes_no_cancel_dialog(
-                    "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(d))
+                    "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(rel))
                 if add == sublime.DIALOG_YES:
                     if "projects" not in projdata:
                         projdata['projects'] = []
-                    if not is_present(d, projdata['projects']):
-                        projdata['projects'].append({"path": d, "name": d})
+                    if not is_present(rel, projdata['projects']):
+                        projdata['projects'].append({"path": absol, "name": rel})
                 elif add == sublime.DIALOG_CANCEL:
                     sublime.message_dialog("Project addition cancelled.")
                     return
