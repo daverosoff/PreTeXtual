@@ -142,7 +142,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     return True
             return False
 
-        projlist = [(d, os.path.join(pretext_vagrant_root, d)) for d in ls if is_project(d)]
+        projlist = [d, os.path.join(pretext_vagrant_root, d)) for d in ls if is_project(d)]
 
         # Add all or some project folders to the settings file, converting to absolute paths
         # so projlist is a list of pairs of paths
@@ -154,7 +154,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         )
         if add_all == sublime.DIALOG_YES:
             for rel, absol in projlist:
-                if 'projects' not in projdata:
+                if 'vagrant_projects' not in projdata:
                     projdata['vagrant_projects'] = []
                 if not is_present(rel, projdata['vagrant_projects']):
                     projdata['vagrant_projects'].append({"path": absol, "name": rel})
@@ -166,7 +166,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 add = sublime.yes_no_cancel_dialog(
                     "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(rel))
                 if add == sublime.DIALOG_YES:
-                    if 'projects' not in projdata:
+                    if 'vagrant_projects' not in projdata:
                         projdata['vagrant_projects'] = []
                     if not is_present(rel, projdata['vagrant_projects']):
                         projdata['vagrant_projects'].append({"path": absol, "name": rel})
