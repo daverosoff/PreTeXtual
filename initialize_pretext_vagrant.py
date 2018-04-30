@@ -7,10 +7,10 @@ class VagrantException(Exception):
         return True
 
 def reverse_virgules(st):
-    return re.sub(os.path.altsep, os.path.sep, st)
+    return re.sub('/', r"\\", st)
 
 def slashes(st):
-    return re.sub(os.path.sep, os.path.altsep, st)
+    return re.sub(r"\\", '/', st)
 
 class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
 
