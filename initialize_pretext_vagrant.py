@@ -93,6 +93,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 the root PreTeXt folder?".format(projdata['folders'][0]))
             if remove_ok:
                 projdata['folders'] = projdata['folders'][0:1]
+                # ensure a list of length 1 is returned
             else:
                 sublime.message_dialog("PreTeXt Vagrant initialization\
                     cancelled.")
