@@ -184,15 +184,59 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
 
         self.window.set_project_data(projdata)
 
-        options = [
-                    "Install PreTeXt",
-                    "Install PreTeXt-lite",
-                    "Install PreTeXt-barebones",
-                    "Install PreTeXt-no-images"
-                ],
+        set_root_files = sublime.ok_cancel_dialog("Do you want to set "
+            "root files for the projects you just added?")
 
-        def on_done(n):
-            return self.acquire_vagrantfile(n, pretext_vagrant_root)
+        def set_root_file(projname):
+            def on_done_root(st):
+                projdata = self.window.project_data()
+                projli = projdata['vagrant_projects']
+                for d in projli:
+                    if d['name'] == projname:
+                        d.update({'root_file': st})
+            self.window.show_input_panel("Enter full path to root "
+                "file for project {}:".format(reverse_virgules(projname)),
+                pretext_vagrant_root, on_done_root, None, None)
 
-        if not pretext_vagrantfile_exists:
-            self.window.show_quick_panel(options, on_done)
+        if set_root_files:
+            projdata = self.window.project_data()
+            projnames = projdata['vagrant_projects']
+            for proj in projnames:
+                set_root_file(proj['name'])
+        else:
+            sublime.message_dialog("No root files set. You can add these "
+                "later in the user settings.")
+
+        usersettings = sublime.load_settings("User.sublime-settings")
+        usersettings.set('vagrant_projects', projdata['vagrant_projects'])
+        sublime.save_settings("User.sublime-settings")
+
+        # sublime.message_dialog("Click OK to bring up a quick panel to select "
+        #     "a PreTeXt installation. This step can take a long time, perhaps "
+        #     "an hour or more. Be patient and do not worry if it seems like "
+        #     "your system is hanging. Just watch and wait. If you don't know "
+        #     "what you want, select PreTeXt-lite.")
+
+        # options = [
+        #             "Install PreTeXt",
+        #             "Install PreTeXt-lite",
+        #             "Install PreTeXt-barebones",
+        #             "Install PreTeXt-no-images"
+        #         ],
+
+        # def on_done(n):
+        #     return self.acquire_vagrantfile(n, pretext_vagrant_root)
+
+        # if not pretext_vagrantfile_exists:
+        #     self.window.show_quick_panel(options, on_done)
+
+        # sublime.message_dialog("The next step you must do yourself; the "
+        #     "Sublime Text application can't do this for you (yet?). IT IS "
+        #     "VERY IMPORTANT AND NOTHING WILL WORK WITHOUT IT.")
+
+        # sublime.message_dialog("Choose Project/Save Project As... from the "
+        #     "Sublime Text menu. Enter a filename in which to save your "
+        #     "\"project settings\". Don't worry too much about what this means "
+        #     "exactly right now; it's a way for Sublime Text to manage your "
+        #     "writing projects and save your preferences between editing "
+        #     "sessions.")
