@@ -2,16 +2,11 @@ import sublime
 import sublime_plugin
 import subprocess, urllib, os, re#, time
 
+class VagrantException(Exception):
+    def is_vagrant_exception(self):
+        return True
+
 class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
-
-    pretext_vagrant_root = os.altsep.join(["C:", "PreTeXt"])
-    pretext_vagrantfile = os.altsep.join([pretext_vagrant_root, "Vagrantfile"])
-    pretext_vagrant_root_exists = False
-    pretext_vagrantfile_exists = False
-
-    class VagrantException(Exception):
-        def is_vagrant_exception(self):
-            return True
 
     # def is_enabled(self):
     #     self.pretext_vagrant_root_exists = os.access(self.pretext_vagrant_root, os.F_OK)
