@@ -38,7 +38,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 return
         # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
         proc = subprocess.Popen("vagrant up", cwd=loc,
-            )
+            shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             try:
                 data = proc.stdout.readline().decode(encoding="UTF-8")
@@ -76,27 +76,27 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         # no open folder, setup defaults
             # test for existence of default folder
             if not os.access(default_pretext_vagrant_root, os.F_OK):
-                create_folder_ok = sublime.ok_cancel_dialog("OK to create\
-                    default folder C:/PreTeXt? (Cancel, create new folder,\
-                    add to project, and initialize again to override default")
+                create_folder_ok = sublime.ok_cancel_dialog("OK to create "
+                    "default folder C:/PreTeXt? (Cancel, create new folder, "
+                    "add to project, and initialize again to override default")
                 if create_folder_ok:
                     os.mkdir(default_pretext_vagrant_root)
                 else:
-                    sublime.message_dialog("PreTeXt Vagrant initialization\
-                    cancelled.")
+                    sublime.message_dialog("PreTeXt Vagrant initialization "
+                    "cancelled.")
                     return
             projdata = {"folders": [{"path": "C:/PreTeXt"}]}
         elif len(projdata['folders']) > 1:
         # close all but top folder after user confirms
-            remove_ok = sublime.ok_cancel_dialog("Multiple folders are open in\
-                the project. OK to remove all folders except {} and make {}\
-                the root PreTeXt folder?".format(projdata['folders'][0]))
+            remove_ok = sublime.ok_cancel_dialog("Multiple folders are open in "
+                "the project. OK to remove all folders except {} and make {}"
+                "the root PreTeXt folder?".format(projdata['folders'][0]))
             if remove_ok:
                 projdata['folders'] = projdata['folders'][0:1]
                 # ensure a list of length 1 is returned
             else:
-                sublime.message_dialog("PreTeXt Vagrant initialization\
-                    cancelled.")
+                sublime.message_dialog("PreTeXt Vagrant initialization "
+                    "cancelled.")
                 return
 
         pretext_vagrant_root = projdata['folders'][0]['path']
@@ -148,7 +148,8 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         # so projlist is a list of pairs of paths
 
         add_all = sublime.yes_no_cancel_dialog(
-            "OK to add {} writing projects to PreTeXtual management? (Select No to add one by one.)".format(
+            "OK to add {} writing projects to PreTeXtual "
+            "management? (Select No to add one by one.)".format(
                 len(projlist)
             )
         )
@@ -200,6 +201,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 for d in projdict:
                     if projdict[d]['name'] == projname:
                         projdict[d].update({'root_file': st})
+                        print("Updating settings for {}".format(projname))
             self.window.show_input_panel("Enter full path to root "
                 "file for project {}:".format(re.sub(r'\\', r'\\\\', projname)),
                 pretext_vagrant_root, on_done_root, None, None)
@@ -209,6 +211,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
 
         if set_root_files:
             for proj in vagrant_projects:
+                sublime.message_dialog("Setting root file for {}".format(proj))
                 set_root_file(vagrant_projects[proj]['name'], vagrant_projects)
             projdata.update({'vagrant_projects': vagrant_projects})
             self.window.set_project_data(projdata)
