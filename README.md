@@ -88,6 +88,10 @@ how to accomplish this. A future release will support use of the build systems
 without Vagrant, which is preferable for any Mac OS or Linux users who might
 want to use the build systems for convenience.
 
+As you continue with the installation, it would be good to [visit this README
+in a browser](https://packagecontrol.io/packages/PreTeXtual) so that you can
+follow along while you do things in Sublime Text and other programs.
+
 #### Install other required software
 
 At present, the build systems require the use of two other applications,
