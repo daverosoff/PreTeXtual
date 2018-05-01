@@ -194,25 +194,36 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         self.window.set_project_data(projdata)
         vagrant_projects = projdata['vagrant_projects']
 
-        def set_root_file(projname, projdict):
-            # projdata = self.window.project_data()
-            # projdi = projdata['vagrant_projects']
-            def on_done_root(st):
-                for d in projdict:
-                    if projdict[d]['name'] == projname:
-                        projdict[d].update({'root_file': st})
-                        print("Updating settings for {}".format(projname))
+        # We need to ask one at a time or the input panels all
+        # collide and we don't get to see the first n-1 of them.
+        # Thanks to OdatNurd on the Sublime Text freenode chat
+        # for this idea.
+        def set_root_file_keys(key_list, key_index, output_dict):
+            key = key_list[key_index]
             self.window.show_input_panel("Enter full path to root "
-                "file for project {}:".format(re.sub(r'\\', r'\\\\', projname)),
-                pretext_vagrant_root, on_done_root, None, None)
+                "file for project {}:".format(key),
+                pretext_vagrant_root,
+                lambda v: set_root_file_values(v, key_list, key_index,
+                    output_dict),
+                None, None)
+
+        def set_root_file_values(key_value, key_list, key_index, output_dict):
+            key = key_list[key_index]
+            output_dict[key].update({'root_file': key_value})
+
+            key_index += 1
+            if key_index < len(key_list):
+                set_root_file_keys(key_list, key_index, output_dict)
+            else:
+                print("Finished with: {}".format(output_dict))
 
         set_root_files = sublime.ok_cancel_dialog("Set "
             "root files for the projects you just added?")
 
         if set_root_files:
-            for proj in vagrant_projects:
-                sublime.message_dialog("Setting root file for {}".format(proj))
-                set_root_file(vagrant_projects[proj]['name'], vagrant_projects)
+            projnames = list(vagrant_projects.keys())
+            if projnames:
+                set_root_file_keys(projnames, 0, vagrant_projects)
             projdata.update({'vagrant_projects': vagrant_projects})
             self.window.set_project_data(projdata)
         else:
