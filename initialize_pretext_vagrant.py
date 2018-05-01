@@ -193,29 +193,30 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         self.window.set_project_data(projdata)
         vagrant_projects = projdata['vagrant_projects']
 
-        set_root_files = sublime.ok_cancel_dialog("Do you want to set "
-            "root files for the projects you just added?")
-
-        def set_root_file(proj):
+        def set_root_file(projname, projdict):
+            # projdata = self.window.project_data()
+            # projdi = projdata['vagrant_projects']
             def on_done_root(st):
-                projdata = self.window.project_data()
-                projli = projdata['vagrant_projects']
-                for d in projli:
-                    if projli['d']['name'] == proj:
-                        projli['d'].update({'root_file': st})
+                for d in projdict:
+                    if projdict[d]['name'] == projname:
+                        projdict[d].update({'root_file': st})
             self.window.show_input_panel("Enter full path to root "
-                "file for project {}:".format(proj),
+                "file for project {}:".format(re.sub(r'\\', r'\\\\', projname)),
                 pretext_vagrant_root, on_done_root, None, None)
 
+        set_root_files = sublime.ok_cancel_dialog("Set "
+            "root files for the projects you just added?")
+
         if set_root_files:
-            projdata = self.window.project_data()
-            projnames = projdata['vagrant_projects']
-            for proj in projnames:
-                set_root_file(proj['name'])
+            for proj in vagrant_projects:
+                set_root_file(vagrant_projects[proj]['name'], vagrant_projects)
+            projdata.update({'vagrant_projects': vagrant_projects})
+            self.window.set_project_data(projdata)
         else:
             sublime.message_dialog("No root files set. You can add these "
                 "later in the user settings.")
 
+        projdata = self.window.project_data()
         usersettings = sublime.load_settings("Preferences.sublime-settings")
         usersettings.set('vagrant_projects', projdata['vagrant_projects'])
         sublime.save_settings("Preferences.sublime-settings")
