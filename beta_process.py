@@ -40,16 +40,28 @@ class BetaCommand(sublime_plugin.WindowCommand):
         vagrantpath = get_setting('vagrantpath', "C:/HashiCorp/Vagrant/bin/vagrant.exe")
         vagrantroot = get_setting('vagrantroot', "C:/PreTeXt/")
         vagrantcommand = get_setting('vagrantcommand', "vagrant ssh --command")
+        vagrant_projects = get_setting('vagrant_projects', {})
         xinclude = get_setting('xinclude', True)
         stringparam = get_setting('stringparam', {})
-        pretext_root_file = get_setting('pretext_root_file', filename)
+        # pretext_root_file = get_setting('pretext_root_file', filename)
+
+        filepath_list = filepath.split('/')
+        while filepath_list:
+            match = next((proj['name'] for proj in vagrant_projects
+                if proj['path'] == '/'.join(filepath_list)))
+            if match:
+                pretext_root_file = match
+            else:
+                sublime.message_dialog("Error 22: couldn't identify root file")
+                raise VagrantException
+
         pretext_output = get_setting('pretext_output')
         if not pretext_output:
-            pretext_output = filepath.split('/')[:-1]
-            pretext_output.append("output")
+            pretext_output_list = filepath.split('/')[:-1]
+            pretext_output_list.append("output")
             if cmd == "xsltproc":
-                pretext_output.append(fmt)
-            pretext_output = '/'.join(pretext_output)
+                pretext_output_list.append(fmt)
+            pretext_output = '/'.join(pretext_output_list)
         pretext_images = get_setting('pretext_images')
         pretext_html_images = get_setting('pretext_html_images')
         pretext_latex_images = get_setting('pretext_latex_images')
@@ -122,5 +134,3 @@ class BetaCommand(sublime_plugin.WindowCommand):
             shutil.copytree(pretext_images, pretext_html_images)
             shutil.copytree(pretext_images, pretext_latex_images)
         sublime.message_dialog("Build complete.")
-
-
