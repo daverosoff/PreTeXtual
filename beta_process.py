@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 import subprocess
 from .get_setting import get_setting
+from .initialize_pretext_vagrant import VagrantException
 import os, time, re
 
 def to_vagrant(st):
