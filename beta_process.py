@@ -79,10 +79,10 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
         if not pretext_stylesheets:
             print("Cannot find PreTeXt stylesheets, check settings :(")
-            return
+            raise VagrantException
         if not pretext_root_file:
             print("Need to set PreTeXt root file :(")
-            return
+            raise VagrantException
         if cmd == "xsltproc":
             print("Invoking xsltproc...{}".format(time.gmtime(time.time())))
             if xinclude:
@@ -110,7 +110,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
             print("Please wait a few moments...")
         else:
             sublime.message_dialog("Error 4: Something bad happened")
-            return
+            raise VagrantException
         proc = subprocess.Popen(cmd_string,
             cwd=from_vagrant(os.path.dirname(pretext_root_file)), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
