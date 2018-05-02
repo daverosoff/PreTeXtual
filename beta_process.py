@@ -120,7 +120,8 @@ class BetaCommand(sublime_plugin.WindowCommand):
             try:
                 data = proc.stdout.readline().decode(encoding="UTF-8")
                 if re.match("VM must be running", data):
-                    sublime.message_dialog("Start your Vagrant box by running the `vagrant up` command (using Command+Shift+P or Ctrl+Shift+P to bring up the command palette).")
+                    print("Starting Vagrant box...")
+                    subprocess.Popen("vagrant up", cwd=vagrantroot, shell=True)
                     # built = False
                 print(data, end="")
             except:
