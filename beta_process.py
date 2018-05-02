@@ -41,6 +41,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
         vagrantroot = get_setting('vagrantroot', "C:/PreTeXt/")
         vagrantcommand = get_setting('vagrantcommand', "vagrant ssh --command")
         vagrant_projects = get_setting('vagrant_projects', {})
+        # TODO: migrate xinclude, stringparam to vagrant settings
         xinclude = get_setting('xinclude', True)
         stringparam = get_setting('stringparam', {})
         # pretext_root_file = get_setting('pretext_root_file', filename)
