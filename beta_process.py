@@ -100,12 +100,15 @@ class BetaCommand(sublime_plugin.WindowCommand):
             # subprocess.run is not available in python 3.3.6 which ST3 uses as of 3162
         elif cmd == "mbx":
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
-            mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(to_vagrant(pretext_images), to_vagrant(vagrantroot))
-            mbx_switches = {'v': "", 'c': fmt, 'd': to_vagrant(pretext_images), 'f': "all"}
+            mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(
+                to_vagrant(pretext_images), to_vagrant(vagrantroot))
+            mbx_switches = {'v': "", 'c': fmt,
+                'd': to_vagrant(pretext_images), 'f': "all"}
             for k, v in mbx_switches.items():
                 mbx_prefix = mbx_prefix + " -{} {}".format(k, v)
             mbx_suffix = " {}".format(to_vagrant(pretext_root_file))
-            cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix + mbx_suffix)
+            cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix
+                + mbx_suffix)
             print("Calling: {}".format(cmd_string))
             sublime.message_dialog("Building images via mbx, please wait a few moments...")
         else:
