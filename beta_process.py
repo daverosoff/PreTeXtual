@@ -96,7 +96,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
             xp_suffix = " {} {}".format(pretext_stylesheets[fmt], to_vagrant(pretext_root_file))
             cmd_string = "{} \"{}\"".format(vagrantcommand, xp_prefix + xp_sps + xp_suffix)
             print("Calling: {}".format(cmd_string))
-            print("Please wait a few moments...")
+            sublime.message_dialog("Processing via xsltproc, please wait a few moments...")
             # subprocess.run is not available in python 3.3.6 which ST3 uses as of 3162
         elif cmd == "mbx":
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
@@ -107,7 +107,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
             mbx_suffix = " {}".format(to_vagrant(pretext_root_file))
             cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix + mbx_suffix)
             print("Calling: {}".format(cmd_string))
-            print("Please wait a few moments...")
+            sublime.message_dialog("Building images via mbx, please wait a few moments...")
         else:
             sublime.message_dialog("Error 4: Something bad happened")
             raise VagrantException
