@@ -47,14 +47,18 @@ class BetaCommand(sublime_plugin.WindowCommand):
         # pretext_root_file = get_setting('pretext_root_file', filename)
 
         filepath_list = filepath.split('/')
+        pretext_root_file = ""
         while filepath_list:
-            match = next((proj['name'] for proj in vagrant_projects
-                if proj['path'] == '/'.join(filepath_list)))
-            if match:
-                pretext_root_file = match
-            else:
-                sublime.message_dialog("Error 22: couldn't identify root file")
-                raise VagrantException
+            print(filepath_list)
+            print(vagrant_projects)
+            try:
+                pretext_root_file = next((vagrant_projects[proj]['name'] for proj in vagrant_projects
+                    if vagrant_projects[proj]['path'].split(r'\\') == filepath_list))
+            except StopIteration:
+                filepath_list = filepath_list[:-1]
+        if not pretext_root_file:
+            sublime.message_dialog("Error 24: Couldn't find root file")
+            raise VagrantException
 
         pretext_output = get_setting('pretext_output')
         if not pretext_output:
