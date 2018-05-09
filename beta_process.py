@@ -6,11 +6,11 @@ import os, time, re
 
 def to_vagrant(st):
     vagrantroot = get_setting('vagrantroot', "C:/PreTeXt/")
-    return re.sub(vagrantroot, '/vagrant/', st)
+    return re.sub(vagrantroot, '/vagrant/', st, flags=re.IGNORECASE)
 
 def from_vagrant(st):
     vagrantroot = get_setting('vagrantroot', "C:/PreTeXt/")
-    return re.sub('/vagrant/', vagrantroot, st)
+    return re.sub('/vagrant/', vagrantroot, st, flags=re.IGNORECASE)
 
 class BetaCommand(sublime_plugin.WindowCommand):
     # def _verbose(msg):
@@ -38,7 +38,9 @@ class BetaCommand(sublime_plugin.WindowCommand):
         # TODO: use vagrant or not based on this value
         vagrantpath = get_setting('vagrantpath', "C:/HashiCorp/Vagrant/bin/vagrant.exe")
         vagrantroot = get_setting('vagrantroot', "C:/PreTeXt/")
-        vagrantcommand = get_setting('vagrantcommand', "vagrant ssh --command")
+        vagrantcommand = get_setting('vagrantcommand',
+            "{} ssh --command".format(vagrantpath))
+        # vagrantcommand = get_setting('vagrantcommand', "vagrant ssh --command")
         xinclude = get_setting('xinclude', True)
         stringparam = get_setting('stringparam', {})
         pretext_root_file = get_setting('pretext_root_file', filename)
