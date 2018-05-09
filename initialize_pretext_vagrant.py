@@ -24,10 +24,14 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
     def acquire_vagrantfile(self, n, loc):
         if n == -1:
             # quick panel was cancelled
+            print("Quick panel for vagrant box cancelled")
+            sublime.message_dialog("No vagrant box installed. Get help "
+                "at https://github.com/daverosoff/PreTeXtual/issues")
             return
         base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
         url_exts = ["", "-lite", "-barebones", "-no-images"]
         box_name = "daverosoff/pretext" + url_exts[n]
+        print("Attempting to fetch {}".format(box_name))
         proc = subprocess.Popen("vagrant init {}".format(box_name), cwd=loc,
             shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
@@ -235,24 +239,22 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         usersettings.set('vagrant_projects', projdata['vagrant_projects'])
         sublime.save_settings("Preferences.sublime-settings")
 
-        # sublime.message_dialog("Click OK to bring up a quick panel to select "
-        #     "a PreTeXt installation. This step can take a long time, perhaps "
-        #     "an hour or more. Be patient and do not worry if it seems like "
-        #     "your system is hanging. Just watch and wait. If you don't know "
-        #     "what you want, select PreTeXt-lite.")
+        sublime.message_dialog("Click OK to bring up a quick panel to select "
+            "a PreTeXt installation. This step can take a long time, perhaps "
+            "an hour or more. Be patient and do not worry if it seems like "
+            "your system is hanging. Just watch and wait. If you don't know "
+            "what you want, select PreTeXt-lite.")
 
-        # options = [
-        #             "Install PreTeXt",
-        #             "Install PreTeXt-lite",
-        #             "Install PreTeXt-barebones",
-        #             "Install PreTeXt-no-images"
-        #         ],
+        options = [["Install PreTeXt", "A comprehensive kitchen-sink installation"],
+            ["Install PreTeXt-lite", "Sufficient for most needs"],
+            ["Install PreTeXt-barebones", "If you only need HTML"],
+            ["Install PreTeXt-no-images", "For testing only, very limited"]],
 
-        # def on_done(n):
-        #     return self.acquire_vagrantfile(n, pretext_vagrant_root)
+        def on_done(n):
+            self.acquire_vagrantfile(n, pretext_vagrant_root)
 
-        # if not pretext_vagrantfile_exists:
-        #     self.window.show_quick_panel(options, on_done)
+        if not pretext_vagrantfile_exists:
+            self.window.show_quick_panel(options, on_done)
 
         # sublime.message_dialog("The next step you must do yourself; the "
         #     "Sublime Text application can't do this for you (yet?). IT IS "
