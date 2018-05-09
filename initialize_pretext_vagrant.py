@@ -149,7 +149,8 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     return True
             return False
 
-        projlist = [(d, os.path.join(pretext_vagrant_root, d)) for d in ls if is_project(d)]
+        projlist = [(d, os.path.join(pretext_vagrant_root, d))
+            for d in ls if is_project(d) and d != "mathbook"]
 
         # Add all or some project folders to the settings file, converting to absolute paths
         # so projlist is a list of pairs of paths
