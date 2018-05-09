@@ -78,7 +78,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             if not os.access(default_pretext_vagrant_root, os.F_OK):
                 create_folder_ok = sublime.ok_cancel_dialog("OK to create "
                     "default folder C:/PreTeXt? (Cancel, create new folder, "
-                    "add to project, and initialize again to override default")
+                    "add to project, and initialize again to override default)")
                 if create_folder_ok:
                     os.mkdir(default_pretext_vagrant_root)
                 else:
