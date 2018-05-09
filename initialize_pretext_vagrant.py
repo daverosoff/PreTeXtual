@@ -151,12 +151,16 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         # Add all or some project folders to the settings file, converting to absolute paths
         # so projlist is a list of pairs of paths
 
-        add_all = sublime.yes_no_cancel_dialog(
-            "OK to add {} writing projects to PreTeXtual "
-            "management? (Select No to add one by one.)".format(
-                len(projlist)
+        if len(projlist) > 0:
+            add_all = sublime.yes_no_cancel_dialog(
+                "OK to add {} writing projects to PreTeXtual "
+                "management? (Select No to add one by one.)".format(
+                    len(projlist)
+                )
             )
-        )
+        else:
+            sublime.message_dialog("No subfolders detected. See "
+                "documentation for details on adding projects.")
 
         def add_some_projects(add_q, projli):
             """
@@ -193,10 +197,12 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 sublime.message_dialog("Error 16: something bad happened")
                 raise VagrantException
 
-        add_some_projects(add_all, projlist)
+        if len(projlist) > 0:
+            add_some_projects(add_all, projlist)
 
         self.window.set_project_data(projdata)
-        vagrant_projects = projdata['vagrant_projects']
+        if 'pretext_projects' in projdata.keys():
+            pretext_projects = projdata['pretext_projects']
 
         # We need to ask one at a time or the input panels all
         # collide and we don't get to see the first n-1 of them.
@@ -221,22 +227,26 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             else:
                 print("Finished with: {}".format(output_dict))
 
-        set_root_files = sublime.ok_cancel_dialog("Set "
-            "root files for the projects you just added?")
+        if 'pretext_projects' in projdata.keys():
+            set_root_files = sublime.ok_cancel_dialog("Set "
+                "root files for the projects you just added?")
 
-        if set_root_files:
-            projnames = list(vagrant_projects.keys())
-            if projnames:
-                set_root_file_keys(projnames, 0, vagrant_projects)
-            projdata.update({'vagrant_projects': vagrant_projects})
-            self.window.set_project_data(projdata)
-        else:
-            sublime.message_dialog("No root files set. You can add these "
-                "later in the user settings.")
+            if set_root_files:
+                projnames = list(pretext_projects.keys())
+                if projnames:
+                    set_root_file_keys(projnames, 0, pretext_projects)
+                projdata.update({'pretext_projects': pretext_projects})
+                self.window.set_project_data(projdata)
+            else:
+                sublime.message_dialog("No root files set. You can add these "
+                    "later in the user settings.")
 
         projdata = self.window.project_data()
         usersettings = sublime.load_settings("Preferences.sublime-settings")
-        usersettings.set('vagrant_projects', projdata['vagrant_projects'])
+        if 'pretext_projects' in projdata.keys():
+            usersettings.set('pretext_projects', projdata['pretext_projects'])
+        else:
+            usersettings.set('pretext_projects', {})
         sublime.save_settings("Preferences.sublime-settings")
 
         sublime.message_dialog("Click OK to bring up a quick panel to select "
