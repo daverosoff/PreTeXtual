@@ -169,10 +169,10 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             """
             if add_q == sublime.DIALOG_YES:
                 for rel, absol in projli:
-                    if 'vagrant_projects' not in projdata:
-                        projdata['vagrant_projects'] = {}
-                    if not is_present(rel, projdata['vagrant_projects']):
-                        projdata['vagrant_projects'].update({rel: {"path": absol, "name": rel}})
+                    if 'pretext_projects' not in projdata.keys():
+                        projdata['pretext_projects'] = {}
+                    if not is_present(rel, projdata['pretext_projects']):
+                        projdata['pretext_projects'].update({rel: {"path": absol, "name": rel}})
             elif add_q == sublime.DIALOG_CANCEL:
                 sublime.message_dialog("No projects added.")
                 return
@@ -181,10 +181,10 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     add = sublime.yes_no_cancel_dialog(
                         "OK to add {} to PreTeXtual management? Select No to proceed to next project.".format(rel))
                     if add == sublime.DIALOG_YES:
-                        if 'vagrant_projects' not in projdata:
-                            projdata['vagrant_projects'] = {}
-                        if not is_present(rel, projdata['vagrant_projects']):
-                            projdata['vagrant_projects'].update({rel: {"path": absol, "name": rel}})
+                        if 'pretext_projects' not in projdata:
+                            projdata['pretext_projects'] = {}
+                        if not is_present(rel, projdata['pretext_projects']):
+                            projdata['pretext_projects'].update({rel: {"path": absol, "name": rel}})
                     elif add == sublime.DIALOG_CANCEL:
                         sublime.message_dialog("Project addition cancelled.")
                         return
