@@ -252,21 +252,23 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             usersettings.set('pretext_projects', {})
         sublime.save_settings("Preferences.sublime-settings")
 
-        sublime.message_dialog("Click OK to bring up a quick panel to select "
-            "a PreTeXt installation. This step can take a long time, perhaps "
-            "an hour or more. Be patient and do not worry if it seems like "
-            "your system is hanging. Just watch and wait. If you don't know "
-            "what you want, select PreTeXt-lite.")
+        options = ["Install PreTeXt", "Install PreTeXt-lite",
+            "Install PreTeXt-barebones", "Install PreTeXt-no-images"]
 
-        options = [["Install PreTeXt", "A comprehensive kitchen-sink installation"],
-            ["Install PreTeXt-lite", "Sufficient for most needs"],
-            ["Install PreTeXt-barebones", "If you only need HTML"],
-            ["Install PreTeXt-no-images", "For testing only, very limited"]],
+            # "A comprehensive kitchen-sink installation"
+            # "Sufficient for most needs"
+            # "If you only need HTML"
+            # "For testing only, very limited"
 
         def on_done(n):
             self.acquire_vagrantfile(n, pretext_vagrant_root)
 
         if not pretext_vagrantfile_exists:
+            sublime.message_dialog("Click OK to bring up a quick panel to select "
+                "a PreTeXt installation. This step can take a long time, perhaps "
+                "an hour or more. Be patient and do not worry if it seems like "
+                "your system is hanging. Just watch and wait. If you don't know "
+                "what you want, select PreTeXt-lite.")
             self.window.show_quick_panel(options, on_done)
 
         # sublime.message_dialog("The next step you must do yourself; the "
