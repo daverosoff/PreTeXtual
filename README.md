@@ -149,6 +149,10 @@ Whatever way you choose, verify the following for each project you add.
 
 #### Compiling to HTML or PDF
 
+To get ready for the next step, open a command shell and run
+
+    vagrant up
+
 Now the fun starts. In an existing writing project, open the root PreTeXt file
 (the one with the `<mathbook>` element). Use the Command Palette
 (<kbd>Ctrl+Shift+P</kbd>) to run the command "Set current file as PreTeXt
@@ -177,7 +181,9 @@ Building images should be as simple as processing to HTML or LaTeX. Use the
 if you have a large project). Then refresh your HTML output in the browser to
 check that the images appear.
 
-This concludes the tour of the build system.
+This concludes the tour of the build system. Run `vagrant suspend` in a command
+shell before shutting down your system (Windows will complain that something is
+stopping you from shutting down otherwise).
 
 ### Keybindings
 
