@@ -1,6 +1,7 @@
 import sublime
 import sublime_plugin
 import subprocess, urllib, os, re#, time
+from .get_setting import get_setting
 
 class VagrantException(Exception):
     def is_vagrant_exception(self):
@@ -28,11 +29,22 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             sublime.message_dialog("No vagrant box installed. Get help "
                 "at https://github.com/daverosoff/PreTeXtual/issues")
             return
+        vagrantpath = get_setting('vagrantpath', "C:/HashiCorp/Vagrant/bin/vagrant.exe")
         base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
         url_exts = ["", "-lite", "-barebones", "-no-images"]
         box_name = "daverosoff/pretext" + url_exts[n]
         print("Attempting to fetch {}".format(box_name))
-        proc = subprocess.Popen("vagrant init {}".format(box_name), cwd=loc,
+        proc = subprocess.Popen("{} init {}".format(vagrantpath,
+            box_name), cwd=loc, shell=True, stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT)
+        while proc.poll() is None:
+            try:
+                data = proc.stdout.readline().decode(encoding="UTF-8")
+                print(data, end="")
+            except:
+                return
+        # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
+        proc = subprocess.Popen("{} up".format(vagrantpath), cwd=loc,
             shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             try:
@@ -41,16 +53,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             except:
                 return
         # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
-        proc = subprocess.Popen("vagrant up", cwd=loc,
-            shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        while proc.poll() is None:
-            try:
-                data = proc.stdout.readline().decode(encoding="UTF-8")
-                print(data, end="")
-            except:
-                return
-        # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
-        proc = subprocess.Popen("vagrant suspend", cwd=loc,
+        proc = subprocess.Popen("{} suspend".format(vagrantpath), cwd=loc,
             shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             try:
