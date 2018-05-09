@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 import subprocess
 from .get_setting import get_setting
+from .initialize_pretext_vagrant import VagrantException
 import os, time, re
 
 def to_vagrant(st):
@@ -41,16 +42,32 @@ class BetaCommand(sublime_plugin.WindowCommand):
         vagrantcommand = get_setting('vagrantcommand',
             "{} ssh --command".format(vagrantpath))
         # vagrantcommand = get_setting('vagrantcommand', "vagrant ssh --command")
+        # TODO: migrate xinclude, stringparam to vagrant settings
         xinclude = get_setting('xinclude', True)
         stringparam = get_setting('stringparam', {})
-        pretext_root_file = get_setting('pretext_root_file', filename)
+        # pretext_root_file = get_setting('pretext_root_file', filename)
+
+        filepath_list = filepath.split('/')
+        pretext_root_file = ""
+        while filepath_list:
+            print(filepath_list)
+            print(vagrant_projects)
+            try:
+                pretext_root_file = next((vagrant_projects[proj]['name'] for proj in vagrant_projects
+                    if vagrant_projects[proj]['path'].split(r'\\') == filepath_list))
+            except StopIteration:
+                filepath_list = filepath_list[:-1]
+        if not pretext_root_file:
+            sublime.message_dialog("Error 24: Couldn't find root file")
+            raise VagrantException
+
         pretext_output = get_setting('pretext_output')
         if not pretext_output:
-            pretext_output = filepath.split('/')[:-1]
-            pretext_output.append("output")
+            pretext_output_list = filepath.split('/')[:-1]
+            pretext_output_list.append("output")
             if cmd == "xsltproc":
-                pretext_output.append(fmt)
-            pretext_output = '/'.join(pretext_output)
+                pretext_output_list.append(fmt)
+            pretext_output = '/'.join(pretext_output_list)
         pretext_images = get_setting('pretext_images')
         pretext_html_images = get_setting('pretext_html_images')
         pretext_latex_images = get_setting('pretext_latex_images')
@@ -67,10 +84,10 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
         if not pretext_stylesheets:
             print("Cannot find PreTeXt stylesheets, check settings :(")
-            return
+            raise VagrantException
         if not pretext_root_file:
             print("Need to set PreTeXt root file :(")
-            return
+            raise VagrantException
         if cmd == "xsltproc":
             print("Invoking xsltproc...{}".format(time.gmtime(time.time())))
             if xinclude:
@@ -84,28 +101,32 @@ class BetaCommand(sublime_plugin.WindowCommand):
             xp_suffix = " {} {}".format(pretext_stylesheets[fmt], to_vagrant(pretext_root_file))
             cmd_string = "{} \"{}\"".format(vagrantcommand, xp_prefix + xp_sps + xp_suffix)
             print("Calling: {}".format(cmd_string))
-            print("Please wait a few moments...")
+            sublime.message_dialog("Processing via xsltproc, please wait a few moments...")
             # subprocess.run is not available in python 3.3.6 which ST3 uses as of 3162
         elif cmd == "mbx":
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
-            mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(to_vagrant(pretext_images), to_vagrant(vagrantroot))
-            mbx_switches = {'v': "", 'c': fmt, 'd': to_vagrant(pretext_images), 'f': "all"}
+            mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(
+                to_vagrant(pretext_images), to_vagrant(vagrantroot))
+            mbx_switches = {'v': "", 'c': fmt,
+                'd': to_vagrant(pretext_images), 'f': "all"}
             for k, v in mbx_switches.items():
                 mbx_prefix = mbx_prefix + " -{} {}".format(k, v)
             mbx_suffix = " {}".format(to_vagrant(pretext_root_file))
-            cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix + mbx_suffix)
+            cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix
+                + mbx_suffix)
             print("Calling: {}".format(cmd_string))
-            print("Please wait a few moments...")
+            sublime.message_dialog("Building images via mbx, please wait a few moments...")
         else:
             sublime.message_dialog("Error 4: Something bad happened")
-            return
+            raise VagrantException
         proc = subprocess.Popen(cmd_string,
             cwd=from_vagrant(os.path.dirname(pretext_root_file)), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             try:
                 data = proc.stdout.readline().decode(encoding="UTF-8")
                 if re.match("VM must be running", data):
-                    sublime.message_dialog("Start your Vagrant box by running the `vagrant up` command (using Command+Shift+P or Ctrl+Shift+P to bring up the command palette).")
+                    print("Starting Vagrant box...")
+                    subprocess.Popen("vagrant up", cwd=vagrantroot, shell=True)
                     # built = False
                 print(data, end="")
             except:
@@ -123,5 +144,3 @@ class BetaCommand(sublime_plugin.WindowCommand):
             shutil.copytree(pretext_images, pretext_html_images)
             shutil.copytree(pretext_images, pretext_latex_images)
         sublime.message_dialog("Build complete.")
-
-
