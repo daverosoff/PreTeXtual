@@ -94,7 +94,8 @@ class BetaCommand(sublime_plugin.WindowCommand):
         vagrant = get_setting('pretext_use_vagrant', True)
         # TODO: use vagrant or not based on this value
 
-        vagrantpath = get_setting('vagrantpath', "C:\\HashiCorp\\Vagrant\\bin\\vagrant.exe")
+        vagrantpath = get_setting('vagrantpath',
+            "C:\\HashiCorp\\Vagrant\\bin\\vagrant.exe")
         vagrantroot = get_setting('vagrantroot', "C:\\PreTeXt\\")
         vagrantcommand = get_setting('vagrantcommand',
             "{} ssh --command".format(vagrantpath))
@@ -120,8 +121,10 @@ class BetaCommand(sublime_plugin.WindowCommand):
         # xinclude = get_setting('xinclude', True)
         xinclude = get_pretext_project_setting('xinclude', True, project_name)
         # stringparam = get_setting('stringparam', {})
-        stringparam = get_pretext_project_setting('stringparam', {}, project_name)
+        stringparam = get_pretext_project_setting('stringparam', {},
+            project_name)
         root_file = get_pretext_project_setting('root_file', "", project_name)
+        # TODO: some attempt at intelligent root file detection assuming sensible structure
         if not root_file:
             sublime.message_dialog("Error 24: Couldn't find project root file")
             raise VagrantException
@@ -193,17 +196,22 @@ class BetaCommand(sublime_plugin.WindowCommand):
             xp_prefix = "xsltproc "
             if xinclude:
                 xp_prefix += "--xinclude"
-            xp_prefix += "--output {}/{}/".format(to_vagrant(pretext_output), fmt)
+            xp_prefix += "--output {}/{}/".format(to_vagrant(pretext_output),
+                fmt)
 
             xp_sps = ""
             if stringparam:
                 for k, v in stringparam.items():
-                    xp_sps = "{} --stringparam {} \\\"{}\\\"".format(xp_sps, k, v)
-            xp_suffix = " {} {}".format(pretext_stylesheets[fmt], to_vagrant(root_file))
+                    xp_sps = "{} --stringparam {} \\\"{}\\\"".format(xp_sps,
+                        k, v)
+            xp_suffix = " {} {}".format(pretext_stylesheets[fmt],
+                to_vagrant(root_file))
 
-            cmd_string = "{} \"{}\"".format(vagrantcommand, xp_prefix + xp_sps + xp_suffix)
+            cmd_string = "{} \"{}\"".format(vagrantcommand, xp_prefix + xp_sps
+                + xp_suffix)
             print("Calling: {}".format(cmd_string))
-            sublime.message_dialog("Processing via xsltproc, please wait a few moments...")
+            sublime.message_dialog("Processing via xsltproc, please wait a "
+                "few moments...")
             # subprocess.run is not available in python 3.3.6 which ST3 uses as of 3162
 
         elif cmd == "mbx":
@@ -221,7 +229,8 @@ class BetaCommand(sublime_plugin.WindowCommand):
             cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix
                 + mbx_suffix)
             print("Calling: {}".format(cmd_string))
-            sublime.message_dialog("Building images via mbx, please wait a few moments...")
+            sublime.message_dialog("Building images via mbx, please wait a "
+                "few moments...")
         else:
             sublime.message_dialog("Error 4: No valid process selected")
             raise VagrantException
@@ -243,7 +252,8 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 return
         # if built:
         if cmd == "mbx":
-            print("Copying images from {} to {}...".format(pretext_images, pretext_html_images))
+            print("Copying images from {} to {}...".format(pretext_images,
+                pretext_html_images))
             import shutil
             if os.access(pretext_html_images, os.F_OK):
                 shutil.rmtree(pretext_html_images)
