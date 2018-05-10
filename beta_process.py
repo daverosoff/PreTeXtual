@@ -169,18 +169,18 @@ class BetaCommand(sublime_plugin.WindowCommand):
         pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
             os.path.join(pretext_output_epub, 'images'), project_name)
         pretext_epub_images = get_pretext_project_setting()
-        if not pretext_images:
-            # pretext_images = '/'.join([pretext_output, 'images'])
-            sublime.message_dialog("Error 38: something bad happened")
-            raise VagrantException
-        if not pretext_html_images:
-            # pretext_html_images = '/'.join([pretext_output, 'html', 'images'])
-            sublime.message_dialog("Error 40: something bad happened")
-            raise VagrantException
-        if not pretext_latex_images:
-            # pretext_latex_images = '/'.join([pretext_output, 'latex', 'images'])
-            sublime.message_dialog("Error 42: something bad happened")
-            raise VagrantException
+        # if not pretext_images:
+        #     # pretext_images = '/'.join([pretext_output, 'images'])
+        #     sublime.message_dialog("Error 38: something bad happened")
+        #     raise VagrantException
+        # if not pretext_html_images:
+        #     # pretext_html_images = '/'.join([pretext_output, 'html', 'images'])
+        #     sublime.message_dialog("Error 40: something bad happened")
+        #     raise VagrantException
+        # if not pretext_latex_images:
+        #     # pretext_latex_images = '/'.join([pretext_output, 'latex', 'images'])
+        #     sublime.message_dialog("Error 42: something bad happened")
+        #     raise VagrantException
 
 
         # if not pretext_root_file:
