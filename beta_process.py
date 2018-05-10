@@ -273,8 +273,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 print(data, end="")
             except:
                 # if built:
-                sublime.message_dialog("Build complete.")
-                return
+                sublime.message_dialog("{} build execution complete.".format(cmd))
         # if built:
         if cmd == "mbx":
             print("Copying images from {} to {}...".format(pretext_images,
