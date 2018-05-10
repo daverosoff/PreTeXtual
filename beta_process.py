@@ -217,7 +217,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
             xp_prefix = "xsltproc "
             if xinclude:
-                xp_prefix += "--xinclude"
+                xp_prefix += "--xinclude "
             xp_prefix += "--output {}/{}/".format(to_vagrant(pretext_output),
                 fmt)
 
