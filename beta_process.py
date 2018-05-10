@@ -143,6 +143,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
         #         filepath_list = filepath_list[:-1]
         # if not pretext_root_file:
 
+        # Note: trailing slash is added later, no need for it here
         pretext_output = get_pretext_project_setting('pretext_output',
             os.path.join(path, 'output'), project_name)
         if not pretext_output:
@@ -153,12 +154,21 @@ class BetaCommand(sublime_plugin.WindowCommand):
             # if cmd == "xsltproc":
             #     pretext_output_list.append(fmt)
             # pretext_output = '/'.join(pretext_output_list)
+        pretext_output_html = get_pretext_project_setting('pretext_output_html',
+            os.path.join(pretext_output, 'html'), project_name)
+        pretext_output_latex = get_pretext_project_setting('pretext_output_latex',
+            os.path.join(pretext_output, 'latex'), project_name)
+        pretext_output_epub = get_pretext_project_setting('pretext_output_epub',
+            os.path.join(pretext_output, 'epub'), project_name)
         pretext_images = get_pretext_project_setting('pretext_images',
             os.path.join(pretext_output, 'images'), project_name)
         pretext_html_images = get_pretext_project_setting('pretext_html_images',
-            os.path.join(pretext_output, 'html', 'images'), project_name)
+            os.path.join(pretext_output_html, 'images'), project_name)
         pretext_latex_images = get_pretext_project_setting('pretext_latex_images',
-            os.path.join(pretext_output, 'latex', 'images'), project_name)
+            os.path.join(pretext_output_latex, 'images'), project_name)
+        pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
+            os.path.join(pretext_output_epub, 'images'), project_name)
+        pretext_epub_images = get_pretext_project_setting()
         if not pretext_images:
             # pretext_images = '/'.join([pretext_output, 'images'])
             sublime.message_dialog("Error 38: something bad happened")
