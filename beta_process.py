@@ -194,7 +194,6 @@ class BetaCommand(sublime_plugin.WindowCommand):
             os.path.join(pretext_output_latex, 'images'), project_name)
         pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
             os.path.join(pretext_output_epub, 'images'), project_name)
-        pretext_epub_images = get_pretext_project_setting()
         # if not pretext_images:
         #     # pretext_images = '/'.join([pretext_output, 'images'])
         #     sublime.message_dialog("Error 38: something bad happened")
