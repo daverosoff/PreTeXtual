@@ -240,10 +240,13 @@ class BetaCommand(sublime_plugin.WindowCommand):
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
             mbx_prefix = "mkdir --parents {}; ".format(to_vagrant(pretext_images))
             mbx_prefix += "{}mathbook/script/mbx".format(to_vagrant(vagrantroot))
+
+            # TODO: fix image_fmt to read input and output from single switch
+            image_fmt = "all" if fmt == "latex-image" else "svg"
+
             # remove 'v' key from mbx_switches to disable verbose
-            # change 'v' value to "v" to enable maximum verbosity
-            image_format = image_fmt if image_fmt else "all"
-            mbx_switches = {'v': "", 'c': fmt,
+            # change 'v' key to "vv" to enable maximum verbosity
+            mbx_switches = {'vv': "", 'c': fmt,
                 'd': to_vagrant(pretext_images), 'f': image_fmt}
             for k, v in mbx_switches.items():
                 mbx_prefix += " -{} {}".format(k, v)
