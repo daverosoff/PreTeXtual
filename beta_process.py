@@ -288,4 +288,25 @@ class BetaCommand(sublime_plugin.WindowCommand):
             shutil.copytree(pretext_images, pretext_html_images)
             shutil.copytree(pretext_images, pretext_latex_images)
             shutil.copytree(pretext_images, pretext_epub_images)
-        sublime.message_dialog("Build complete.")
+
+        # if cmd == "xsltproc" and fmt == "latex":
+        #     tex_prefix = "xelatex"
+        #     root_file_suffix = os.path.basename(to_vagrant(root_file)).split('.')[-1]
+        #     root_file_suffix += '$' # only match at end
+        #     tex_source = re.sub(root_file_suffix, 'tex',
+        #         os.path.basename(root_file))
+        #     tex_source = to_vagrant(os.path.join(pretext_output_latex, tex_source))
+        #     tex_cmd_string = "{} {}".format(tex_prefix, tex_source)
+        #     print("Calling {}...".format(tex_cmd_string))
+        #     proc = subprocess.Popen(tex_cmd_string,
+        #         # cwd=from_vagrant(os.path.dirname(root_file)),
+        #         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        #     while proc.poll() is None:
+        #         try:
+        #             data = proc.stdout.readline().decode(encoding="UTF-8")
+        #             print(data, end="")
+        #         except:
+        #             # if built:
+        #             sublime.message_dialog("tex build execution complete.")
+
+        sublime.message_dialog("End of PreTeXtual build routine.")
