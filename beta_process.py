@@ -208,28 +208,33 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
         elif cmd == "mbx":
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
-            mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(
-                to_vagrant(pretext_images), to_vagrant(vagrantroot))
+            mbx_prefix = "mkdir --parents {}; ".format(to_vagrant(pretext_images))
+            mbx_prefix += "{}mathbook/script/mbx".format(to_vagrant(vagrantroot))
+            # remove 'v' key from mbx_switches to disable verbose
+            # change 'v' value to "v" to enable maximum verbosity
+            image_format = image_fmt if image_fmt else "all"
             mbx_switches = {'v': "", 'c': fmt,
-                'd': to_vagrant(pretext_images), 'f': "all"}
+                'd': to_vagrant(pretext_images), 'f': image_fmt}
             for k, v in mbx_switches.items():
-                mbx_prefix = mbx_prefix + " -{} {}".format(k, v)
+                mbx_prefix += " -{} {}".format(k, v)
             mbx_suffix = " {}".format(to_vagrant(root_file))
             cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix
                 + mbx_suffix)
             print("Calling: {}".format(cmd_string))
             sublime.message_dialog("Building images via mbx, please wait a few moments...")
         else:
-            sublime.message_dialog("Error 4: Something bad happened")
+            sublime.message_dialog("Error 4: No valid process selected")
             raise VagrantException
         proc = subprocess.Popen(cmd_string,
-            cwd=from_vagrant(os.path.dirname(root_file)), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            cwd=from_vagrant(os.path.dirname(root_file)), shell=True,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             try:
                 data = proc.stdout.readline().decode(encoding="UTF-8")
                 if re.match("VM must be running", data):
                     print("Starting Vagrant box...")
-                    subprocess.Popen("vagrant up", cwd=vagrantroot, shell=True)
+                    subprocess.Popen("{} up".format(vagrantpath),
+                        cwd=vagrantroot, shell=True)
                     # built = False
                 print(data, end="")
             except:
