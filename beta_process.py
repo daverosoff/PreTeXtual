@@ -189,19 +189,23 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
         if cmd == "xsltproc":
             print("Invoking xsltproc...{}".format(time.gmtime(time.time())))
+
+            xp_prefix = "xsltproc "
             if xinclude:
-                xp_prefix = "xsltproc --xinclude --output {}/ ".format(to_vagrant(pretext_output))
-            else:
-                xp_prefix = "xsltproc --output {}/ ".format(to_vagrant(pretext_output))
+                xp_prefix += "--xinclude"
+            xp_prefix += "--output {}/{}/".format(to_vagrant(pretext_output), fmt)
+
             xp_sps = ""
             if stringparam:
                 for k, v in stringparam.items():
                     xp_sps = "{} --stringparam {} \\\"{}\\\"".format(xp_sps, k, v)
             xp_suffix = " {} {}".format(pretext_stylesheets[fmt], to_vagrant(root_file))
+
             cmd_string = "{} \"{}\"".format(vagrantcommand, xp_prefix + xp_sps + xp_suffix)
             print("Calling: {}".format(cmd_string))
             sublime.message_dialog("Processing via xsltproc, please wait a few moments...")
             # subprocess.run is not available in python 3.3.6 which ST3 uses as of 3162
+
         elif cmd == "mbx":
             print("Invoking mbx...{}".format(time.gmtime(time.time())))
             mbx_prefix = "mkdir -p {}; {}mathbook/script/mbx".format(
