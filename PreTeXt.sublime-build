@@ -21,9 +21,22 @@
             "fmt": "latex-image"
         },
         {
+            "name": "Build asymptote images (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "asy"
+        },
+        {
+            "name": "Build sageplot images (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "sageplot"
+        },
+        {
             "name": "Update PreTeXt",
-            "shell": true,
-            "cmd": "vagrant ssh -- 'cd /vagrant/mathbook; git pull origin dev'; echo 'Installation up to date.'"
+            "target": "beta",
+            "cmd": "update_pretext",
+            "fmt": "none" //unused
         },
     ],
 }
