@@ -100,6 +100,29 @@ class BetaCommand(sublime_plugin.WindowCommand):
         vagrantcommand = get_setting('vagrantcommand',
             "{} ssh --command".format(vagrantpath))
 
+        if cmd == "update_pretext":
+            #### FUNCTION EXITS FROM THIS BLOCK
+            # test for existing installation
+            loc = to_vagrant(os.path.join(vagrantroot, "mathbook"))
+            cmd_string = "mkdir --parents {}; cd {}; ".format(loc, loc)
+            if os.access(os.path.join(vagrantroot, "mathbook"), os.F_OK):
+                cmd_string += "git pull"
+            else:
+                cmd_string += "git clone https://github.com/rbeezer/mathbook.git ."
+            print("Calling {} \"{}\"".format(vagrantcommand,
+                cmd_string))
+            proc = subprocess.Popen("{} \"{}\"".format(vagrantcommand, cmd_string),
+                shell=True, stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT)
+            while proc.poll() is None:
+                try:
+                    data = proc.stdout.readline().decode(encoding="UTF-8")
+                    print(data, end="")
+                except:
+                    # if built:
+                    sublime.message_dialog("Build complete.")
+            return
+
         # most users will not have values set for vagrantpath, vagrantroot,
         # vagrantcommand; assume these sensible default values; only users who
         # are customizing to fit an existing system will need to override the
