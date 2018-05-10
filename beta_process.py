@@ -284,6 +284,9 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 shutil.rmtree(pretext_html_images)
             if os.access(pretext_latex_images, os.F_OK):
                 shutil.rmtree(pretext_latex_images)
+            if os.access(pretext_epub_images, os.F_OK):
+                shutil.rmtree(pretext_epub_images)
             shutil.copytree(pretext_images, pretext_html_images)
             shutil.copytree(pretext_images, pretext_latex_images)
+            shutil.copytree(pretext_images, pretext_epub_images)
         sublime.message_dialog("Build complete.")
