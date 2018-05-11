@@ -6,13 +6,13 @@ from .initialize_pretext_vagrant import VagrantException
 import os, time, re
 
 def to_vagrant(st):
-    vagrantroot = get_setting('vagrantroot', "C:\\\\PreTeXt\\\\")
+    vagrantroot = get_setting('vagrantroot', r"C:\\PreTeXt\\")
     result = re.sub(vagrantroot, '/vagrant/', st, flags=re.IGNORECASE)
     result = re.sub(r'\\', '/', result)
     return result
 
 def from_vagrant(st):
-    vagrantroot = get_setting('vagrantroot', "C:\\\\PreTeXt\\\\")
+    vagrantroot = get_setting('vagrantroot', r"C:\\PreTeXt\\")
     return re.sub('/vagrant/', vagrantroot, st, flags=re.IGNORECASE)
 
 
