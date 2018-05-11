@@ -3,7 +3,7 @@
     "file_patterns": ["*.ptx", "*.mbx"],
     "variants": [
         {
-            "name": "Process PreTeXt to HTML (beta)",
+            "name": "Process PreTeXt to HTML",
             "target": "beta",
             "cmd": "xsltproc",
             "fmt": "html"
@@ -14,20 +14,26 @@
             "cmd": "xsltproc",
             "fmt": "latex"
         },
+        // {
+        //     "name": "Process PreTeXt to EPub",
+        //     "target": "beta",
+        //     "cmd": "xsltproc",
+        //     "fmt": "epub"
+        // },
         {
-            "name": "Build latex-image images (beta)",
+            "name": "Build latex-image images",
             "target": "beta",
             "cmd": "mbx",
             "fmt": "latex-image"
         },
         {
-            "name": "Build asymptote images (beta)",
+            "name": "Build asymptote images",
             "target": "beta",
             "cmd": "mbx",
             "fmt": "asy"
         },
         {
-            "name": "Build sageplot images (beta)",
+            "name": "Build sageplot images",
             "target": "beta",
             "cmd": "mbx",
             "fmt": "sageplot"

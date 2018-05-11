@@ -132,6 +132,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
         pretext_stylesheets = get_setting('pretext_stylesheets', {
             "html": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-html.xsl"),
             "latex": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-latex.xsl"),
+            # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
         })
 
         if not pretext_stylesheets:
@@ -259,86 +260,98 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 sublime.message_dialog("Error 46: Something bad happened")
                 raise VagrantException
 
-            if allowed_formats[fmt]:
-                def on_done(st):
-                    image_outfmt = st
-
-                self.window.show_input_panel("Enter an output format (one of "
-                    "{}): ".format(", ".join(allowed_formats[fmt])),
-                    "", on_done, None, None)
-            # else:
-            #     image_outfmt = ""
-
-
             # remove 'v' key from mbx_switches to disable verbose
             # change 'v' key to "vv" to enable maximum verbosity
             mbx_switches = {'vv': "", 'c': fmt,
                 'd': to_vagrant(pretext_images)}
-            if image_outfmt:
-                mbx_switches.update({'f': image_outfmt})
-            for k, v in mbx_switches.items():
-                mbx_prefix += " -{} {}".format(k, v)
-            mbx_suffix = " {}".format(to_vagrant(root_file))
-            cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix
-                + mbx_suffix)
-            print("Calling: {}".format(cmd_string))
-            sublime.message_dialog("Building {} images into {} format "
-                "via mbx, please wait a few moments...".format(fmt, image_outfmt))
+
+            if allowed_formats[fmt]:
+                def on_done(st, mbx_p, mbx_s):
+                    image_outfmt = st
+                    mbx_s.update({'f': image_outfmt})
+                    for k, v in mbx_s.items():
+                        mbx_p += " -{} {}".format(k, v)
+                    mbx_suffix = " {}".format(to_vagrant(root_file))
+                    cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_p
+                        + mbx_suffix)
+                    print("Calling: {}".format(cmd_string))
+                    if fmt == "youtube":
+                        sublime.message_dialog("Fetching YouTube thumbnails "
+                            "via mbx, please wait a few moments...")
+                    elif fmt == "webwork":
+                        sublime.message_dialog("Extracting WeBWorK problems "
+                            "into {} format via mbx, ".format(image_outfmt)
+                                + "please wait a few moments...")
+                    elif fmt == "mom":
+                        sublime.message_dialog("Extracting MyOpenMath "
+                            "static problems via mbx, please wait a "
+                            "few moments...")
+                    else:
+                        sublime.message_dialog("Building {} images into {} format "
+                            "via mbx, please wait a few moments...".format(fmt, image_outfmt))
+
+                    proc = subprocess.Popen(cmd_string,
+                        cwd=from_vagrant(os.path.dirname(root_file)), shell=True,
+                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    while proc.poll() is None:
+                        try:
+                            data = proc.stdout.readline().decode(encoding="UTF-8")
+                            if re.match("VM must be running", data):
+                                print("Starting Vagrant box...")
+                                subprocess.Popen("{} up".format(vagrantpath),
+                                    cwd=vagrantroot, shell=True)
+                                # built = False
+                            print(data, end="")
+                        except:
+                            # if built:
+                            sublime.message_dialog("{} build execution complete.".format(cmd))
+                    # if built:
+                    if cmd == "mbx":
+                        import shutil
+                        if os.access(pretext_html_images, os.F_OK):
+                            shutil.rmtree(pretext_html_images)
+                        if os.access(pretext_latex_images, os.F_OK):
+                            shutil.rmtree(pretext_latex_images)
+                        if os.access(pretext_epub_images, os.F_OK):
+                            shutil.rmtree(pretext_epub_images)
+                        print("Copying images from {} to {}...".format(pretext_images,
+                            pretext_html_images))
+                        shutil.copytree(pretext_images, pretext_html_images)
+                        print("Copying images from {} to {}...".format(pretext_images,
+                            pretext_latex_images))
+                        shutil.copytree(pretext_images, pretext_latex_images)
+                        print("Copying images from {} to {}...".format(pretext_images,
+                            pretext_epub_images))
+                        shutil.copytree(pretext_images, pretext_epub_images)
+
+                    # if cmd == "xsltproc" and fmt == "latex":
+                    #     tex_prefix = "xelatex"
+                    #     root_file_suffix = os.path.basename(to_vagrant(root_file)).split('.')[-1]
+                    #     root_file_suffix += '$' # only match at end
+                    #     tex_source = re.sub(root_file_suffix, 'tex',
+                    #         os.path.basename(root_file))
+                    #     tex_source = to_vagrant(os.path.join(pretext_output_latex, tex_source))
+                    #     tex_cmd_string = "{} {}".format(tex_prefix, tex_source)
+                    #     print("Calling {}...".format(tex_cmd_string))
+                    #     proc = subprocess.Popen(tex_cmd_string,
+                    #         # cwd=from_vagrant(os.path.dirname(root_file)),
+                    #         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    #     while proc.poll() is None:
+                    #         try:
+                    #             data = proc.stdout.readline().decode(encoding="UTF-8")
+                    #             print(data, end="")
+                    #         except:
+                    #             # if built:
+                    #             sublime.message_dialog("tex build execution complete.")
+
+                    sublime.message_dialog("End of PreTeXtual build routine.")
+                self.window.show_input_panel("Enter an output format (one of "
+                    "{}): ".format(", ".join(allowed_formats[fmt])),
+                    "", lambda s: on_done(s, mbx_prefix, mbx_switches), None, None)
+
+
+
         else:
             sublime.message_dialog("Error 4: No valid process selected")
             raise VagrantException
-        proc = subprocess.Popen(cmd_string,
-            cwd=from_vagrant(os.path.dirname(root_file)), shell=True,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        while proc.poll() is None:
-            try:
-                data = proc.stdout.readline().decode(encoding="UTF-8")
-                if re.match("VM must be running", data):
-                    print("Starting Vagrant box...")
-                    subprocess.Popen("{} up".format(vagrantpath),
-                        cwd=vagrantroot, shell=True)
-                    # built = False
-                print(data, end="")
-            except:
-                # if built:
-                sublime.message_dialog("{} build execution complete.".format(cmd))
-        # if built:
-        if cmd == "mbx":
-            import shutil
-            if os.access(pretext_html_images, os.F_OK):
-                shutil.rmtree(pretext_html_images)
-            if os.access(pretext_latex_images, os.F_OK):
-                shutil.rmtree(pretext_latex_images)
-            if os.access(pretext_epub_images, os.F_OK):
-                shutil.rmtree(pretext_epub_images)
-            print("Copying images from {} to {}...".format(pretext_images,
-                pretext_html_images))
-            shutil.copytree(pretext_images, pretext_html_images)
-            print("Copying images from {} to {}...".format(pretext_images,
-                pretext_latex_images))
-            shutil.copytree(pretext_images, pretext_latex_images)
-            print("Copying images from {} to {}...".format(pretext_images,
-                pretext_epub_images))
-            shutil.copytree(pretext_images, pretext_epub_images)
 
-        # if cmd == "xsltproc" and fmt == "latex":
-        #     tex_prefix = "xelatex"
-        #     root_file_suffix = os.path.basename(to_vagrant(root_file)).split('.')[-1]
-        #     root_file_suffix += '$' # only match at end
-        #     tex_source = re.sub(root_file_suffix, 'tex',
-        #         os.path.basename(root_file))
-        #     tex_source = to_vagrant(os.path.join(pretext_output_latex, tex_source))
-        #     tex_cmd_string = "{} {}".format(tex_prefix, tex_source)
-        #     print("Calling {}...".format(tex_cmd_string))
-        #     proc = subprocess.Popen(tex_cmd_string,
-        #         # cwd=from_vagrant(os.path.dirname(root_file)),
-        #         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        #     while proc.poll() is None:
-        #         try:
-        #             data = proc.stdout.readline().decode(encoding="UTF-8")
-        #             print(data, end="")
-        #         except:
-        #             # if built:
-        #             sublime.message_dialog("tex build execution complete.")
-
-        sublime.message_dialog("End of PreTeXtual build routine.")
