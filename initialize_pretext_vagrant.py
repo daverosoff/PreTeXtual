@@ -223,7 +223,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
 
         def set_root_file_values(key_value, key_list, key_index, output_dict):
             key = key_list[key_index]
-            output_dict[key].update({'root_file': key_value})
+            output_dict[key].update({'root_file': os.path.normpath(key_value)})
 
             key_index += 1
             if key_index < len(key_list):
