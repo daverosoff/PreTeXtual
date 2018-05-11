@@ -9,7 +9,7 @@
             "fmt": "html"
         },
         {
-            "name": "Process PreTeXt to LaTeX (beta)",
+            "name": "Process PreTeXt to LaTeX",
             "target": "beta",
             "cmd": "xsltproc",
             "fmt": "latex"
@@ -31,6 +31,24 @@
             "target": "beta",
             "cmd": "mbx",
             "fmt": "sageplot"
+        },
+        {
+            "name": "Fetch Youtube thumbnails (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "youtube"
+        },
+        {
+            "name": "Extract MyOpenMath problems (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "mom"
+        },
+        {
+            "name": "Extract WeBWorK problems (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "webwork"
         },
         {
             "name": "Update PreTeXt",

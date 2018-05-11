@@ -241,21 +241,49 @@ class BetaCommand(sublime_plugin.WindowCommand):
             mbx_prefix = "mkdir --parents {}; ".format(to_vagrant(pretext_images))
             mbx_prefix += "{}mathbook/script/mbx".format(to_vagrant(vagrantroot))
 
-            # TODO: fix image_fmt to read input and output from single switch
-            image_fmt = "all" if fmt == "latex-image" else "svg"
+            # source format (-c) specified via build sys, but output format
+            # (-f) should be gotten via input panel
+            allowed_formats = {
+                "tikz": ["source", "svg", "pdf"],
+                "asy": ["source", "svg", "pdf", "eps"],
+                "sageplot": ["source", "svg", "pdf"],
+                "latex-image": ["source", "svg", "pdf", "eps", "png", "all"],
+                "youtube": [],
+                "mom": [],
+                "webwork": ["tex", "xml"]
+            }
+
+            image_outfmt = None
+
+            if fmt not in allowed_formats.keys():
+                sublime.message_dialog("Error 46: Something bad happened")
+                raise VagrantException
+
+            if allowed_formats[fmt]:
+                def on_done(st):
+                    image_outfmt = st
+
+                self.window.show_input_panel("Enter an output format (one of "
+                    "{}): ".format(", ".join(allowed_formats[fmt])),
+                    "", on_done, None, None)
+            # else:
+            #     image_outfmt = ""
+
 
             # remove 'v' key from mbx_switches to disable verbose
             # change 'v' key to "vv" to enable maximum verbosity
             mbx_switches = {'vv': "", 'c': fmt,
-                'd': to_vagrant(pretext_images), 'f': image_fmt}
+                'd': to_vagrant(pretext_images)}
+            if image_outfmt:
+                mbx_switches.update({'f': image_outfmt})
             for k, v in mbx_switches.items():
                 mbx_prefix += " -{} {}".format(k, v)
             mbx_suffix = " {}".format(to_vagrant(root_file))
             cmd_string = "{} \"{}\"".format(vagrantcommand, mbx_prefix
                 + mbx_suffix)
             print("Calling: {}".format(cmd_string))
-            sublime.message_dialog("Building images via mbx, please wait a "
-                "few moments...")
+            sublime.message_dialog("Building {} images into {} format "
+                "via mbx, please wait a few moments...".format(fmt, image_outfmt))
         else:
             sublime.message_dialog("Error 4: No valid process selected")
             raise VagrantException
@@ -276,8 +304,6 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 sublime.message_dialog("{} build execution complete.".format(cmd))
         # if built:
         if cmd == "mbx":
-            print("Copying images from {} to {}...".format(pretext_images,
-                pretext_html_images))
             import shutil
             if os.access(pretext_html_images, os.F_OK):
                 shutil.rmtree(pretext_html_images)
@@ -285,8 +311,14 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 shutil.rmtree(pretext_latex_images)
             if os.access(pretext_epub_images, os.F_OK):
                 shutil.rmtree(pretext_epub_images)
+            print("Copying images from {} to {}...".format(pretext_images,
+                pretext_html_images))
             shutil.copytree(pretext_images, pretext_html_images)
+            print("Copying images from {} to {}...".format(pretext_images,
+                pretext_latex_images))
             shutil.copytree(pretext_images, pretext_latex_images)
+            print("Copying images from {} to {}...".format(pretext_images,
+                pretext_epub_images))
             shutil.copytree(pretext_images, pretext_epub_images)
 
         # if cmd == "xsltproc" and fmt == "latex":
