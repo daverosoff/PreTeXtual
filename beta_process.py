@@ -123,95 +123,85 @@ class BetaCommand(sublime_plugin.WindowCommand):
                     sublime.message_dialog("Build complete.")
             return
 
-        # most users will not have values set for vagrantpath, vagrantroot,
-        # vagrantcommand; assume these sensible default values; only users who
-        # are customizing to fit an existing system will need to override the
-        # defaults
+        def acquire_settings(vu):
 
-        # most users will not override these defaults
-        pretext_stylesheets = get_setting('pretext_stylesheets', {
-            "html": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-html.xsl"),
-            "latex": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-latex.xsl"),
-            # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
-        })
+            project_name = get_pretext_project(vu)
 
-        if not pretext_stylesheets:
-            # print("Cannot find PreTeXt stylesheets, check settings :(")
-            sublime.message_dialog("Error 44: Can't find PreTeXt stylesheets")
-            raise VagrantException
+            pretext_stylesheets = get_pretext_project_setting(
+                'pretext_stylesheets', {
+                    "html": to_vagrant(vagrantroot
+                        + "mathbook/xsl/mathbook-html.xsl"),
+                    "latex": to_vagrant(vagrantroot
+                        + "mathbook/xsl/mathbook-latex.xsl"),
+                # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
+            }, project_name)
 
-        project_name = get_pretext_project(sublime.active_window().active_view())
+            # if not pretext_stylesheets:
+            #     # print("Cannot find PreTeXt stylesheets, check settings :(")
+            #     sublime.message_dialog("Error 44: Can't find PreTeXt stylesheets")
+            #     raise VagrantException
 
-        # xinclude = get_setting('xinclude', True)
-        xinclude = get_pretext_project_setting('xinclude', True, project_name)
-        # stringparam = get_setting('stringparam', {})
-        stringparam = get_pretext_project_setting('stringparam', {},
-            project_name)
-        root_file = get_pretext_project_setting('root_file', "", project_name)
-        # TODO: some attempt at intelligent root file detection assuming sensible structure
-        if not root_file:
-            sublime.message_dialog("Error 24: Couldn't find project root file")
-            raise VagrantException
-        path = get_pretext_project_setting('path', "", project_name)
-        if not path:
-            sublime.message_dialog("Error 34: Couldn't find project path")
-            raise VagrantException
+            # xinclude = get_setting('xinclude', True)
+            xinclude = get_pretext_project_setting('xinclude', True,
+                project_name)
+            # stringparam = get_setting('stringparam', {})
+            stringparam = get_pretext_project_setting('stringparam', {},
+                project_name)
+            root_file = get_pretext_project_setting('root_file', "",
+                project_name)
+            # TODO: some attempt at intelligent root file detection assuming
+            # sensible structure
+            if not root_file:
+                sublime.message_dialog("Error 24: Couldn't find project "
+                    "root file")
+                raise VagrantException
+            path = get_pretext_project_setting('path', "", project_name)
+            if not path:
+                sublime.message_dialog("Error 34: Couldn't find project path")
+                raise VagrantException
 
-        # pretext_root_file = get_setting('pretext_root_file', filename)
-        # filepath_list = filepath.split('/')
-        # pretext_root_file = ""
-        # while filepath_list:
-        #     print(filepath_list)
-        #     print(vagrant_projects)
-        #     try:
-        #         pretext_root_file = next((vagrant_projects[proj]['name'] for proj in vagrant_projects
-        #             if vagrant_projects[proj]['path'].split(r'\\') == filepath_list))
-        #     except StopIteration:
-        #         filepath_list = filepath_list[:-1]
-        # if not pretext_root_file:
-
-        # Note: trailing slash is added later, no need for it here
-        pretext_output = get_pretext_project_setting('pretext_output',
-            os.path.join(path, 'output'), project_name)
-        if not pretext_output:
-            sublime.message_dialog("Error 36: something bad happened")
-            raise VagrantException
-            # pretext_output_list = filepath.split('/')[:-1]
-            # pretext_output_list.append("output")
-            # if cmd == "xsltproc":
-            #     pretext_output_list.append(fmt)
-            # pretext_output = '/'.join(pretext_output_list)
-        pretext_output_html = get_pretext_project_setting('pretext_output_html',
-            os.path.join(pretext_output, 'html'), project_name)
-        pretext_output_latex = get_pretext_project_setting('pretext_output_latex',
-            os.path.join(pretext_output, 'latex'), project_name)
-        pretext_output_epub = get_pretext_project_setting('pretext_output_epub',
-            os.path.join(pretext_output, 'epub'), project_name)
-        pretext_images = get_pretext_project_setting('pretext_images',
-            os.path.join(pretext_output, 'images'), project_name)
-        pretext_html_images = get_pretext_project_setting('pretext_html_images',
-            os.path.join(pretext_output_html, 'images'), project_name)
-        pretext_latex_images = get_pretext_project_setting('pretext_latex_images',
-            os.path.join(pretext_output_latex, 'images'), project_name)
-        pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
-            os.path.join(pretext_output_epub, 'images'), project_name)
-        # if not pretext_images:
-        #     # pretext_images = '/'.join([pretext_output, 'images'])
-        #     sublime.message_dialog("Error 38: something bad happened")
-        #     raise VagrantException
-        # if not pretext_html_images:
-        #     # pretext_html_images = '/'.join([pretext_output, 'html', 'images'])
-        #     sublime.message_dialog("Error 40: something bad happened")
-        #     raise VagrantException
-        # if not pretext_latex_images:
-        #     # pretext_latex_images = '/'.join([pretext_output, 'latex', 'images'])
-        #     sublime.message_dialog("Error 42: something bad happened")
-        #     raise VagrantException
+            # Note: trailing slash is added later, no need for it here
+            pretext_output = get_pretext_project_setting('pretext_output',
+                os.path.join(path, 'output'), project_name)
+            if not pretext_output:
+                sublime.message_dialog("Error 36: something bad happened")
+                raise VagrantException
+                # pretext_output_list = filepath.split('/')[:-1]
+                # pretext_output_list.append("output")
+                # if cmd == "xsltproc":
+                #     pretext_output_list.append(fmt)
+                # pretext_output = '/'.join(pretext_output_list)
+            pretext_output_html = get_pretext_project_setting('pretext_output_html',
+                os.path.join(pretext_output, 'html'), project_name)
+            pretext_output_latex = get_pretext_project_setting('pretext_output_latex',
+                os.path.join(pretext_output, 'latex'), project_name)
+            # pretext_output_epub = get_pretext_project_setting('pretext_output_epub',
+            #     os.path.join(pretext_output, 'epub'), project_name)
+            pretext_images = get_pretext_project_setting('pretext_images',
+                os.path.join(pretext_output, 'images'), project_name)
+            pretext_html_images = get_pretext_project_setting('pretext_html_images',
+                os.path.join(pretext_output_html, 'images'), project_name)
+            pretext_latex_images = get_pretext_project_setting('pretext_latex_images',
+                os.path.join(pretext_output_latex, 'images'), project_name)
+            # pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
+            #     os.path.join(pretext_output_epub, 'images'), project_name)
+            # if not pretext_images:
+            #     # pretext_images = '/'.join([pretext_output, 'images'])
+            #     sublime.message_dialog("Error 38: something bad happened")
+            #     raise VagrantException
+            # if not pretext_html_images:
+            #     # pretext_html_images = '/'.join([pretext_output, 'html', 'images'])
+            #     sublime.message_dialog("Error 40: something bad happened")
+            #     raise VagrantException
+            # if not pretext_latex_images:
+            #     # pretext_latex_images = '/'.join([pretext_output, 'latex', 'images'])
+            #     sublime.message_dialog("Error 42: something bad happened")
+            #     raise VagrantException
 
 
-        # if not pretext_root_file:
-        #     print("Need to set PreTeXt root file :(")
-        #     raise VagrantException
+            # if not pretext_root_file:
+            #     print("Need to set PreTeXt root file :(")
+            #     raise VagrantException
 
         if cmd == "xsltproc":
             print("Invoking xsltproc...{}".format(time.gmtime(time.time())))
