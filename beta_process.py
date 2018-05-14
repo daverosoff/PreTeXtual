@@ -136,7 +136,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
                     "latex": to_vagrant(vagrantroot
                         + "mathbook/xsl/mathbook-latex.xsl"),
                 # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
-            }, project_name)
+            }, sett['project_name'])
 
             # if not pretext_stylesheets:
             #     # print("Cannot find PreTeXt stylesheets, check settings :(")
@@ -145,26 +145,26 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
             # xinclude = get_setting('xinclude', True)
             sett['xinclude'] = get_pretext_project_setting('xinclude', True,
-                project_name)
+                sett['project_name'])
             # stringparam = get_setting('stringparam', {})
             sett['stringparam'] = get_pretext_project_setting('stringparam', {},
-                project_name)
+                sett['project_name'])
             sett['root_file'] = get_pretext_project_setting('root_file', "",
-                project_name)
+                sett['project_name'])
             # TODO: some attempt at intelligent root file detection assuming
             # sensible structure
             if not sett['root_file']:
                 sublime.message_dialog("Error 24: Couldn't find project "
                     "root file")
                 raise VagrantException
-            sett['path'] = get_pretext_project_setting('path', "", project_name)
-            if not path:
-                sublime.message_dialog("Error 34: Couldn't find project path")
-                raise VagrantException
+            sett['path'] = get_pretext_project_setting('path', "", sett['project_name'])
+            # if not path:
+            #     sublime.message_dialog("Error 34: Couldn't find project path")
+            #     raise VagrantException
 
             # Note: trailing slash is added later, no need for it here
             sett['pretext_output'] = get_pretext_project_setting('pretext_output',
-                os.path.join(path, 'output'), project_name)
+                os.path.join(sett['path'], 'output'), sett['project_name'])
             if not sett['pretext_output']:
                 sublime.message_dialog("Error 36: something bad happened")
                 raise VagrantException
@@ -174,17 +174,17 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 #     pretext_output_list.append(fmt)
                 # pretext_output = '/'.join(pretext_output_list)
             sett['pretext_output_html'] = get_pretext_project_setting('pretext_output_html',
-                os.path.join(pretext_output, 'html'), project_name)
+                os.path.join(sett['pretext_output'], 'html'), sett['project_name'])
             sett['pretext_output_latex'] = get_pretext_project_setting('pretext_output_latex',
-                os.path.join(pretext_output, 'latex'), project_name)
+                os.path.join(sett['pretext_output'], 'latex'), sett['project_name'])
             # pretext_output_epub = get_pretext_project_setting('pretext_output_epub',
             #     os.path.join(pretext_output, 'epub'), project_name)
             sett['pretext_images'] = get_pretext_project_setting('pretext_images',
-                os.path.join(pretext_output, 'images'), project_name)
+                os.path.join(sett['pretext_output'], 'images'), sett['project_name'])
             sett['pretext_html_images'] = get_pretext_project_setting('pretext_html_images',
-                os.path.join(pretext_output_html, 'images'), project_name)
+                os.path.join(sett['pretext_output_html'], 'images'), sett['project_name'])
             sett['pretext_latex_images'] = get_pretext_project_setting('pretext_latex_images',
-                os.path.join(pretext_output_latex, 'images'), project_name)
+                os.path.join(sett['pretext_output_latex'], 'images'), sett['project_name'])
             # pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
             #     os.path.join(pretext_output_epub, 'images'), project_name)
             # if not pretext_images:
@@ -294,7 +294,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
             # remove 'v' key from mbx_switches to disable verbose
             # change 'v' key to "vv" to enable maximum verbosity
             mbx_switches = {'vv': "", 'c': fmt,
-                'd': to_vagrant(pretext_images)}
+                'd': to_vagrant(s['pretext_images'])}
 
             # def on_done(st, mbx_p, mbx_s):
             for image_outfmt in allowed_formats[fmt]:
@@ -327,6 +327,8 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 # if built:
                 # if cmd == "mbx":
 
+        sett = acquire_settings(self.window.active_view())
+
         if cmd == "xsltproc":
             xsl_process(sett, cmd, fmt)
         if cmd == "mbx":
@@ -358,9 +360,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 #     "{}): ".format(", ".join(allowed_formats[fmt])),
                 #     "", lambda s: on_done(s, mbx_prefix, mbx_switches), None, None)
 
-
-
-        else:
-            sublime.message_dialog("Error 4: No valid process selected")
-            raise VagrantException
+        # else:
+        #     sublime.message_dialog("Error 4: No valid process selected")
+        #     raise VagrantException
 
