@@ -281,7 +281,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 "tikz": ["source", "svg", "pdf"],
                 "asy": ["source", "svg", "pdf", "eps"],
                 "sageplot": ["source", "svg", "pdf"],
-                "latex-image": ["source", "svg", "pdf", "eps", "png", "all"],
+                "latex-image": ["source", "svg", "pdf", "eps", "png"],
                 "youtube": [],
                 "mom": [],
                 "webwork": ["tex", "xml"]
