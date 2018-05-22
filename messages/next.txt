@@ -1,25 +1,30 @@
-PreTeXtual, package version 0.6.0-rc.1
+PreTeXtual, package version 0.6.0
+
 Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
-for instructions on usage and configuring your MathBook XML files to work
+for instructions on usage and configuring your PreTeXt files to work
 automatically with PreTeXtual. If you find a bug or have a feature request,
 please open an issue at
 
     https://github.com/daverosoff/PreTeXtual
 
+or post on the pretext-support Google Group at
+
+    https://groups.google.com/forum/#!forum/pretext-support
+
 I hope you find PreTeXtual useful!
 
 Release notes:
 
-    * This is a release candidate version of PreTeXtual and may be buggier
-      than usual.
-    * Sublime Text build system added. Use Ctrl+Shift+B from within a PreTeXt
-      file to process source from within Sublime Text. The build system
-      assumes certain structure about your filesystem and you may need to edit
-      it by hand to make it work, or move some files and directories on your
-      system. The build system is intended for beginning users of PreTeXt at
-      the moment and it does not support much customization natively. The
-      official release of 0.6.0 will be more customizable and in particular
-      will not require the use of the Vagrant box. See README.md for complete details on setting up your environment to use the build system commands.
+    * This is a public beta version of PreTeXtual and may be buggier
+      than usual. Contact me for instructions on rolling back to a previous
+      version if things are not working right for you.
+    * Sublime Text build system (Windows only) added. This feature, which is
+      still in beta, is the reason for the new release (no other known issues
+      have been addressed). See README.md for complete details on setting up
+      your environment to use the build system commands.
+
+Known issues:
+    * Build system paths are not always stored correctly
 
 Known issues from 0.5.0 not fixed in this release:
 
