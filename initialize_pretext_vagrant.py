@@ -262,7 +262,9 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         # projdata = self.window.project_data()
         usersettings = sublime.load_settings("Preferences.sublime-settings")
         if 'pretext_projects' in projdata.keys():
-            usersettings.set('pretext_projects', projdata['pretext_projects'])
+            print("updating user settings: setting 'pretext_projects' to {}".format(pretext_projects))
+            usersettings.set('pretext_projects', pretext_projects)
+            # usersettings.set('pretext_projects', projdata['pretext_projects'])
         else:
             usersettings.set('pretext_projects', {})
         sublime.save_settings("Preferences.sublime-settings")
