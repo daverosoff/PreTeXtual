@@ -24,11 +24,11 @@ def retrieve(key, val, ddict, id='name'):
     match.
     """
 
-    match = next((ddict[x][id] for x in ddict if ddict[x][key] == val))
-    if not match:
-        return None
-    else:
+    try:
+        match = next((ddict[x][id] for x in ddict if ddict[x][key] == val))
         return match
+    except StopIteration:
+        return None
 
 def get_pretext_project_setting(setting, default, proj_name):
     """Given a setting (string), returns the value associated to that
