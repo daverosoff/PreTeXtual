@@ -210,44 +210,56 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         else:
             pretext_projects = {}
 
+        # print("About to set root files "
+        #     + "with output_dict: {}".format(pretext_projects))
+
         # We need to ask one at a time or the input panels all
         # collide and we don't get to see the first n-1 of them.
         # Thanks to OdatNurd on the Sublime Text freenode chat
         # for this idea.
-        def set_root_file_keys(key_list, key_index, output_dict):
-            key = key_list[key_index]
-            self.window.show_input_panel("Enter full path to root "
-                "file for project {}:".format(key),
-                pretext_vagrant_root,
-                lambda v: set_root_file_values(v, key_list, key_index,
-                    output_dict),
-                None, None)
+        # def set_root_file_keys(key_list, key_index, output_dict):
+        #     print("srfk: {}, {}, {}".format(key_list, key_index, output_dict))
+        #     key = key_list[key_index]
+        #     self.window.show_input_panel("Enter full path to root "
+        #         "file for project {}:".format(key),
+        #         os.path.normpath(pretext_vagrant_root),
+        #         lambda v: set_root_file_values(v, key_list, key_index,
+        #             output_dict),
+        #         None, None)
 
-        def set_root_file_values(key_value, key_list, key_index, output_dict):
-            key = key_list[key_index]
-            output_dict[key].update({'root_file': os.path.normpath(key_value)})
+        # def set_root_file_values(key_value, key_list, key_index, output_dict):
+        #     print("srfv: {}, {}, {}, {}".format(key_value, key_list, key_index, output_dict))
+        #     key = key_list[key_index]
+        #     output_dict[key].update({'root_file': os.path.normpath(key_value)})
 
-            key_index += 1
-            if key_index < len(key_list):
-                set_root_file_keys(key_list, key_index, output_dict)
-            else:
-                print("Finished with: {}".format(output_dict))
+        #     key_index += 1
+        #     if key_index < len(key_list):
+        #         set_root_file_keys(key_list, key_index, output_dict)
+        #     else:
+        #         print("Finished with: {}".format(output_dict))
 
-        if 'pretext_projects' in projdata.keys():
-            set_root_files = sublime.ok_cancel_dialog("Set "
-                "root files for the projects you just added?")
+        # # if 'pretext_projects' in projdata.keys():
+        # if pretext_projects:
+        #     set_root_files = sublime.ok_cancel_dialog("Set "
+        #         "root files for the projects you just added?")
 
-            if set_root_files:
-                projnames = list(pretext_projects.keys())
-                if projnames:
-                    set_root_file_keys(projnames, 0, pretext_projects)
-                projdata.update({'pretext_projects': pretext_projects})
-                self.window.set_project_data(projdata)
-            else:
-                sublime.message_dialog("No root files set. You can add these "
-                    "later in the user settings.")
+        #     if set_root_files:
+        #         projnames = list(pretext_projects.keys())
+        #         if projnames:
+        #             set_root_file_keys(projnames, 0, pretext_projects)
+        #         print("keys exhausted, new pretext_projects is {}".format(pretext_projects))
+        #         projdata.update({'pretext_projects': pretext_projects})
+        #         print("keys exhausted, new projdata is {}".format(projdata))
+        #         self.window.set_project_data(projdata)
+        #     else:
+        #         sublime.message_dialog("No root files set. You can add these "
+        #             "later in the user settings.")
 
-        projdata = self.window.project_data()
+        sublime.message_dialog("Make sure to edit your User Settings"
+            " and set root files for all the packages you have added."
+            " Nothing will work unless you do this.")
+
+        # projdata = self.window.project_data()
         usersettings = sublime.load_settings("Preferences.sublime-settings")
         if 'pretext_projects' in projdata.keys():
             usersettings.set('pretext_projects', projdata['pretext_projects'])
