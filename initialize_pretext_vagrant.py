@@ -207,6 +207,8 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         self.window.set_project_data(projdata)
         if 'pretext_projects' in projdata.keys():
             pretext_projects = projdata['pretext_projects']
+        else:
+            pretext_projects = {}
 
         # We need to ask one at a time or the input panels all
         # collide and we don't get to see the first n-1 of them.
