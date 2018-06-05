@@ -80,7 +80,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
     # get project settings
     # xinclude: boolean
     # output: string (absolute path name for vagrant)
-    # stringparams: dict{string:string}
+    # stringparam: dict{string:string}
 
     def run(self, cmd, fmt):
         sublime.set_timeout_async(lambda: self.doit(cmd, fmt), 0)
