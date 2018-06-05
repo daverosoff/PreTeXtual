@@ -29,7 +29,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             sublime.message_dialog("No vagrant box installed. Get help "
                 "at https://github.com/daverosoff/PreTeXtual/issues")
             return
-        vagrantpath = get_setting('vagrantpath', "C:/HashiCorp/Vagrant/bin/vagrant.exe")
+        vagrantpath = get_setting('vagrantpath', r"C:\\HashiCorp\\Vagrant\\bin\\vagrant.exe")
         base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
         url_exts = ["", "-lite", "-barebones", "-no-images"]
         box_name = "daverosoff/pretext" + url_exts[n]
@@ -76,7 +76,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
 
     def run(self):
 
-        default_pretext_vagrant_root = "C:/PreTeXt"
+        default_pretext_vagrant_root = r"C:\\PreTeXt"
 
         projdata = self.window.project_data()
         if projdata is None or "folders" not in projdata:
@@ -84,7 +84,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
             # test for existence of default folder
             if not os.access(default_pretext_vagrant_root, os.F_OK):
                 create_folder_ok = sublime.ok_cancel_dialog("OK to create "
-                    "default folder C:/PreTeXt? (Cancel, create new folder, "
+                    "default folder C:\\PreTeXt? (Cancel, create new folder, "
                     "add to project, and initialize again to override default)")
                 if create_folder_ok:
                     os.mkdir(default_pretext_vagrant_root)
@@ -92,7 +92,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                     sublime.message_dialog("PreTeXt Vagrant initialization "
                     "cancelled.")
                     return
-            projdata = {"folders": [{"path": "C:/PreTeXt"}]}
+            projdata = {"folders": [{"path": r"C:\\PreTeXt"}]}
         elif len(projdata['folders']) > 1:
         # close all but top folder after user confirms
             remove_ok = sublime.ok_cancel_dialog("Multiple folders are open in "
