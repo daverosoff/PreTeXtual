@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 import subprocess
 import os, time, re, shutil
+from distutils.dir_util import copy_tree
 from .get_setting import get_setting
 from .initialize_pretext_vagrant import VagrantException
 
@@ -208,21 +209,21 @@ class BetaCommand(sublime_plugin.WindowCommand):
             return sett
 
         def refresh_images(s):
-            if os.access(s['pretext_html_images'], os.F_OK):
-                shutil.rmtree(s['pretext_html_images'])
-            if os.access(s['pretext_latex_images'], os.F_OK):
-                shutil.rmtree(s['pretext_latex_images'])
+            # if os.access(s['pretext_html_images'], os.F_OK):
+            #     shutil.rmtree(s['pretext_html_images'])
+            # if os.access(s['pretext_latex_images'], os.F_OK):
+            #     shutil.rmtree(s['pretext_latex_images'])
             # if os.access(s['pretext_epub_images'], os.F_OK):
             #     shutil.rmtree(s['pretext_epub_images'])
             print("Copying images from {} to {}...".format(s['pretext_images'],
                 s['pretext_html_images']))
-            shutil.copytree(s['pretext_images'], s['pretext_html_images'])
+            copy_tree(s['pretext_images'], s['pretext_html_images'])
             print("Copying images from {} to {}...".format(s['pretext_images'],
                 s['pretext_latex_images']))
-            shutil.copytree(s['pretext_images'], s['pretext_latex_images'])
+            copy_tree(s['pretext_images'], s['pretext_latex_images'])
             # print("Copying images from {} to {}...".format(s['pretext_images'],
                 # s['pretext_epub_images']))
-            # shutil.copytree(s['pretext_images'], s['pretext_epub_images'])
+            # shutil.copy_tree(s['pretext_images'], s['pretext_epub_images'])
 
         def do_process(s, cmd, cmd_string):
             proc = subprocess.Popen(cmd_string,
