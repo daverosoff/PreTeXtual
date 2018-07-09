@@ -1,6 +1,9 @@
 {
     "selector": "text.xml.pretext",
     "file_patterns": ["*.ptx", "*.mbx"],
+    "cmd": "xsltproc",
+    "fmt": "html",
+    "target": "beta",
     "variants": [
         {
             "name": "Process PreTeXt to HTML",
