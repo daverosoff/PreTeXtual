@@ -255,7 +255,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         #         sublime.message_dialog("No root files set. You can add these "
         #             "later in the user settings.")
 
-        sublime.message_dialog("Make sure to edit your User Settings"
+        sublime.message_dialog("Make sure to check your User Settings"
             " and set root files for all the packages you have added."
             " Nothing will work unless you do this.")
 
@@ -287,6 +287,13 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 "your system is hanging. Just watch and wait. If you don't know "
                 "what you want, select PreTeXt-lite.")
             self.window.show_quick_panel(options, on_done)
+
+        vagrantpath = get_setting('vagrantpath', r"C:\\HashiCorp\\Vagrant\\bin\\vagrant.exe")
+        if vagrantpath:
+            vp = get_setting('vagrant_path')
+            settings = sublime.load_settings("Preferences.sublime-settings")
+            settings.set('vagrant_path', vagrantpath)
+            sublime.save_settings("Preferences.sublime-settings")
 
         # sublime.message_dialog("The next step you must do yourself; the "
         #     "Sublime Text application can't do this for you (yet?). IT IS "
