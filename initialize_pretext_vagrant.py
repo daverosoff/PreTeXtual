@@ -34,15 +34,26 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         url_exts = ["", "-lite", "-barebones", "-no-images"]
         box_name = "daverosoff/pretext" + url_exts[n]
         print("Attempting to fetch {}".format(box_name))
-        proc = subprocess.Popen("{} init {}".format(vagrantpath,
-            box_name), cwd=loc, shell=True, stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT)
-        while proc.poll() is None:
-            try:
-                data = proc.stdout.readline().decode(encoding="UTF-8")
-                print(data, end="")
-            except:
-                return
+        vagrantfile_raw = [
+            "Vagrant.configure(\"2\") do |config|",
+            "  config.vm.box = {}".format(box_name),
+            "  config.vm.provision \"shell\", inline: <<-SHELL",
+            "    sudo git clone https://github.com/rbeezer/mathbook.git /vagrant/mathbook",
+            "  SHELL",
+            "end"
+        ]
+        with open("{}/Vagrantfile".format(loc), 'r+') as f:
+            for line in vagrantfile_raw:
+                f.write("{}\n".format(line))
+        # proc = subprocess.Popen("{} init {}".format(vagrantpath,
+        #     box_name), cwd=loc, shell=True, stdout=subprocess.PIPE,
+        #     stderr=subprocess.STDOUT)
+        # while proc.poll() is None:
+        #     try:
+        #         data = proc.stdout.readline().decode(encoding="UTF-8")
+        #         print(data, end="")
+        #     except:
+        #         return
         # subprocess.call("vagrant init {}".format(box_name), cwd=loc)
         proc = subprocess.Popen("{} up".format(vagrantpath), cwd=loc,
             shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
