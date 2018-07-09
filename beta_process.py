@@ -101,29 +101,6 @@ class BetaCommand(sublime_plugin.WindowCommand):
         vagrantcommand = get_setting('vagrantcommand',
             "{} ssh --command".format(vagrantpath))
 
-        if cmd == "update_pretext":
-            #### FUNCTION EXITS FROM THIS BLOCK
-            # test for existing installation
-            loc = to_vagrant(os.path.join(vagrantroot, "mathbook"))
-            cmd_string = "mkdir --parents {}; cd {}; ".format(loc, loc)
-            if os.access(os.path.join(vagrantroot, "mathbook"), os.F_OK):
-                cmd_string += "git pull"
-            else:
-                cmd_string += "git clone https://github.com/rbeezer/mathbook.git ."
-            print("Calling {} \"{}\"".format(vagrantcommand,
-                cmd_string))
-            proc = subprocess.Popen("{} \"{}\"".format(vagrantcommand, cmd_string),
-                shell=True, stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT)
-            while proc.poll() is None:
-                try:
-                    data = proc.stdout.readline().decode(encoding="UTF-8")
-                    print(data, end="")
-                except:
-                    # if built:
-                    sublime.message_dialog("Build complete.")
-            return
-
         def acquire_settings(vu):
 
             sett = {}
@@ -207,6 +184,31 @@ class BetaCommand(sublime_plugin.WindowCommand):
             #     raise VagrantException
 
             return sett
+
+        if cmd == "update_pretext":
+            #### FUNCTION EXITS FROM THIS BLOCK
+            # test for existing installation
+            s = acquire_settings(self.window.active_view())
+            loc = to_vagrant(os.path.join(vagrantroot, "mathbook"))
+            cmd_string = "mkdir --parents {}; cd {}; ".format(loc, loc)
+            if os.access(os.path.join(vagrantroot, "mathbook"), os.F_OK):
+                cmd_string += "git pull"
+            else:
+                cmd_string += "git clone https://github.com/rbeezer/mathbook.git ."
+            print("Calling {} \"{}\"".format(vagrantcommand,
+                cmd_string))
+            proc = subprocess.Popen("{} \"{}\"".format(vagrantcommand, cmd_string),
+                shell=True, stdout=subprocess.PIPE,
+                cwd=from_vagrant(os.path.dirname(s['root_file'])),
+                stderr=subprocess.STDOUT)
+            while proc.poll() is None:
+                try:
+                    data = proc.stdout.readline().decode(encoding="UTF-8")
+                    print(data, end="")
+                except:
+                    # if built:
+                    sublime.message_dialog("Build complete.")
+            return
 
         def refresh_images(s):
             # if os.access(s['pretext_html_images'], os.F_OK):
