@@ -9,6 +9,11 @@ please open an issue at
 
 I hope you find PreTeXtual useful!
 
+This version of PreTeXtual can work with a special type of virtual machine
+called a Vagrant box. This allows Windows users to install and use PreTeXt
+from within Sublime Text. Video help with setup and use examples is available
+at
+
 Known issues:
 
     * Mirrored title text in snippet xml:id does not always give
