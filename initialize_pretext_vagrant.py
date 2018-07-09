@@ -30,7 +30,7 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
                 "at https://github.com/daverosoff/PreTeXtual/issues")
             return
         vagrantpath = get_setting('vagrantpath', r"C:\\HashiCorp\\Vagrant\\bin\\vagrant.exe")
-        base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
+        # base_url = "https://raw.githubusercontent.com/daverosoff/pretext-vagrant/master/Vagrantfile-PreTeXt"
         url_exts = ["", "-lite", "-barebones", "-no-images"]
         box_name = "daverosoff/pretext" + url_exts[n]
         print("Attempting to fetch {}".format(box_name))
