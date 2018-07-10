@@ -1,0 +1,52 @@
+PreTeXtual, package version 0.6.0
+
+Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
+for instructions on usage and configuring your PreTeXt files to work
+automatically with PreTeXtual. If you find a bug or have a feature request,
+please open an issue at
+
+    https://github.com/daverosoff/PreTeXtual
+
+or post on the pretext-support Google Group at
+
+    https://groups.google.com/forum/#!forum/pretext-support
+
+I hope you find PreTeXtual useful!
+
+Release notes:
+
+    * Sublime Text build system (Windows only) added. This feature, which is
+      still experimental, is the reason for the new release (no other known issues
+      have been addressed). See README.md for complete details on setting up
+      your environment to use the build system commands.
+
+Known issues:
+    * The install process is not as painless as one might wish, but is perhaps
+      best possible for Sublime Text 3
+    * Potential for confusion since the "PreTeXt root file" setting
+      is used for the symbol list, but a different setting is used to
+      specify root file for Vagrant-enabled builds. The global "root
+      file" setting will be deprecated in a future version.
+    * Work on the Vagrant build systems has supplanted work on the syntax
+      definition, which now does not completely reflect the schema
+
+Known issues from 0.5.0 not fixed in this release:
+
+    * The scoping for embedded syntaxes is not completely satisfactory
+    * Symbol recognition is not as good as before
+
+Known issues from 0.4.5 not fixed in this release:
+
+    * Symbol recognition lists are incomplete
+    * Mirroring title text to get xml:id is good for divisions, but less
+      good for theorems (often not titled)
+    * Mirrored title text in snippet xml:id does not always give
+      completely satisfactory results (e.g., XML tags inside)
+        - Should there be a user setting to disable this mirroring?
+        - Is this even possible?
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite:
+      unrecognized format")
+    * Potential for confusion since Symbols List is always based on
+      the current project (or open folder) but the ref autocomplete
+      list may not be (if there is not an explicit project and the
+      root PreTeXt file is set globally or not at all)
