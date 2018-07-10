@@ -36,13 +36,14 @@ class InitializePretextVagrantCommand(sublime_plugin.WindowCommand):
         print("Attempting to fetch {}".format(box_name))
         vagrantfile_raw = [
             "Vagrant.configure(\"2\") do |config|",
-            "  config.vm.box = {}".format(box_name),
+            "  config.vm.box = \"{}\"".format(box_name),
             "  config.vm.provision \"shell\", inline: <<-SHELL",
             "    sudo git clone https://github.com/rbeezer/mathbook.git /vagrant/mathbook",
+            "    sudo chown vagrant:vagrant /vagrant/mathbook",
             "  SHELL",
             "end"
         ]
-        with open("{}/Vagrantfile".format(loc), 'r+') as f:
+        with open("{}/Vagrantfile".format(loc), 'w+') as f:
             for line in vagrantfile_raw:
                 f.write("{}\n".format(line))
         # proc = subprocess.Popen("{} init {}".format(vagrantpath,
