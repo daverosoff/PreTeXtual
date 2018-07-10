@@ -1,8 +1,9 @@
 # PreTeXtual: a Sublime Text package for PreTeXt
 
 PreTeXtual is a Sublime Text 3 package designed to assist authors using
-[PreTeXt](https://github.com/rbeezer/mathbook) (formerly known as MathBook
-XML). It is very experimental and may behave unexpectedly.
+[PreTeXt](https://github.com/rbeezer/mathbook) (formerly known as MathBook XML).
+Parts of it, especially the Vagrant build system, are experimental and may
+behave unexpectedly.
 
 The package is inspired by the excellent
 [LaTeXTools](https://github.com/SublimeText/LaTeXTools) package, which I have
@@ -22,16 +23,18 @@ As of version 0.5.0, Sublime Text 2 is no longer supported.
   - Install other required software
 - A tour of the automated build systems
   - Initialize your setup
-  - Adding projects
   - Installing the Vagrant box
-  - Install PreTeXt with one easy step
-  - Adding new projects
-    - Add via git
-    - Add by creating directory
+  - Activate the Vagrant box
   - Compiling to HTML or PDF
+    - When compilation fails
   - Building images
+  - Adding new projects
+  - Keep PreTeXt up to date
+  - Keep your Vagrant box up to date
   - Editing settings manually
       - Available settings
+  - Troubleshooting
+  - Future plans
   - Conclusion
 - Keybindings
 - Usage
@@ -83,18 +86,18 @@ can do is described here at present. PreTeXtual can do things more flexibly
 than described here, but this documentation has been written for simplicity
 and the details are omitted.
 
-The build systems are intended primarily for Windows users, since PreTeXt is
-much more difficult and tedious to install on Windows. As of this release, it
-has only been successfully used on Windows 10. Windows 7 users are welcome to
-try to follow the directions, but Windows 7 seems to have some difficulty
-installing current versions of Vagrant, see below. Future support for Windows
-7 is devoutly to be wished.
+The build systems are intended only for Windows users, since PreTeXt is much
+more difficult and tedious to install on Windows than on Linux or Mac OS. As
+of this release, it has only been successfully used on Windows 10. Windows 7
+users are welcome to try to follow the directions, but Windows 7 seems to have
+some difficulty installing current versions of Vagrant, see below. Future
+support for Windows 7 is devoutly to be wished.
 
 If your Windows 7 is 32-bits, it is unlikely that you will be able to use the
 build systems with this version of PreTeXtual. Please open an issue if you
 need 32-bit support. If there is sufficient demand, it is possible to create
 compatible Vagrant boxes. (However you will still need to use Vagrant, which
-may not always play nice with Windows 7, as described above)
+may not always play nice with Windows 7, as described above.)
 
 Users of other operating systems will not find the build systems in this
 release useful without manual editing of some of the package resources. You
@@ -108,20 +111,42 @@ As you continue with the installation, it would be good to [visit this README
 in a browser](https://packagecontrol.io/packages/PreTeXtual) so that you can
 follow along while you do things in Sublime Text and other programs.
 
+A final note before we begin the installation directions: as soon as your
+project acquires some maturity, you will likely outgrow the build systems in
+their present form. The present author recommends the use of a virtual machine
+to continue your PreTeXt work, but there are several different solutions.
+
 #### Enable VT-X virtualization
 
 This is the hardest step, regrettably necessary for the current version of
 PreTeXtual. Feel free to skip it and come back to it later if things don't
 work properly.
 
-Follow the directions linked below--very carefully! It is possible to
-really mess up your system doing this. There is always "Quit without Saving"
-option you can use if you get really stuck or scared.
+Follow the directions linked below--very carefully! It is possible to really
+mess up your system doing this. You may want to get help from your institution's
+IT department. There is always "Quit without Saving" option you can use if you
+get really stuck or scared.
 
-Windows users will want to [follow these directions][vtxdirs], using steps 1
-through 5 only.
+Windows users will want to follow these directions (step 4 from
+[the directions found here][vtxdirs]).
+
+1.  Power on the machine and open the BIOS (as per Step 1). This can usually be
+    done by pressing the `delete` key, the F1 key or Alt and F4 keys depending
+    on the system. You may have to try a few times. I'm usually not fast enough
+    to get it on the first try.
+2.  Open the "Processor" submenu. The processor settings menu may be hidden in
+    the "Chipset", "Advanced CPU Configuration" or "Northbridge" menus.
+3.  Enable "Intel Virtualization Technology" (also known as "Intel VT") or
+    "AMD-V" depending on the brand of the processor. The virtualization
+    extensions may be labeled "Virtualization Extensions", "Vanderpool" or
+    various other names depending on the OEM and system BIOS.
+4.  Enable "Intel VTd" or "AMD IOMMU", if the options are available.
+4.  Select "Save & Exit".
 
 #### Install other required software
+
+Note that the entire installation process from this point onward is documented
+in the video available at https://mathbook.pugetsound.edu/doc/
 
 At present, the build systems require the use of two other applications,
 Virtualbox and Vagrant. Install these on your computer. Agree to the default
@@ -129,12 +154,9 @@ whenever you are prompted for a decision. *Not choosing default values will
 break the PreTeXtual build systems.*
 
 1. In Sublime Text, use Package Control to install the SideBarEnhancements
-   plugin
+   package and the Vagrant package.
 1. [Download Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 2. [Download Vagrant](https://www.vagrantup.com/downloads.html)
-2. (optional) In Sublime Text, use Package Control to install the Vagrant plugin.
-   This plugin may need some configuration not described in this README. Its
-   use is not assumed or required in the rest of this document.
 
 ### A tour of the automated build systems
 
@@ -145,27 +167,27 @@ virtual machine to do the XSL processing and image building steps of the PTX
 document generation process. If you don't want to use Vagrant, then this version
 of PreTeXtual's build systems won't work for you.
 
-After downloading and installing from the above links, open a Sublime Text
-window and run the command (from the Command Palette) "Initialize PreTeXt
-Vagrant". This will take some time, depending on your selections. Then follow
-the prompts. PreTeXtual will set up a directory called `C:\PreTeXt`, which
-will hold many subdirectories: one for each of your writing projects, and one
-for PreTeXt itself (still called `mathbook` as of 2018-05-14.) If you already
-have such a directory, or if you create one now before continuing, PreTeXtual
-will notice and preserve it.
+You need to organize your projects in a specific way for PreTeXtual to be able
+to see and manage them. In particular, you must create a folder called
+`C:\PreTeXt` (it **must** be on the C: drive). This folder should contain one
+subfolder for each writing project you want to work on. Set this up before
+continuing.
 
-#### Adding projects
+*Note: The rest of the procedure will take quite some time, up to two hours
+depending on your selections.*
 
-If you have a `C:\PreTeXt` directory, each folder one level underneath it will
-be recognized as a writing project. These will be added to PreTeXtual's simple
+Once your folders are set up as described above, open a Sublime Text window and
+run the command (from the Command Palette) "Initialize PreTeXt Vagrant".  Then
+follow the prompts. Each folder one level underneath `C:\PreTeXt` will be
+recognized as a writing project. These will be added to PreTeXtual's simple
 project management system. You can store some options for each project in your
 User settings. At the time of initialization, you will be prompted to type a
 root file for each one. The root file of a PreTeXt project is the file
 containing the `<mathbook>` XML element. You will need to enter the paths with
-slashes `/` rather than the more typical backslash `\`. A typical path might
+double backslashes `\\` rather than a single backslash `\`. A typical path might
 look like
 
-    C:/PreTeXt/AATA/src/aata.xml
+    C:\\PreTeXt\\AATA\\src\\aata.xml
 
 **Warning.** While Windows usually doesn't care much about capitalization in
 paths, PreTeXtual does. You must enter all letters in your path names with
@@ -175,74 +197,52 @@ You can always enter the paths later by editing your Preferences file directly.
 
 #### Installing the Vagrant box
 
-*Note: this step is required, even if you already have installed PreTeXt.*
+*Note: this step is required, even if you already have installed PreTeXt in some
+other way.*
 
 After you have finished importing projects as described above, you will see a
 menu with several choices. Most people will want either "PreTeXt" or
-"PreTeXt-lite". If you need Sage or Asymptote, choose "PreTeXt".  If you need
-a full LaTeX installation but not Sage or Asymptote, choose "PreTeXt-lite". If
-you only need to process HTML, you can try "PreTeXt-barebones". The last option,
-"PreTeXt-no-images", is only for testing.
+"PreTeXt-lite". If you need Sage or Asymptote, choose "PreTeXt".  If you need a
+full LaTeX installation but not Sage or Asymptote, choose "PreTeXt-lite". If you
+only need to process HTML, you can try "PreTeXt-barebones" (not recommended).
+The last option, "PreTeXt-no-images", is only for testing.
 
-The full "PreTeXt" option will take between 45 and 60 minutes to download and
-install. The others will take less time, but even the barebones option might
-take 10 to 15 minutes. You should see new windows opening to advise you of
-progress and reassure you that something is happening, but even if you don't,
-please don't worry! When no more of these windows are visible, open a command
-shell (Start menu/type `cmd`/hit Enter) and run
+The full "PreTeXt" option will take between 45 and 60 minutes, or longer on a
+slow connection, to download and install. The others will take less time, but
+even the barebones option might take 10 to 15 minutes. Unfortunately, it is not
+possible at this time for PreTeXtual to provide any progress bar or feedback.
+The Sublime Text window may even appear to hang, with a "(Not responding)"
+message in the title bar. Please don't worry!
 
-    cd C:\PreTeXt
-    vagrant up
+#### Activate the Vagrant box
 
-before you go on to the next step.
+*Note. Perform this step whenever you start working on a PreTeXt project for
+the first time after a reboot.*
 
-#### Install PreTeXt with one easy step
-
-*Note: this step is required, even if you already have installed PreTeXt.*
-
-Note: This step will merge with the previous one in a future release.
-
-From the Command Palette, run the command `PreTeXtual: Update PreTeXt`. If it
-is not available, try saving an empty file with the `.ptx` extension and try
-again from within this file. You may see a new window open with some
-`git`-related hieroglyphics. A directory named `mathbook` should appear in
-your `C:\PreTeXt` folder. All done!
-
-#### Adding new projects
-
-Currently, there is no separate command to add a project. There are two ways you
-can do it by hand.
-
-##### Add via git
-
-PreTeXtual has a simple command to clone an existing Git repository into your
-`C:\PreTeXt` folder. Run the command `PreTeXtual: Clone repository` from the
-Command Palette, and enter the URL of the repository in the input panel.
-
-Make sure to re-run the `PreTeXtual: Initialize PreTeXt Vagrant` command afterward,
-to add your new repo to the PreTeXtual project database.
-
-##### Add by creating directory
-
-Simply create a directory under `C:\PreTeXt`, put a (possibly empty) root file
-in it, and re-run the `PreTeXtual: Initialize PreTeXt Vagrant` command, to add
-your new repo to the PreTeXtual project database.
+In a new Sublime Text window, use the Open Folder command to open your entire
+`C:\PreTeXt` folder. All your projects should appear in the sidebar. Then use
+the Command Palette to run the command `vagrant up`. Wait for the text "Running
+Vagrant...." to disappear from the status bar at the bottom of the window before
+going on (it may take a minute or two). Alternatively, you may select `View/Show
+Console` from the menu to check the progress of this command, which activates
+the virtual machine on which you have installed PreTeXt.
 
 #### Compiling to HTML or PDF
 
 Now the fun starts. In an existing writing project, open any PreTeXt file.
 Make sure that "PreTeXt" is showing in the far lower right corner of the
 screen. Some commands will only be available in PreTeXt mode (provided by the
-PreTeXtual plugin). If your source files end in `.xml` rather than `.ptx` or
+PreTeXtual package). If your source files end in `.xml` rather than `.ptx` or
 `.mbx` you will need to do some configuration (use the `PreTeXtual: Set
 PreTeXt File Exts` command, see below).
 
 Having opened a PreTeXt file, bring up the build menu by pressing
-<kbd>Ctrl+Shift+B</kbd>. Select "Process PreTeXt to HTML" from the menu. If
-you are watching the sidebar, you will see an `output` folder appear next to
-your `src` folder. If you expand it in the sidebar you can watch the HTML
-files appear as they are generated. When the build is finished, Sublime Text
-should alert you to this fact with a dialog box.
+<kbd>Ctrl+Shift+B</kbd>. Select "Process PreTeXt to HTML" from the menu and
+click OK when the notification of processing appears. If you are watching the
+sidebar, you will see an `output` folder appear next to your `src` folder. If
+you expand it in the sidebar you can watch the HTML files appear as they are
+generated. When the build is finished, Sublime Text should alert you to this
+fact with a dialog box.
 
 **Warning.** The dialog boxes are not very big or very insistent, but they
 block Sublime Text from continuing. If you think your editor has crashed,
@@ -252,19 +252,28 @@ window.
 Open the `output\html` folder and right-click one of the HTML files. Select
 "Open in browser". Marvel at the relative simplicity of this process.
 
-To compile to LaTeX, you can select "Process PreTeXt to LaTeX" from the menu.
-To convert to PDF, I recommend you use the excellent LaTeXtools plugin, to
-which PreTeXtual owes a great deal. A future version may support compilation
-from within Sublime Text without the use of LaTeXtools. You will need to install
-LaTeX on your computer to perform this step, not presently documented here.
+To compile to LaTeX, you can select "Process PreTeXt to LaTeX" from the menu. To
+convert to PDF, I recommend you use the excellent LaTeXtools package, to which
+PreTeXtual owes a great deal. A future version of PreTeXtual may support
+compilation from within Sublime Text without the use of LaTeXtools. You will
+need to install LaTeX on your computer to perform this step, not presently
+documented here.
+
+##### When compilation fails
+
+PreTeXtual is not, at present, smart enough to realize when anything has gone
+wrong. You will notice that your output isn't there, or didn't change. To see
+the messages PreTeXt generates when processing your source, use the Sublime Text
+console: select `Show Console` from the View menu before, during, or after
+compilation.
 
 #### Building images
 
-*Note.* This part of the build system may still be a bit buggy. In particular
-it will probably fail if you chose `pretext-barebones` above. Moreover, it can
+*Note.* This part of the build system may still be a bit buggy. In addition, it
+will fail if you chose `pretext-barebones` or `pretext-no-images` above. It can
 be time-consuming, especially for longer documents. Finally, some Asymptote 3D
-images are not yet supported and raise exceptions that will stop the image
-build process.
+images are not yet supported and raise exceptions that will stop the image build
+process.
 
 *Note.* Including images that are not generated from source is not yet
 supported. If you urgently need this feature,
@@ -279,8 +288,35 @@ PreTeXtual build routine", you can refresh your HTML output in the browser to
 check that the images appear. They will now also be available for LaTeX compilation.
 
 This concludes the tour of the build system. Run `vagrant suspend` in a command
-shell before shutting down your system (Windows will complain that something is
-stopping you from shutting down otherwise).
+shell before shutting down your system. This pauses the virtual machine in
+a non-destructive way. Windows will complain that something is
+stopping you from shutting down your computer otherwise---in fact, it may do
+so anyway, but forcing a shutdown will not cause any problems to the virtual
+machine (you can simply throw it away and create a new one if you need to).
+
+#### Adding new projects
+
+Currently, there is no separate command to add a project. The best way to do it
+by hand is to manually edit your Settings file, as described below.
+
+#### Keep PreTeXt up to date
+
+PreTeXt is actively developed and changes frequently. To keep your installation
+up to date, you should update it every few weeks. This may require some changes
+to your source.
+
+From the Command Palette, run the command `PreTeXtual: Update PreTeXt`. If it
+is not available, try saving an empty file with the `.ptx` extension and try
+again from within this file. You may see a new window open with some
+`git`-related hieroglyphics. Just wait for it to close. All done!
+
+#### Keep your Vagrant box up to date
+
+Although it may never be necessary, it is probably a good idea to keep your
+Vagrant box updated (new versions come out in the first week of each calendar
+month). The simplest way to update it is to run the command `Vagrant: Destroy &&
+Up` from the Command Palette. You can also use the command `vagrant box update`
+from any command prompt (make sure to change to the `C:\PreTeXt` folder first).
 
 #### Editing settings manually
 
@@ -311,6 +347,35 @@ values and save the file as you wish.
    that are not yet documented here. Inspect the file `beta_process.py` to
    find out more about them.
 
+#### Troubleshooting
+
+As mentioned elsewhere, this system is still experimental. If you run into
+problems or things don't work as expected, you will probably need to get some
+help, but one thing to try first is to use the Sublime Text console to see
+what's going on. Enable the console with `View/Show Console` from the Sublime
+Text menu. A new pane will appear that updates you in real time on what Sublime
+Text is doing. In particular, if PreTeXtual is throwing errors that the author
+hasn't anticipated, you will see the error messages in the console. These
+messages will be helpful in debugging your situation.
+
+You can dismiss the console by putting the cursor in it and hitting
+<kbd>Esc</kbd>, or by using `View/Hide Console`.
+
+#### Future plans
+
+We would like to support generation of thumbnails/static images for videos and
+interactives. It might also be possible to provide some suport for compiling
+documents using WeBWorK/MyOpenMath problems, although it may end up being the
+case that heavy use of these features means your project has "outgrown" the
+Vagrant build system. In that event you will be best served by another way of
+using PreTeXt.
+
+Documentation of the Vagrant build system, and in particular the "graduation"
+process when a project is sufficiently mature/advanced, is still spotty. We have
+chosen to release it along with the present document and the video
+demonstrations in the interest of getting people started more quickly. The
+author is actively working on the documentation and welcomes your contributions.
+
 #### Conclusion
 
 This concludes the section of the documentation about the build system. Thank you
@@ -321,6 +386,9 @@ for reading and please address questions to the pretext-support Google group:
 or open an issue at
 
     https://github.com/daverosoff/PreTeXtual/issues
+
+The remainder of this document pertains to the other features of the PreTeXtual
+package.
 
 ### Keybindings
 
@@ -336,7 +404,7 @@ like this.
 
 You can activate the package features by enabling the PreTeXt syntax. The
 syntax definition looks for `.ptx` or the legacy `.mbx` file extension. If
-your MathBook XML files end with `.xml` (or something else), you have several
+your PreTeXt files end with `.xml` (or something else), you have several
 choices.
 
 1. Use the Preferences menu or the Command Palette to run the command `Set
@@ -354,9 +422,9 @@ choices.
 
 You should see the text `PreTeXt` in the lower right corner if you have
 the status bar visible (command palette: Toggle Status Bar). Please excuse
-the image which still shows the former name `MathBook XML`.
+the image which still shows the former name `PreTeXt`.
 
-![Image of status bar showing MathBook XML active](media/mbx-syntax-active.png)
+![Image of status bar showing PreTeXt active](media/mbx-syntax-active.png)
 
 Here is a (non-exhaustive) list of features.
 
@@ -375,13 +443,12 @@ Here is a (non-exhaustive) list of features.
 
 2. Open your entire source folder as a project and use Goto Symbol in Project
    (<kbd>Ctrl+Shift+R</kbd>/<kbd>Cmd+Shift+R</kbd>) to see all the `xml:id`
-   for all the MathBook XML files in the project (must use `.mbx` or `.ptx`
+   for all the PreTeXt files in the project (must use `.mbx` or `.ptx`
    extension for indexing to succeed).
 
-3. If you have been using `xml:id` to label your stuff, try typing `<xref
-   ref="` (the beginning of a cross-reference). Sublime Text should show you a
-   panel containing all xml:id values along with the elements they go with.
-   Choose one to insert it at the caret and close the `xref` tag.
+3. Try typing `<xref ref="` (the beginning of a cross-reference). Sublime Text
+   should show you a panel containing all xml:id values along with the elements
+   they go with. Choose one to insert it at the caret and close the `xref` tag.
    Alternatively, type `ref` and hit <kbd>Tab</kbd> to activate the `xref`
    snippet. Then hit <kbd>Ctrl+L, X</kbd> or <kbd>Ctrl+L, Ctrl+Space</kbd> to
    bring up the completions menu. There are several variants of the `ref`
