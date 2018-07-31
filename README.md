@@ -105,7 +105,8 @@ are welcome to [open an
 issue](https://github.com/daverosoff/PreTeXtual/issues) with questions about
 how to accomplish this. A future release will support use of the build systems
 without Vagrant, which is preferable for any Mac OS or Linux users who might
-want to use the build systems for convenience.
+want to use the build systems for convenience. Users with custom stylesheets
+("thin xsl") will also benefit.
 
 As you continue with the installation, it would be good to [visit this README
 in a browser](https://packagecontrol.io/packages/PreTeXtual) so that you can
@@ -114,7 +115,9 @@ follow along while you do things in Sublime Text and other programs.
 A final note before we begin the installation directions: as soon as your
 project acquires some maturity, you will likely outgrow the build systems in
 their present form. The present author recommends the use of a virtual machine
-to continue your PreTeXt work, but there are several different solutions.
+to continue your PreTeXt work, but there are several different solutions, all
+of which you are invited to discuss at the
+[pretext-support Google group](https://groups.google.com/forum/#!forum/pretext-support).
 
 #### Enable VT-X virtualization
 
@@ -176,16 +179,16 @@ continuing.
 *Note: The rest of the procedure will take quite some time, up to two hours
 depending on your selections.*
 
-Once your folders are set up as described above, open a Sublime Text window and
-run the command (from the Command Palette) "Initialize PreTeXt Vagrant".  Then
-follow the prompts. Each folder one level underneath `C:\PreTeXt` will be
+Once your folders are set up as described above, open a Sublime Text window
+and run the command (from the Command Palette) "Initialize PreTeXt Vagrant".
+Then follow the prompts. Each folder one level underneath `C:\PreTeXt` will be
 recognized as a writing project. These will be added to PreTeXtual's simple
 project management system. You can store some options for each project in your
-User settings. At the time of initialization, you will be prompted to type a
-root file for each one. The root file of a PreTeXt project is the file
-containing the `<mathbook>` XML element. You will need to enter the paths with
-double backslashes `\\` rather than a single backslash `\`. A typical path might
-look like
+User settings. In particular, you will need to type in a *root file* path for
+each one. The root file of a PreTeXt project is the file containing the
+`<mathbook>` XML element. You will need to enter the paths with double
+backslashes `\\` rather than a single backslash `\`. A typical path might look
+like
 
     C:\\PreTeXt\\AATA\\src\\aata.xml
 
@@ -193,7 +196,7 @@ look like
 paths, PreTeXtual does. You must enter all letters in your path names with
 the correct case, or things may not work as desired.
 
-You can always enter the paths later by editing your Preferences file directly.
+You can always enter the paths later by editing your Settings file directly.
 
 #### Installing the Vagrant box
 
@@ -262,8 +265,9 @@ documented here.
 ##### When compilation fails
 
 PreTeXtual is not, at present, smart enough to realize when anything has gone
-wrong. You will notice that your output isn't there, or didn't change. To see
-the messages PreTeXt generates when processing your source, use the Sublime Text
+wrong. You will notice that your output isn't there, or didn't change; a very
+quick "Build finished" dialog also usually indicates an error. To see the
+messages PreTeXt generates when processing your source, use the Sublime Text
 console: select `Show Console` from the View menu before, during, or after
 compilation.
 
@@ -293,6 +297,9 @@ a non-destructive way. Windows will complain that something is
 stopping you from shutting down your computer otherwise---in fact, it may do
 so anyway, but forcing a shutdown will not cause any problems to the virtual
 machine (you can simply throw it away and create a new one if you need to).
+
+*Note. If you wait a few minutes after running `vagrant suspend`
+you should not get any error from Windows when you shutdown.*
 
 #### Adding new projects
 
@@ -349,14 +356,15 @@ values and save the file as you wish.
 
 #### Troubleshooting
 
-As mentioned elsewhere, this system is still experimental. If you run into
-problems or things don't work as expected, you will probably need to get some
-help, but one thing to try first is to use the Sublime Text console to see
-what's going on. Enable the console with `View/Show Console` from the Sublime
-Text menu. A new pane will appear that updates you in real time on what Sublime
-Text is doing. In particular, if PreTeXtual is throwing errors that the author
-hasn't anticipated, you will see the error messages in the console. These
-messages will be helpful in debugging your situation.
+As mentioned elsewhere, this system is still experimental, although it has
+been tested to some extent. If you run into problems or things don't work as
+expected, you will probably need to get some help, but one thing to try first
+is to use the Sublime Text console to see what's going on. Enable the console
+with `View/Show Console` from the Sublime Text menu. A new pane will appear
+that updates you in real time on what Sublime Text is doing. In particular, if
+PreTeXtual is throwing errors that the author hasn't anticipated, you will see
+the error messages in the console. These messages will be helpful in debugging
+your situation.
 
 You can dismiss the console by putting the cursor in it and hitting
 <kbd>Esc</kbd>, or by using `View/Hide Console`.
@@ -364,7 +372,7 @@ You can dismiss the console by putting the cursor in it and hitting
 #### Future plans
 
 We would like to support generation of thumbnails/static images for videos and
-interactives. It might also be possible to provide some suport for compiling
+interactives. It might also be possible to provide some support for compiling
 documents using WeBWorK/MyOpenMath problems, although it may end up being the
 case that heavy use of these features means your project has "outgrown" the
 Vagrant build system. In that event you will be best served by another way of
