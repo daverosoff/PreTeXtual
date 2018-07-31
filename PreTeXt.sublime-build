@@ -1,29 +1,69 @@
 {
     "selector": "text.xml.pretext",
     "file_patterns": ["*.ptx", "*.mbx"],
+    "cmd": "xsltproc",
+    "fmt": "html",
+    "target": "beta",
     "variants": [
         {
-            "name": "Process PreTeXt to HTML (beta)",
+            "name": "Process PreTeXt to HTML",
             "target": "beta",
             "cmd": "xsltproc",
             "fmt": "html"
         },
         {
-            "name": "Process PreTeXt to LaTeX (beta)",
+            "name": "Process PreTeXt to LaTeX",
             "target": "beta",
             "cmd": "xsltproc",
             "fmt": "latex"
         },
+        // {
+        //     "name": "Process PreTeXt to EPub",
+        //     "target": "beta",
+        //     "cmd": "xsltproc",
+        //     "fmt": "epub"
+        // },
         {
-            "name": "Build latex-image images (beta)",
+            "name": "Build latex-image images",
             "target": "beta",
             "cmd": "mbx",
             "fmt": "latex-image"
         },
         {
+            "name": "Build asymptote images",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "asy"
+        },
+        {
+            "name": "Build sageplot images",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "sageplot"
+        },
+        {
+            "name": "Fetch Youtube thumbnails (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "youtube"
+        },
+        {
+            "name": "Extract MyOpenMath problems (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "mom"
+        },
+        {
+            "name": "Extract WeBWorK problems (beta)",
+            "target": "beta",
+            "cmd": "mbx",
+            "fmt": "webwork"
+        },
+        {
             "name": "Update PreTeXt",
-            "shell": true,
-            "cmd": "vagrant ssh -- 'cd /vagrant/mathbook; git pull origin dev'; echo 'Installation up to date.'"
+            "target": "beta",
+            "cmd": "update_pretext",
+            "fmt": "none" //unused
         },
     ],
 }
