@@ -18,7 +18,11 @@ Release notes:
     * Sublime Text build system (Windows only) added. This feature, which is
       still experimental, is the reason for the new release (no other known issues
       have been addressed). See README.md for complete details on setting up
-      your environment to use the build system commands.
+      your environment to use the build system commands. Also find video documentation
+      of proper setup and a demonstration of use here:
+
+        - Setup video, 12 minutes https://www.youtube.com/watch?v=x49DNVVLyd8
+        - Demo video, 3 minutes https://www.youtube.com/watch?v=qorTLYsvj4E
 
 Known issues:
     * The install process is not as painless as one might wish, but is perhaps
@@ -27,6 +31,8 @@ Known issues:
       is used for the symbol list, but a different setting is used to
       specify root file for Vagrant-enabled builds. The global "root
       file" setting will be deprecated in a future version.
+    * Build systems cannot yet be used without also using Vagrant boxes;
+      this will be fixed in a future version
     * Work on the Vagrant build systems has supplanted work on the syntax
       definition, which now does not completely reflect the schema
 
