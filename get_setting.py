@@ -26,10 +26,12 @@ def get_setting(setting, default=None):
         # no view defined
         result = None
 
-    if result is None:
+    # if result is None:
+    if not result:
         result = global_settings.get(setting, default)
 
-    if result is None:
+    # if result is None:
+    if not result:
         result = default
 
     # if isinstance(result, sublime.Settings) or isinstance(result, dict):
