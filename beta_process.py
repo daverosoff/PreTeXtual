@@ -120,7 +120,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
                     "latex": to_vagrant(vagrantroot
                         + "mathbook/xsl/mathbook-latex.xsl"),
                 # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
-            }, settings.get('project_name'))
+            }, settings.get('project_name')))
 
             # if not pretext_stylesheets:
             #     # print("Cannot find PreTeXt stylesheets, check settings :(")
@@ -159,17 +159,17 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 #     pretext_output_list.append(fmt)
                 # pretext_output = '/'.join(pretext_output_list)
             settings.set('pretext_output_html',get_pretext_project_setting('pretext_output_html',
-                os.path.join(settings.get('pretext_output', 'html'), settings.get('project_name')))
+                os.path.join(settings.get('pretext_output', 'html'), settings.get('project_name'))))
             settings.set('pretext_output_latex',get_pretext_project_setting('pretext_output_latex',
-                os.path.join(settings.get('pretext_output', 'latex'), settings.get('project_name')))
+                os.path.join(settings.get('pretext_output', 'latex'), settings.get('project_name'))))
             # pretext_output_epub = get_pretext_project_setting('pretext_output_epub',
             #     os.path.join(pretext_output, 'epub'), project_name)
             settings.set('pretext_images',get_pretext_project_setting('pretext_images',
-                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name')))
+                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name'))))
             settings.set('pretext_html_images',get_pretext_project_setting('pretext_html_images',
-                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name')))
+                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name'))))
             settings.set('pretext_latex_images',get_pretext_project_setting('pretext_latex_images',
-                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name')))
+                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name'))))
             # pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
             #     os.path.join(pretext_output_epub, 'images'), project_name)
             # if not pretext_images:
