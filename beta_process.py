@@ -109,7 +109,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
         def acquire_settings(vu):
 
-            settings = sublime.Settings() #Cpnstruction of a settings object
+            settings = sublime.Settings(vu.id()) #Cpnstruction of a settings object
             
             settings.set('project_name',get_pretext_project(vu))
 
