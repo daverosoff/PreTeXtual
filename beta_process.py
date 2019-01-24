@@ -42,7 +42,7 @@ def get_pretext_project_setting(setting, default, proj_name):
 
     projects = get_setting('pretext_projects')
     if proj_name not in projects.keys():
-        sublime.message_dialog("Error 32: invalid project")
+        sublime.message_dialog("Error 32: invalid project {}".format(proj_name))
         raise VagrantException
     if setting in projects[proj_name].keys():
         return projects[proj_name][setting]
@@ -71,9 +71,13 @@ def get_pretext_project(vu):
             sublime.message_dialog("Error 30: couldn't find project")
             raise VagrantException
         fn = os.path.dirname(fn)
-        match = retrieve('path', fn, projects)
+        match = retrieve('path', fn, projects) # name of project is retained
         if match:
+            # print("Found {}".format(match))
             return match
+
+    sublime.message_dialog("Error 102: Something bad happened")
+    raise VagrantException
 
 class BetaCommand(sublime_plugin.WindowCommand):
     # def _verbose(msg):
