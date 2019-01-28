@@ -113,6 +113,10 @@ class BetaCommand(sublime_plugin.WindowCommand):
                         + "mathbook/xsl/mathbook-html.xsl"),
                     "latex": to_vagrant(vagrantroot
                         + "mathbook/xsl/mathbook-latex.xsl"),
+                    "html101": to_vagrant(vagrantroot
+                        + "mathbook/xsl/idaho-html-101.xsl"),
+                    "html102": to_vagrant(vagrantroot
+                        + "mathbook/xsl/idaho-html-102.xsl")
                 # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
             }, sett['project_name'])
 

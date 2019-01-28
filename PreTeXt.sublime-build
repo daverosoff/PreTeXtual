@@ -6,6 +6,18 @@
     "target": "beta",
     "variants": [
         {
+            "name": "Process PreTeXt to HTML (Idaho 101)",
+            "target": "beta",
+            "cmd": "xsltproc",
+            "fmt": "html101"
+        },
+        {
+            "name": "Process PreTeXt to HTML (Idaho 102)",
+            "target": "beta",
+            "cmd": "xsltproc",
+            "fmt": "html102"
+        },
+        {
             "name": "Process PreTeXt to HTML",
             "target": "beta",
             "cmd": "xsltproc",
