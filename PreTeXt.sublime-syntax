@@ -393,7 +393,7 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(li)(?=\s)'
+    - match: '(</?)(li)(?=\b)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
