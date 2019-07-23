@@ -405,6 +405,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)(abbr|acro|init(?=\b))'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.abbreviation-group.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(</?)(q(?=\s)|sq(?=\s)|braces|angles|dblbrackets)'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -1081,42 +1093,6 @@ contexts:
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.interactive.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
-    - match: '(</?)(abbr)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.abbr.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
-    - match: '(</?)(acro)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.acro.pretext
-        - match: '/?>'
-          scope: punctuation.definition.tag.end.pretext
-          pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
-    - match: '(</?)(init)(?=\s)'
-      captures:
-        1: punctuation.definition.tag.begin.pretext
-        2: entity.name.tag.localname.pretext
-      push:
-        - meta_scope: meta.tag.pretext markup.other.init.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
