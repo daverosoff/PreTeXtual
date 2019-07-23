@@ -22,9 +22,10 @@ variables:
   #  2: namespace prefix colon
   #  3: local tag name
   qualified_name: '(?:([[:alpha:]_][[:alnum:]_.-]*)(:))?([[:alpha:]_][[:alnum:]_.-]*)'
-  division: '(part|chapter|(?:sub)*section(?=[^>-])|appendix|introduction|conclusion|exercises|paragraphs)'
-  frontmatter: '(frontmatter|titlepage|colophon_front|abstract|author|contributor|personname|department|institution|email|credit|date|role|entity|edition|website|copyright|year|holder|minilicense|shortlicense|biography|dedication|acknowledgement|preface)'
-  backmatter: '(backmatter|references|index|colophon_back)'
+  division: '(part|chapter|(?:sub)*section(?=[^>-])|appendix|introduction|conclusion|exercises|solutions|references|paragraphs|commentary)'
+  # Issue: there are two kinds of references and two kinds of colophon
+  frontmatter: '(frontmatter|titlepage|colophon|abstract|author|contributor|personname|department|institution|email|credit|date|role|entity|edition|website|copyright|year|holder|minilicense|shortlicense|biography|dedication|acknowledgement|preface)'
+  backmatter: '(backmatter|index|colophon)'
   aside_like: '(aside|biographical|historical)'
   axiom_like: '(axiom|conjecture|principle|heuristic|hypothesis|assumption)'
   computation_like: '(computation|technology)'
