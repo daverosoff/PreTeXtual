@@ -405,7 +405,7 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(q(?=\s)|sq(?=\s)|braces|angles|brackets|dblbrackets)'
+    - match: '(</?)(q(?=\s)|sq(?=\s)|braces|angles|dblbrackets)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
