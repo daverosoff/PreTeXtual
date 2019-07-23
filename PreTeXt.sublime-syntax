@@ -381,6 +381,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)(dl)'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.list.named.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(</?)(li)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
