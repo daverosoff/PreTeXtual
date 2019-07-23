@@ -48,6 +48,7 @@ variables:
   character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n(?=\s)|chord|alteration)'
   generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|eg|ie|circa|etc)'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
+  paragraph: '(p(?=\b)|line)'
   verbatim: '(c(?=\s)|email)'
   # sage and program tags are handled separately due to @language
   verbatimdisplay: '(cd|cline|pre(?=\s)|console|prompt|input|output)'
