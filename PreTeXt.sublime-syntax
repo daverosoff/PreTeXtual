@@ -585,7 +585,7 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(<)(mrow|me(?=\b)|men)[^>]*?(>)'
+    - match: '(<)(mrow|m[de](?=\b)|m[de]n)[^>]*?(>)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
