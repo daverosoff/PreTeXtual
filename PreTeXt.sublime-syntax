@@ -463,6 +463,18 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
+    - match: '(</?)({{paragraph}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.paragraph.pretext
+        - match: '/?>'
+          scope: punctuation.def.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
     - match: '(</?)({{verbatim}})'
       captures:
         1: punctuation.definition.tag.begin.pretext
