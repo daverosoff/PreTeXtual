@@ -48,6 +48,7 @@ variables:
   character_escape_latex: '(hash|dollar|percent|tilde|underscore|circumflex|backslash|lbrace|rbrace)'
   character_fillin: '(fillin)'
   character_arithmetic: '(solidus|times)'
+  character_icon: ('icon')
   character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n(?=\s)|chord|alteration)'
   generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|eg|ie|circa|etc)'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
@@ -1199,6 +1200,18 @@ contexts:
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext constant.character.arithmetic.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{character_icon}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext constant.character.icon.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
