@@ -50,7 +50,7 @@ variables:
   character_arithmetic: '(solidus|times)'
   character_icon: ('icon')
   character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n(?=\s)|chord|alteration)'
-  generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|eg|ie|circa|etc)'
+  generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|ad|am|bc|circa|eg|etal|etc|ie|np|pm|ps|vs|viz)'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
   paragraph: '(p(?=\b)|line)'
   verbatim: '(c(?=\s)|email)'
