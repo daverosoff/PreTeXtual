@@ -51,6 +51,7 @@ variables:
   character_icon: ('icon')
   character_music: '(doublesharp|sharp|natural|flat|doubleflat|scaledeg|n(?=\s)|chord|alteration)'
   generator: '(today|timeofday|tex|latex(?=\s)|pretext|webwork|ad|am|bc|circa|eg|etal|etc|ie|np|pm|ps|vs|viz)'
+  siunit: '(quantity|mag|unit|per(?=\b))'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
   paragraph: '(p(?=\b)|line)'
   verbatim: '(c(?=\s)|email)'
@@ -1236,6 +1237,18 @@ contexts:
         2: entity.name.tag.localname.pretext
       push:
         - meta_scope: meta.tag.pretext markup.other.generator.pretext
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
+    - match: '(</?)({{siunit}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - meta_scope: meta.tag.pretext markup.other.siunit.pretext
         - match: '/?>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
