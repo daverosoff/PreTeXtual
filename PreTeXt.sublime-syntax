@@ -39,7 +39,7 @@ variables:
   theorem_like: '(theorem|corollary|lemma|algorithm|proposition|claim|fact|identity)'
   footnote: '(fn)'
   character_delimiter: '([lr]s?q)'
-  # They are all dashes in the PTX schema, as of 2018-02-15
+  # They are all dashes in the PTX schema, as of 2019-07-23
   character_dash: '(nbsp|ndash|mdash)'
   character_exotic: '(ellipsis|asterisk|slash|midpoint|swungdash|permille|pilcrow|section-mark|copy|registered|trademark|backtick)'
   character_escape_xml: '(greater-than|less-than|ampersand|squote|quote)'
