@@ -417,7 +417,7 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)(em(?=\s)|term|alert|foreign|booktitle)'
+    - match: '(</?)(em(?=\s)|term|alert|pubtitle|articletitle|foreign)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
