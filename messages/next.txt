@@ -1,4 +1,4 @@
-PreTeXtual, package version 0.6.0
+PreTeXtual, package version 0.7.0
 
 Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
 for instructions on usage and configuring your PreTeXt files to work
@@ -15,14 +15,12 @@ I hope you find PreTeXtual useful!
 
 Release notes:
 
-    * This is a public beta version of PreTeXtual and may be buggier
-      than usual. Contact me for instructions on rolling back to a previous
-      version if things are not working right for you.
-    * Sublime Text build system (Windows only) added. This feature, which is
-      still in beta, is the reason for the new release (no other known issues
-      have been addressed). See README.md for complete details on setting up
-      your environment to use the build system commands.
-
+    * Many parts of the UI have been updated or rationalized. Some shortcuts
+      may have changed.
+    * Updated to reflect major changes in PreTeXt over the past months. 
+    * Build system no longer relies on Vagrant and can be used with a   
+      traditional installation. User will need to configure paths manually.
+      
 Known issues:
     * Build system paths are not always stored correctly
 
