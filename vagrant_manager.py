@@ -21,7 +21,8 @@ class AddVagrantManagedProjectCommand(sublime_plugin.WindowCommand):
             'project_images': ""
         }
         if not data.has('vagrant_managed_projects'):
-
+            pass
+            
 class TestVagrantManagerCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         add = VagrantSettings()
