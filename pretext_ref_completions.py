@@ -232,7 +232,7 @@ class PretextRefCommand(sublime_plugin.TextCommand):
             return
 
         # filter! Note matching is "less fuzzy" than ST2. Room for improvement...
-        # completions = [c for c in completions if prefix in c]
+        completions = [c for c in completions if prefix in c]
 
         if not completions:
             sublime.error_message("No label matches %s !" % (prefix,))
