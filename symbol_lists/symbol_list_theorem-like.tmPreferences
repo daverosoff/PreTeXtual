@@ -28,41 +28,17 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-			s/&lt;(.)(?:heorem)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:orollary)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:emma)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:lgorithm)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:roposition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:laim)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:act)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(theorem)&gt;//g;
-			s/&lt;(corollary)&gt;//g;
-			s/&lt;(lemma)&gt;//g;
-			s/&lt;(algorithm)&gt;//g;
-			s/&lt;(proposition)&gt;//g;
-			s/&lt;(claim)&gt;//g;
-			s/&lt;(fact)&gt;//g;
-			s/&lt;\/[^&gt;]+&gt;//g;
+			s/&lt;(theorem|corollary|lemma|algorithm|proposition|claim|fact).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
+			s/&lt;(theorem|corollary|lemma|algorithm|proposition|claim|fact).*?&gt;/\u$1 no xml:id/g;
+			s/&lt;\/(?:theorem|corollary|lemma|algorithm|proposition|claim|fact).*?&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
 		<string>
-			s/&lt;(.)(?:heorem)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:orollary)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:emma)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:lgorithm)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:roposition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:laim)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:act)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(theorem)&gt;//g;
-			s/&lt;(corollary)&gt;//g;
-			s/&lt;(lemma)&gt;//g;
-			s/&lt;(algorithm)&gt;//g;
-			s/&lt;(proposition)&gt;//g;
-			s/&lt;(claim)&gt;//g;
-			s/&lt;(fact)&gt;//g;
-			s/&lt;\/[^&gt;]+&gt;//g;
+			s/&lt;(theorem|corollary|lemma|algorithm|proposition|claim|fact).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
+			s/&lt;(theorem|corollary|lemma|algorithm|proposition|claim|fact).*?&gt;/\u$1 no xml:id/g;
+			s/&lt;\/(?:theorem|corollary|lemma|algorithm|proposition|claim|fact).*?&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>

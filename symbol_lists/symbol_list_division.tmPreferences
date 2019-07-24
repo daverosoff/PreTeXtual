@@ -30,7 +30,7 @@
 		<string>
 			s/&lt;(chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
 			s/&lt;(chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?&gt;/\u$1 (no xml:id)/g;
-			s/&lt;\/(?:chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?//g;
+			s/&lt;\/(?:chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
@@ -38,7 +38,7 @@
 		<string>
 			s/&lt;(chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
 			s/&lt;(chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?&gt;/\u$1 (no xml:id)/g;
-			s/&lt;\/(?:chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?//g;
+			s/&lt;\/(?:chapter|article|(?:sub)?section|paragraphs|introduction|conclusion|references|exercise(?:s|group)?).*?&gt;//g;
 		</string>
 	</dict>
 	<key>uuid</key>

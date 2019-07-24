@@ -28,17 +28,15 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-			s/&lt;(.)(?:efinition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(definition)&gt;//g;
-			s/&lt;\/[^&gt;]+&gt;//g;
+			s/&lt;(definition).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
+			s/&lt;\/(definition).*?&gt;/$1 no xml:id/g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
 		<string>
-			s/&lt;(.)(?:efinition)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(definition)&gt;//g;
-			s/&lt;\/[^&gt;]+&gt;//g;
+			s/&lt;(definition).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
+			s/&lt;\/(definition).*?&gt;/$1 no xml:id/g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>

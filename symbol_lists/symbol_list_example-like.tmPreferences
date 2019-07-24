@@ -28,25 +28,17 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-			s/&lt;(.)(?:xample)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:uestion)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:roblem)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(example)&gt;//g;
-			s/&lt;(question)&gt;//g;
-			s/&lt;(problem)&gt;//g;
-			s/&lt;\/[^&gt;]+&gt;//g;
+			s/&lt;(example|question|problem).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
+			s/&lt;(example|question|problem).*?&gt;/\u$1 (no xml:id)/g;
+			s/&lt;\/(example|question|problem).*?&gt;//g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
 		<string>
-			s/&lt;(.)(?:xample)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:uestion)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(.)(?:roblem)\s+xml:id\s*=\s*\"([^\"]+)\"\s*&gt;/\u$1 $2/g;
-			s/&lt;(example)&gt;//g;
-			s/&lt;(question)&gt;//g;
-			s/&lt;(problem)&gt;//g;
-			s/&lt;\/[^&gt;]+&gt;//g;
+			s/&lt;(example|question|problem).*?xml:id\s*=\s*\"([^\"]+)\".*?&gt;/\u$1 $2/g;
+			s/&lt;(example|question|problem).*?&gt;/\u$1 (no xml:id)/g;
+			s/&lt;\/(example|question|problem).*?&gt;//g;
 		</string>
 		<!-- <key>unusedValue</key>
 		<string>

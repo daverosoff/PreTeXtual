@@ -28,7 +28,7 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-			s/&lt;idx&gt;(.?)&lt;\/idx&gt;/idx $1/g;
+			s/&lt;idx&gt;(.*?)&lt;\/idx&gt;/idx $1/g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
