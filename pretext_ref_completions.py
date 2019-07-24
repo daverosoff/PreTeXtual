@@ -195,7 +195,7 @@ class PretextRefCompletions(sublime_plugin.EventListener):
     def on_query_completions(self, view, prefix, locations):
         # Only trigger within xref
         if not view.match_selector(locations[0],
-                "markup.reference.xref.pretext"):
+                "markup.other.reference.xref.pretext"):
             return []
 
         point = locations[0]
