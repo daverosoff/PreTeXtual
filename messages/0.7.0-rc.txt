@@ -1,0 +1,55 @@
+PreTeXtual, package version 0.7.0-rc
+
+Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
+for instructions on usage and configuring your PreTeXt files to work
+automatically with PreTeXtual. If you find a bug or have a feature request,
+please open an issue at
+
+    https://github.com/daverosoff/PreTeXtual
+
+or post on the pretext-support Google Group at
+
+    https://groups.google.com/forum/#!forum/pretext-support
+
+I hope you find PreTeXtual useful!
+
+Release notes:
+
+    * The symbol navigation (Go To Symbol/Go To Symbol In Project) has been
+      fixed and should be much more usable now. Use Ctrl-R or Ctrl-Shift-R to
+      try it. (Fixed from 0.5.0)
+    * Syntax definition updated to reflect major changes in PreTeXt over the 
+      past months. (Fixed from 0.5.0)
+    * <h>, etc., tags within <idx> are not properly highlighted (but no 
+      longer appear spuriously in symbol navigation)
+    * Snippets improved, rationalized, and expanded. (Fixed from 0.6.0)
+    * Build system no longer relies on Vagrant and can be used with a   
+      traditional installation (possibly on any OS?). User will need to 
+      configure paths manually.
+    * Many parts of the UI have been updated or rationalized. Some shortcuts
+      may have changed.
+      
+Known issues:
+    * Go To Symbol In Project (Ctrl-Shift-R) seems to only operate on open
+      files, not necessarily all files in project
+    * Build system paths are not always stored correctly
+    * Ref autocompletion is broken
+
+Known issues from 0.5.0 not fixed in this release:
+
+    * The scoping for embedded syntaxes is not completely satisfactory
+
+Known issues from 0.4.5 not fixed in this release:
+
+    * Mirroring title text to get xml:id is good for divisions, but less
+      good for theorems (often not titled)
+    * Mirrored title text in snippet xml:id does not always give
+      completely satisfactory results (e.g., XML tags inside)
+        - Should there be a user setting to disable this mirroring?
+        - Is this even possible?
+    * Typing '<xref ref=""' results in a spurious error ("ref/cite:
+      unrecognized format")
+    * Potential for confusion since Symbols List is always based on
+      the current project (or open folder) but the ref autocomplete
+      list may not be (if there is not an explicit project and the
+      root PreTeXt file is set globally or not at all)
