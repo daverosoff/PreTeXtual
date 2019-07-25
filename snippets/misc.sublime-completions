@@ -2,6 +2,6 @@
     "scope": "meta.tag.pretext",
     "completions":
     [
-        { "trigger": "x\txml:id", "contents": "xml:id=\"$1\"$0"}
+        { "trigger": "xid\txml:id", "contents": "xml:id=\"$1\"$0"}
     ]
 }

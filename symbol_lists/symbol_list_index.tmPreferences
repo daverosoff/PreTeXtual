@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<!-- Copyright 2016-2018 David W. Rosoff -->
+	<!-- Copyright 2016-2019 David W. Rosoff -->
 
 	<!-- This file is part of PreTeXtual, a package for Sublime Text. -->
 
@@ -28,7 +28,7 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-			s/&lt;idx&gt;(.?)&lt;\/idx&gt;/idx $1/g;
+			s/&lt;idx&gt;(.*?)&lt;\/idx&gt;/idx $1/g;
 		</string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>

@@ -1,4 +1,4 @@
-# Copyright 2016-2018 David W. Rosoff
+# Copyright 2016-2019 David W. Rosoff
 
 # This file is part of PreTeXtual, a package for Sublime Text.
 
@@ -195,7 +195,7 @@ class PretextRefCompletions(sublime_plugin.EventListener):
     def on_query_completions(self, view, prefix, locations):
         # Only trigger within xref
         if not view.match_selector(locations[0],
-                "markup.reference.xref.pretext"):
+                "markup.other.reference.xref.pretext"):
             return []
 
         point = locations[0]
@@ -232,7 +232,7 @@ class PretextRefCommand(sublime_plugin.TextCommand):
             return
 
         # filter! Note matching is "less fuzzy" than ST2. Room for improvement...
-        # completions = [c for c in completions if prefix in c]
+        completions = [c for c in completions if prefix in c]
 
         if not completions:
             sublime.error_message("No label matches %s !" % (prefix,))

@@ -10,8 +10,6 @@ want to suggest a feature, open an issue at
 * Set tabs to spaces and width 2 on apply syntax
 * Change snippets, etc. to use 2-space indentation (or package settings)
 * Investigate why <jsxgraph> tags don't close properly
-* Fix non-division snippet title/xmlid capture
-* Fix snippets so they correctly handle <nonempty>tags</nonempty>
 * adapt subdiv snippets for wrapping selection; also place cursor in <p> tag
   for modification to e.g. <introduction>
 * command to clear root file, set current file as root file, set some open file
@@ -20,8 +18,3 @@ want to suggest a feature, open an issue at
 * Text command based on scopes to add similar tag on Ctrl+Enter
 * Text command to move to next subdiv/block lacking xml:id
 * Add new snippets for new constants/entities
-
-Features longer-term
-
-* Settings for PreTeXt repository location for e.g. build systems, schema
-* Build systems

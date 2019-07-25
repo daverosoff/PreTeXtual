@@ -1,4 +1,4 @@
-# Copyright 2016-2018 David W. Rosoff
+# Copyright 2016-2019 David W. Rosoff
 
 # This file is part of PreTeXtual, a package for Sublime Text.
 
