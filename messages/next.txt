@@ -1,4 +1,4 @@
-PreTeXtual, package version 0.7.0
+PreTeXtual, package version 0.7.0-rc
 
 Thank you for your interest in PreTeXtual. Make sure to inspect the README.md
 for instructions on usage and configuring your PreTeXt files to work
@@ -20,6 +20,8 @@ Release notes:
       try it. (Fixed from 0.5.0)
     * Syntax definition updated to reflect major changes in PreTeXt over the 
       past months. (Fixed from 0.5.0)
+    * <h>, etc., tags within <idx> are not properly highlighted (but no 
+      longer appear spuriously in symbol navigation)
     * Snippets improved, rationalized, and expanded. (Fixed from 0.6.0)
     * Build system no longer relies on Vagrant and can be used with a   
       traditional installation (possibly on any OS?). User will need to 
