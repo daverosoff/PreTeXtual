@@ -58,7 +58,8 @@ variables:
   interactive: '(jsxgraph|musescore)'
   latex_image: '(latex-image(?:-preamble)?)'
   # index: '(index|h(?=\s)|idx|index-list|index-part)'
-  index: '(idx|see(?:also)?|h(?=\b))'
+  index_tag: '(idx)'
+  index_content: '(see(?:also)?|h(?=\b))'
   block_component: '(prelude|interlude|postlude|statement|hint|answer|solution)'
   paragraph: '(p(?=\b)|line)'
 
@@ -333,14 +334,28 @@ contexts:
         - include: single-quoted-string
         - include: double-quoted-string
         - include: tag-stuff
-    - match: '(</?)({{index}})'
+    - match: '(</?)({{index_tag}})[^>]*?(>)'
       captures:
         1: punctuation.definition.tag.begin.pretext
         2: entity.name.tag.localname.pretext
+        3: punctuation.definition.tag.end.pretext
+        0: meta.tag.pretext markup.other.index.begin.pretext
       push:
-        - meta_scope: meta.tag.pretext markup.other.index.pretext
-        - match: '/?>'
-          scope: punctuation.definition.end.tag.pretext
+        - meta_content_scope: markup.other.index.content.pretext
+        - match: '(</?)({{index-content}})'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+          push:
+            - match: '/?>'
+              scope: punctuation.definition.tag.end.pretext
+              pop: true
+        - match: '(</)(\2)(>)'
+          captures:
+            1: punctuation.definition.tag.begin.pretext
+            2: entity.name.tag.localname.pretext
+            3: punctuation.definition.tag.end.pretext
+            0: meta.tag.pretext markup.other.index.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
@@ -1515,3 +1530,15 @@ contexts:
         2: punctuation.separator.key-value.pretext
     - include: double-quoted-string
     - include: single-quoted-string
+  index-content:
+    - match: '(</?)({{index-content}})'
+      captures:
+        1: punctuation.definition.tag.begin.pretext
+        2: entity.name.tag.localname.pretext
+      push:
+        - match: '/?>'
+          scope: punctuation.definition.tag.end.pretext
+          pop: true
+        - include: single-quoted-string
+        - include: double-quoted-string
+        - include: tag-stuff
