@@ -511,7 +511,7 @@ contexts:
       push:
         - meta_scope: meta.tag.pretext markup.other.paragraph.pretext
         - match: '/?>'
-          scope: punctuation.def.tag.end.pretext
+          scope: punctuation.definition.tag.end.pretext
           pop: true
         - include: single-quoted-string
         - include: double-quoted-string
