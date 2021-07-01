@@ -74,4 +74,5 @@ class SetCurrentFileAsRootCommand(SetPretextRootFileCommand):
     def run(self):
         import re
         fn = self.window.active_view().file_name()
-        SetPretextRootFileCommand.run(self, filename=re.sub(r"\\", '/', fn))
+        # SetPretextRootFileCommand.run(self, filename=re.sub(r"\\", '/', fn))
+        SetPretextRootFileCommand.run(self, filename=fn)
