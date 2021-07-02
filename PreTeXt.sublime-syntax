@@ -242,7 +242,8 @@ contexts:
       push:
         - meta_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
-        # - include: tag-stuff
+        - include: single-quoted-string
+        - include: double-quoted-string
         - match: '(</)(\2)(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
@@ -342,10 +343,11 @@ contexts:
         0: meta.tag.pretext markup.other.index.begin.pretext
       push:
         - meta_content_scope: markup.other.index.content.pretext
-        - match: '(</?)({{index-content}})'
+        - match: '(</?)({{index_content}})'
           captures:
             1: punctuation.definition.tag.begin.pretext
             2: entity.name.tag.localname.pretext
+            0: meta.tag.pretext markup.other.index.end.pretext
           push:
             - match: '/?>'
               scope: punctuation.definition.tag.end.pretext
@@ -357,9 +359,9 @@ contexts:
             3: punctuation.definition.tag.end.pretext
             0: meta.tag.pretext markup.other.index.end.pretext
           pop: true
-        - include: single-quoted-string
-        - include: double-quoted-string
-        - include: tag-stuff
+        # - include: single-quoted-string
+        # - include: double-quoted-string
+        # - include: tag-stuff
     - match: '(</?)(list)(?=\s)'
       captures:
         1: punctuation.definition.tag.begin.pretext
@@ -633,7 +635,14 @@ contexts:
       push:
         - meta_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
-        # - include: tag-stuff
+        - include: single-quoted-string
+        - include: double-quoted-string
+        # - match: '(<)(var)(>)'
+        #   captures:
+        #     1: punctuation.definition.tag.begin.pretext
+        #     2: entity.name.tag.localname.pretext
+        #     3: punctuation.definition.tag.end.pretext
+        #     0: meta.tag.pretext markup.other.dwr.temp.pretext
         - match: '(</)(\2)(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
@@ -650,6 +659,8 @@ contexts:
       push:
         - meta_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
+        - include: single-quoted-string
+        - include: double-quoted-string
         # - include: tag-stuff
       # with_prototype:
         - match: '(</)(\2)(>)'
@@ -690,6 +701,8 @@ contexts:
           scope: punctuation.definition.string.end.pretext
         - meta_content_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
+        - include: single-quoted-string
+        - include: double-quoted-string
         - match: '(</)({{latex_image}})(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
@@ -710,6 +723,8 @@ contexts:
           scope: punctuation.definition.string.end.pretext
         - meta_content_scope: text.tex.latex.pretext
         - include: 'scope:text.tex.latex'
+        - include: single-quoted-string
+        - include: double-quoted-string
         - match: '(</)(macros)(>)'
           captures:
             1: punctuation.definition.tag.begin.pretext
@@ -1394,6 +1409,10 @@ contexts:
       scope: invalid.illegal.bad-ampersand.pretext
     - match: '<'
       scope: invalid.illegal.missing-entity.pretext
+  # pg-dollar-variable:
+  #   - match: '(\$)([A-Za-z_][0-9A-Za-z_-])'
+  #     scope: punctuation.definition.scalar.dwr.perl.pg
+  #     meta_scope: meta.embedded.perl.pg
   double-quoted-string:
     - match: '"'
       scope: punctuation.definition.string.begin.pretext
@@ -1404,6 +1423,7 @@ contexts:
           pop: true
         - include: entity
         - include: should-be-entity
+        # - include: pg-dollar-variable
   entity:
     - match: '(&)(?:{{name}}|#[0-9]+|#x\h+)(;)'
       scope: constant.character.entity.pretext
@@ -1445,8 +1465,8 @@ contexts:
         - match: '>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
-        - include: double-quoted-string
         - include: single-quoted-string
+        - include: double-quoted-string
   element-decl:
     - match: '(<!)(ELEMENT)\s+({{name}})\s+'
       captures:
@@ -1487,8 +1507,8 @@ contexts:
         - match: '>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
-        - include: double-quoted-string
         - include: single-quoted-string
+        - include: double-quoted-string
   notation-decl:
     - match: '(<!)(NOTATION)\s+({{name}})'
       captures:
@@ -1499,8 +1519,8 @@ contexts:
         - match: '>'
           scope: punctuation.definition.tag.end.pretext
           pop: true
-        - include: double-quoted-string
         - include: single-quoted-string
+        - include: double-quoted-string
   parameter-entity:
     - match: '(%){{name}}(;)'
       scope: constant.character.parameter-entity.pretext
@@ -1528,8 +1548,8 @@ contexts:
       captures:
         1: invalid.illegal.bad-attribute-name.pretext
         2: punctuation.separator.key-value.pretext
-    - include: double-quoted-string
     - include: single-quoted-string
+    - include: double-quoted-string
   index-content:
     - match: '(</?)({{index-content}})'
       captures:
