@@ -19,7 +19,8 @@ Release notes for 0.7.1:
       highlighting. Thanks to Alex Jordan for the bug fix request.
 
     * Fixed a syntax bug that led to anything inside `<idx>...</idx>` not
-      being highlighted.
+      being highlighted and `<idx>` and `<h>` not closing correctly. Thanks to
+      @j-oldroyd for spotting the error.
 
     * Go To Symbol and Go To Symbol in Project should work a little better
       now. You still have to set the root file for each project to use Go To
