@@ -98,7 +98,10 @@ def find_xmlids_in_files(rootdir, src, xmlids):
             if f and not f.closed:
                 f.close()
 
-    xmlids += re.findall(r'<\s*([A-Za-z][A-Za-z0-9_-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_-]*)"\s*>', src_content)
+    matches = re.findall(r'<\s*([A-Za-z][A-Za-z0-9_-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_-]*)"\s*>', src_content)
+    matches = [x[1] + '\t' + x[0] for x in matches]
+
+    xmlids += matches
 
     for f in re.findall(r'<\s*xi:include\s*href\s*=\s*"([^"]+)"', src_content):
         find_xmlids_in_files(rootdir, f, xmlids)
@@ -156,7 +159,7 @@ def get_ref_completions(view, point, autocompleting=False):
     # Check the file buffer first:
     #    1) in case there are unsaved changes
     #    2) if this file is unnamed and unsaved, get_tex_root will fail
-    view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_\-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_\-]*)"\s*>', 0, '\\1: \\2', completions)
+    view.find_all(r'<\s*([A-Za-z][A-Za-z0-9_\-]*)\s+xml:id\s*=\s*"([A-Za-z][A-Za-z0-9_\-]*)"\s*>', 0, '\\2\t\\1', completions)
 
     root = get_setting('pretext_root_file')
     print ("PreTeXt root: " + repr(root))
@@ -166,10 +169,12 @@ def get_ref_completions(view, point, autocompleting=False):
     #     find_xmlids_in_files(os.path.dirname(view), os.path.basename(view), completions)
     # remove duplicates
     completions = list(set(completions))
+    ### Don't think we need this after the changes to how completions are reported
     # this screws up the list for some reason?
     # fixed with a wretched hack
-    tuple = type((1,2,3))
-    completions = [": ".join(c) if type(c) is tuple else c for c in completions]
+    # tuple = type((1,2,3))
+    # completions = [": ".join(c) if type(c) is tuple else c for c in completions]
+    ### end of fence
     print(repr(completions))
     # raise RuntimeError
 
@@ -205,7 +210,7 @@ class PretextRefCompletions(sublime_plugin.EventListener):
         except UnrecognizedRefFormatError:
             return []
 
-        r = [(label + post_snippet) for label in completions]
+        r = [label + post_snippet if post_snippet else label for label in completions]
         print(r)
         return (r, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
