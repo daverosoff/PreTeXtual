@@ -23,8 +23,13 @@ from distutils.dir_util import copy_tree
 from .get_setting import get_setting
 from .initialize_pretext_vagrant import VagrantException
 
-def to_vagrant(st):
+#I am not sure I understand the use of the functions "to_vagrant" and "from vagrant". My guess was that they return a string
+#that seems to be the path of the vagrant directory?
+
+def to_vagrant(st): 
     vagrantroot = get_setting('vagrantroot', r"C:\\PreTeXt\\")
+    # I looked at the get_setting module, but I don't understand how line 13 gets executed. A better way to say it is that 
+    # I don't really understand how the get-setting function works and what it does.
     result = re.sub(vagrantroot, '/vagrant/', st, flags=re.IGNORECASE)
     result = re.sub(r'\\', '/', result)
     return result
@@ -33,7 +38,7 @@ def from_vagrant(st):
     vagrantroot = get_setting('vagrantroot', r"C:\\PreTeXt\\")
     return re.sub('/vagrant/', vagrantroot, st, flags=re.IGNORECASE)
 
-
+#Is this the equivalent of a hashtable?
 def retrieve(key, val, ddict, id='name'):
     """
     Given a dict of dicts, return the value of id for the dict whose
@@ -47,13 +52,14 @@ def retrieve(key, val, ddict, id='name'):
     except StopIteration:
         return None
 
+#
 def get_pretext_project_setting(setting, default, proj_name):
     """Given a setting (string), returns the value associated to that
     key in the dictionary for proj_name."""
 
     projects = get_setting('pretext_projects')
     if proj_name not in projects.keys():
-        sublime.message_dialog("Error 32: invalid project")
+        sublime.message_dialog("Error 32: invalid project {}".format(proj_name))
         raise VagrantException
     if setting in projects[proj_name].keys():
         return projects[proj_name][setting]
@@ -82,9 +88,13 @@ def get_pretext_project(vu):
             sublime.message_dialog("Error 30: couldn't find project")
             raise VagrantException
         fn = os.path.dirname(fn)
-        match = retrieve('path', fn, projects)
+        match = retrieve('path', fn, projects) # name of project is retained
         if match:
+            # print("Found {}".format(match))
             return match
+
+    sublime.message_dialog("Error 102: Something bad happened")
+    raise VagrantException
 
 class BetaCommand(sublime_plugin.WindowCommand):
     # def _verbose(msg):
@@ -120,18 +130,18 @@ class BetaCommand(sublime_plugin.WindowCommand):
 
         def acquire_settings(vu):
 
-            sett = {}
+            settings = sublime.Settings(vu.id()) #Cpnstruction of a settings object
+            
+            settings.set('project_name',get_pretext_project(vu))
 
-            sett['project_name'] = get_pretext_project(vu)
-
-            sett['pretext_stylesheets'] = get_pretext_project_setting(
+            settings.set('pretext_stylesheets',get_pretext_project_setting(
                 'pretext_stylesheets', {
                     "html": to_vagrant(vagrantroot
                         + "mathbook/xsl/mathbook-html.xsl"),
                     "latex": to_vagrant(vagrantroot
                         + "mathbook/xsl/mathbook-latex.xsl"),
                 # "epub": to_vagrant(vagrantroot + "mathbook/xsl/mathbook-epub.xsl"),
-            }, sett['project_name'])
+            }, settings.get('project_name')))
 
             # if not pretext_stylesheets:
             #     # print("Cannot find PreTeXt stylesheets, check settings :(")
@@ -139,28 +149,29 @@ class BetaCommand(sublime_plugin.WindowCommand):
             #     raise VagrantException
 
             # xinclude = get_setting('xinclude', True)
-            sett['xinclude'] = get_pretext_project_setting('xinclude', True,
-                sett['project_name'])
+
+            settings.set('xinclude',get_pretext_project_setting('xinclude', True,
+                settings.get('project_name')))
             # stringparam = get_setting('stringparam', {})
-            sett['stringparam'] = get_pretext_project_setting('stringparam', {},
-                sett['project_name'])
-            sett['root_file'] = get_pretext_project_setting('root_file', "",
-                sett['project_name'])
+            settings.set('stringparam',get_pretext_project_setting('stringparam', {},
+                settings.get('project_name')))
+            settings.set('stringparam',get_pretext_project_setting('root_file', "",
+                settings.get('project_name')))
             # TODO: some attempt at intelligent root file detection assuming
             # sensible structure
-            if not sett['root_file']:
+            if settings.get('root_file') is None:
                 sublime.message_dialog("Error 24: Couldn't find project "
                     "root file")
                 raise VagrantException
-            sett['path'] = get_pretext_project_setting('path', "", sett['project_name'])
+            settings.set('path', get_pretext_project_setting('path', "", settings.get('project_name')))
             # if not path:
             #     sublime.message_dialog("Error 34: Couldn't find project path")
             #     raise VagrantException
 
             # Note: trailing slash is added later, no need for it here
-            sett['pretext_output'] = get_pretext_project_setting('pretext_output',
-                os.path.join(sett['path'], 'output'), sett['project_name'])
-            if not sett['pretext_output']:
+            settings.set('pretext_output',get_pretext_project_setting('pretext_output',
+                os.path.join(settings.get('path'), 'output'), settings.get('project_name')))
+            if settings.get(pretext_output) is None:
                 sublime.message_dialog("Error 36: something bad happened")
                 raise VagrantException
                 # pretext_output_list = filepath.split('/')[:-1]
@@ -168,18 +179,18 @@ class BetaCommand(sublime_plugin.WindowCommand):
                 # if cmd == "xsltproc":
                 #     pretext_output_list.append(fmt)
                 # pretext_output = '/'.join(pretext_output_list)
-            sett['pretext_output_html'] = get_pretext_project_setting('pretext_output_html',
-                os.path.join(sett['pretext_output'], 'html'), sett['project_name'])
-            sett['pretext_output_latex'] = get_pretext_project_setting('pretext_output_latex',
-                os.path.join(sett['pretext_output'], 'latex'), sett['project_name'])
+            settings.set('pretext_output_html',get_pretext_project_setting('pretext_output_html',
+                os.path.join(settings.get('pretext_output', 'html'), settings.get('project_name'))))
+            settings.set('pretext_output_latex',get_pretext_project_setting('pretext_output_latex',
+                os.path.join(settings.get('pretext_output', 'latex'), settings.get('project_name'))))
             # pretext_output_epub = get_pretext_project_setting('pretext_output_epub',
             #     os.path.join(pretext_output, 'epub'), project_name)
-            sett['pretext_images'] = get_pretext_project_setting('pretext_images',
-                os.path.join(sett['pretext_output'], 'images'), sett['project_name'])
-            sett['pretext_html_images'] = get_pretext_project_setting('pretext_html_images',
-                os.path.join(sett['pretext_output_html'], 'images'), sett['project_name'])
-            sett['pretext_latex_images'] = get_pretext_project_setting('pretext_latex_images',
-                os.path.join(sett['pretext_output_latex'], 'images'), sett['project_name'])
+            settings.set('pretext_images',get_pretext_project_setting('pretext_images',
+                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name'))))
+            settings.set('pretext_html_images',get_pretext_project_setting('pretext_html_images',
+                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name'))))
+            settings.set('pretext_latex_images',get_pretext_project_setting('pretext_latex_images',
+                os.path.join(settings.get('pretext_output', 'images'), settings.get('project_name'))))
             # pretext_epub_images = get_pretext_project_setting('pretext_epub_images',
             #     os.path.join(pretext_output_epub, 'images'), project_name)
             # if not pretext_images:
@@ -200,7 +211,7 @@ class BetaCommand(sublime_plugin.WindowCommand):
             #     print("Need to set PreTeXt root file :(")
             #     raise VagrantException
 
-            return sett
+            return settings
 
         if cmd == "update_pretext":
             #### FUNCTION EXITS FROM THIS BLOCK
